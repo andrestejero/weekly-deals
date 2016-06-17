@@ -9,14 +9,10 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 
 public class ServiceGenerator {
 
     public interface GetPostByIdServiceApi {
-        //@GET("/weekly-deals/{id}")
-        //Call<Game> getItem(@Path("id") String id);
-
         @GET("/games")
         Call<List<Game>> getGames();
     }

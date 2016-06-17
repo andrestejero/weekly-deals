@@ -37,7 +37,6 @@ public class MainActivity extends AppBaseActivity {
                 Log.e("onFailure", t.getMessage());
             }
         });
-        //call.cancel();
     }
 
     @Override
