@@ -12,7 +12,7 @@ import retrofit2.http.GET;
 
 public class ServiceGenerator {
 
-    public interface GetPostByIdServiceApi {
+    public interface GetGameListServiceApi {
         @GET("/games")
         Call<List<Game>> getGames();
     }
