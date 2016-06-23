@@ -47,16 +47,12 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
 
     @Override
     public void showLoading() {
-        showLoadingView();
-    }
-
-    @Override
-    public void hideLoading() {
-        hideLoadingView();
+        updateLoadingView(View.VISIBLE);
     }
 
     @Override
     public void showGameList(@NonNull List<Game> games) {
+        updateLoadingView(View.GONE);
         for (Game game : CollectionUtils.safeIterable(games)) {
             Log.d(LOG_TAG, game.getDescription());
         }
@@ -64,18 +60,13 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
 
     @Override
     public void showErrorGameList() {
+        updateLoadingView(View.GONE);
         Log.d(LOG_TAG, "showErrorGameList");
     }
 
-    public void showLoadingView() {
+    private void updateLoadingView(int loadingVisibility) {
         if (mViewHolder != null && mViewHolder.loadingView != null) {
-            mViewHolder.loadingView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void hideLoadingView() {
-        if (mViewHolder != null && mViewHolder.loadingView != null) {
-            mViewHolder.loadingView.setVisibility(View.GONE);
+            mViewHolder.loadingView.setVisibility(loadingVisibility);
         }
     }
 
