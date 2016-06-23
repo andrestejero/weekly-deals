@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weekly Deals</string>
+    <string name="title_activity_game_list">Listado de Juegos</string>
 </resources>
