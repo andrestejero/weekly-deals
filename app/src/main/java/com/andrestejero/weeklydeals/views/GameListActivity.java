@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
@@ -18,12 +19,16 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
     private static final String LOG_TAG = GameListActivity.class.getSimpleName();
 
     @Nullable
+    private ViewHolder mViewHolder;
+
+    @Nullable
     private GameListPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_list);
+        mViewHolder = new ViewHolder();
         mPresenter = new GameListPresenter(this, getAppRepository());
         loadGameList();
     }
@@ -42,7 +47,12 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
 
     @Override
     public void showLoading() {
-        Log.d(LOG_TAG, "showLoading");
+        showLoadingView();
+    }
+
+    @Override
+    public void hideLoading() {
+        hideLoadingView();
     }
 
     @Override
@@ -55,5 +65,27 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
     @Override
     public void showErrorGameList() {
         Log.d(LOG_TAG, "showErrorGameList");
+    }
+
+    public void showLoadingView() {
+        if (mViewHolder != null && mViewHolder.loadingView != null) {
+            mViewHolder.loadingView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideLoadingView() {
+        if (mViewHolder != null && mViewHolder.loadingView != null) {
+            mViewHolder.loadingView.setVisibility(View.GONE);
+        }
+    }
+
+    private class ViewHolder {
+        private final View loadingView;
+        private final View errorView;
+
+        private ViewHolder() {
+            loadingView = findViewById(R.id.loadingView);
+            errorView = findViewById(R.id.errorView);
+        }
     }
 }

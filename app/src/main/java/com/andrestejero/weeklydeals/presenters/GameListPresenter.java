@@ -35,6 +35,7 @@ public class GameListPresenter {
                 @Override
                 public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
                     if (response.isSuccessful()) {
+                        view.hideLoading();
                         List<Game> games = response.body();
                         view.showGameList(games);
                     }
@@ -51,6 +52,7 @@ public class GameListPresenter {
 
     public interface GameListView {
         void showLoading();
+        void hideLoading();
         void showGameList(@NonNull List<Game> games);
         void showErrorGameList();
     }
