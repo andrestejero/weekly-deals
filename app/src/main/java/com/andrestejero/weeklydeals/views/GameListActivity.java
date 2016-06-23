@@ -3,11 +3,13 @@ package com.andrestejero.weeklydeals.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
+import com.andrestejero.weeklydeals.adapters.GameListAdapter;
 import com.andrestejero.weeklydeals.models.Game;
 import com.andrestejero.weeklydeals.presenters.GameListPresenter;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
@@ -65,18 +67,33 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
     }
 
     private void updateLoadingView(int loadingVisibility) {
-        if (mViewHolder != null && mViewHolder.loadingView != null) {
+        if (mViewHolder != null) {
             mViewHolder.loadingView.setVisibility(loadingVisibility);
         }
     }
 
     private class ViewHolder {
+        @NonNull
         private final View loadingView;
-        private final View errorView;
+
+        @NonNull
+        final RecyclerView gameListView;
+
+        @NonNull
+        final GameListAdapter gameListAdapter;
 
         private ViewHolder() {
-            loadingView = findViewById(R.id.loadingView);
-            errorView = findViewById(R.id.errorView);
+
+            View v = findViewById(R.id.loadingView);
+            assert v != null;
+            loadingView = v;
+
+            RecyclerView rv = (RecyclerView) findViewById(R.id.rvGameList);
+            assert rv != null;
+            gameListView = rv;
+
+            gameListAdapter = new GameListAdapter(GameListActivity.this);
+            gameListView.setAdapter(gameListAdapter);
         }
     }
 }
