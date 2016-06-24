@@ -1,4 +1,4 @@
-package com.andrestejero.weeklydeals.adapters;
+package com.andrestejero.weeklydeals.views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -27,11 +27,11 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public GameListAdapter(@NonNull Context context) {
         this.mContext = context;
         mGames = Collections.emptyList();
-        setHasStableIds(true);
     }
 
     public void updateGames(@Nullable List<Game> games) {
         this.mGames = CollectionUtils.safeList(games);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -41,8 +41,10 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ViewHolder viewHolder = (ViewHolder) holder;
+        final Game game = mGames.get(position);
+        viewHolder.gameTitle.setText(game.getDescription());
     }
 
     @Override
@@ -51,13 +53,11 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         private TextView gameTitle;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            gameTitle = (TextView) itemView.findViewById(R.id.tvGameTitle);
         }
     }
 

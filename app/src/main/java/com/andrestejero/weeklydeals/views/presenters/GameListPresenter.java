@@ -1,4 +1,4 @@
-package com.andrestejero.weeklydeals.presenters;
+package com.andrestejero.weeklydeals.views.presenters;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
