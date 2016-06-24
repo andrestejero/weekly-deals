@@ -53,6 +53,8 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ViewHolder viewHolder = (ViewHolder) holder;
         final Game game = mGames.get(position);
         viewHolder.gameTitle.setText(game.getDescription());
+        viewHolder.gameSaving.setText("20% OFF");
+        viewHolder.gamePrice.setText("U$S 39.99");
         showGameImage(mContext, game, viewHolder.gameImage, PRODUCT_IMAGE_WIDTH);
     }
 
@@ -72,12 +74,16 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView gameTitle;
         private ImageView gameImage;
+        private TextView gameSaving;
+        private TextView gamePrice;
 
         public ViewHolder(View itemView) {
             super(itemView);
             View actionableCover = itemView.findViewById(R.id.actionableCover);
             gameTitle = (TextView) itemView.findViewById(R.id.tvGameTitle);
             gameImage = (ImageView) itemView.findViewById(R.id.ivGameImage);
+            gameSaving = (TextView) itemView.findViewById(R.id.tvGameSaving);
+            gamePrice = (TextView) itemView.findViewById(R.id.tvPrice);
             actionableCover.setOnClickListener(this);
         }
 

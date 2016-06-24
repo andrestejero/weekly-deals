@@ -93,7 +93,7 @@
                     android:paddingTop="2dp">
 
                     <TextView
-                        android:id="@+id/tvProductSaving"
+                        android:id="@+id/tvGameSaving"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
