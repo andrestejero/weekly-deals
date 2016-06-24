@@ -11,7 +11,7 @@
         android:background="@color/white00">
 
         <ImageView
-            android:id="@+id/ivProductImage"
+            android:id="@+id/ivGameImage"
             android:layout_width="@dimen/list_image_size"
             android:layout_height="@dimen/list_image_size"
             android:layout_alignParentLeft="true"
@@ -29,13 +29,13 @@
             android:id="@+id/tvGameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/ivProductImage"
+            android:layout_alignTop="@id/ivGameImage"
             android:layout_marginEnd="16dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="16dp"
             android:layout_marginStart="12dp"
-            android:layout_toEndOf="@+id/ivProductImage"
-            android:layout_toRightOf="@+id/ivProductImage"
+            android:layout_toEndOf="@+id/ivGameImage"
+            android:layout_toRightOf="@+id/ivGameImage"
             android:lines="2"
             android:textColor="@color/grey120"
             android:textSize="16sp"
