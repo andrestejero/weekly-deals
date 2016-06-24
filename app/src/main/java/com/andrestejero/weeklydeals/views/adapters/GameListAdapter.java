@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final String LOG_TAG = GameListAdapter.class.getSimpleName();
 
     @NonNull
     private Context mContext;
@@ -52,12 +55,19 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return CollectionUtils.safeSize(mGames);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView gameTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            View actionableCover = itemView.findViewById(R.id.actionableCover);
             gameTitle = (TextView) itemView.findViewById(R.id.tvGameTitle);
+            actionableCover.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d(LOG_TAG, "OnItemClick");
         }
     }
 

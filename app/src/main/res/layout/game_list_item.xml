@@ -1,15 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvGameTitle"
+    <RelativeLayout
+        android:id="@+id/rlContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white00">
+
+        <ImageView
+            android:id="@+id/ivProductImage"
+            android:layout_width="@dimen/list_image_size"
+            android:layout_height="@dimen/list_image_size"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/white"
+            android:contentDescription="@string/iv_description"
+            android:scaleType="centerCrop"
+            tools:background="@color/blue00" />
+
+        <TextView
+            android:id="@+id/tvGameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ivProductImage"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/ivProductImage"
+            android:layout_toRightOf="@+id/ivProductImage"
+            android:lines="2"
+            android:textColor="@color/grey120"
+            android:textSize="16sp"
+            tools:text="COMBO TABLET GONNA SPRINGBOKS 7' 8GB NEGRO" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvGameTitle"
+            android:layout_alignStart="@+id/tvGameTitle"
+            android:layout_below="@+id/tvGameTitle"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/tvListPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:textColor="@color/grey80"
+                android:textSize="13sp"
+                tools:text="$2,000" />
+
+            <RelativeLayout
+                android:id="@+id/rlSavingContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvListPrice">
+
+                <!--style="@style/TextStyleRobotoLight"-->
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:lines="1"
+                    android:textColor="@color/blue00"
+                    android:textSize="22sp"
+                    tools:text="$1,500" />
+
+                <LinearLayout
+                    android:id="@+id/llSavingContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tvPrice"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/saving_blue_background"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp">
+
+                    <TextView
+                        android:id="@+id/tvProductSaving"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:textColor="@color/white00"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:ignore="SmallSp"
+                        tools:text="$200.00" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvInstallmentsDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlSavingContainer"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/grey120"
+                android:textSize="12sp"
+                tools:text="En 6 cuotas sin interés de $12.000" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue20" />
+
+    <RelativeLayout
+        android:id="@+id/actionableCover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        tools:text="Item" />
+        android:layout_alignBottom="@+id/rlContent"
+        android:layout_alignEnd="@+id/rlContent"
+        android:layout_alignLeft="@+id/rlContent"
+        android:layout_alignRight="@+id/rlContent"
+        android:layout_alignStart="@+id/rlContent"
+        android:layout_alignTop="@+id/rlContent"
+        android:background="@drawable/bg_transparent_actionable" />
 
-</LinearLayout>
+</RelativeLayout>

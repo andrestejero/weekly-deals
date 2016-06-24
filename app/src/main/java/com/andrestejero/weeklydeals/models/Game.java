@@ -9,7 +9,13 @@ import java.math.BigDecimal;
 public class Game {
 
     @Nullable
+    private String id;
+
+    @Nullable
     private String description;
+
+    @Nullable
+    private String url;
 
     @Nullable
     private BigDecimal price;
@@ -23,9 +29,6 @@ public class Game {
     private BigDecimal plusPrice;
 
     @Nullable
-    private String id;
-
-    @Nullable
     public String getId() {
         return id;
     }
@@ -33,6 +36,11 @@ public class Game {
     @Nullable
     public String getDescription() {
         return description;
+    }
+
+    @Nullable
+    public String getUrl() {
+        return url;
     }
 
     @Nullable

@@ -3,4 +3,66 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="red00">#ee3344</color>
+    <color name="red120">#ab0000</color>
+    <color name="red100">#d30000</color>
+    <color name="red80">#e5675e</color>
+    <color name="red60">#ffa9a8</color>
+    <color name="red40">#fdccc9</color>
+    <color name="red20">#fae1df</color>
+
+    <color name="green00">#49c237</color>
+    <color name="green120">#268f16</color>
+    <color name="green100">#52902c</color>
+    <color name="green85">#5ca131</color>
+    <color name="green80">#65ab3a</color>
+    <color name="green60">#5bbe4b</color>
+    <color name="green40">#9eda94</color>
+    <color name="green20">#dff0d8</color>
+
+    <color name="blue00">#48a1d2</color>
+    <color name="blue100">#1e6391</color>
+    <color name="blue20">#e3e7e9</color>
+    <color name="blue80">#567eb1</color>
+    <color name="blue120">#385e8d</color>
+
+    <color name="cyan00">#2dbde9</color>
+    <color name="cyan120">#056889</color>
+    <color name="cyan100">#0a8cb6</color>
+    <color name="cyan80">#00ace4</color>
+    <color name="cyan60">#4ec7ef</color>
+    <color name="cyan40">#86dbf7</color>
+    <color name="cyan20">#bbe7f5</color>
+
+    <color name="yellow00">#feba2b</color>
+    <color name="yellow00alpha20">#14feba2b</color>
+    <color name="yellow100">#f19f15</color>
+    <color name="yellow80">#ffc755</color>
+    <color name="yellow60">#ffd377</color>
+    <color name="yellow40">#fce4b2</color>
+    <color name="yellow20">#fef8e9</color>
+
+    <color name="black00">#333333</color>
+    <color name="black00alpha30">#1e000000</color>
+
+    <color name="grey120">#444444</color>
+    <color name="grey120alpha40">#28444444</color>
+    <color name="grey100">#777777</color>
+    <color name="grey80">#999999</color>
+    <color name="grey60">#aaaaaa</color>
+    <color name="grey40">#cccccc</color>
+    <color name="grey20">#dfdfdf</color>
+    <color name="grey15">#ececec</color>
+    <color name="grey10">#f5f5f5</color>
+
+    <color name="white00">#ffffff</color>
+    <color name="white00alpha40">#28ffffff</color>
+
+    <color name="oil00">#00afc0</color>
+    <color name="oil120">#00636c</color>
+    <color name="oil20">#d2e8ea</color>
+
+    <color name="ripple_transparent_mask">#77ffffff</color>
+    <color name="ripple_transparent_grey15">#44ececec</color>
 </resources>

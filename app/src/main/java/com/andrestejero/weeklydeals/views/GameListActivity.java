@@ -10,11 +10,9 @@ import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
+import com.andrestejero.weeklydeals.models.GameList;
 import com.andrestejero.weeklydeals.views.adapters.GameListAdapter;
-import com.andrestejero.weeklydeals.models.Game;
 import com.andrestejero.weeklydeals.views.presenters.GameListPresenter;
-
-import java.util.List;
 
 public class GameListActivity extends AppBaseActivity implements GameListPresenter.GameListView {
 
@@ -53,10 +51,10 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
     }
 
     @Override
-    public void showGameList(@NonNull List<Game> games) {
+    public void showGameList(@NonNull GameList games) {
         updateLoadingView(View.GONE);
         if (mViewHolder != null) {
-            mViewHolder.gameListAdapter.updateGames(games);
+            mViewHolder.gameListAdapter.updateGames(games.getGames());
         }
     }
 

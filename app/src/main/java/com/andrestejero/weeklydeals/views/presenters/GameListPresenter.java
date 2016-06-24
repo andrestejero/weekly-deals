@@ -3,11 +3,10 @@ package com.andrestejero.weeklydeals.views.presenters;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.andrestejero.weeklydeals.models.Game;
+import com.andrestejero.weeklydeals.models.GameList;
 import com.andrestejero.weeklydeals.repositories.AppRepository;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,17 +30,17 @@ public class GameListPresenter {
         final GameListView view = weakView.get();
         if (view != null) {
             view.showLoading();
-            mAppRepository.getGames(new Callback<List<Game>>() {
+            mAppRepository.getGames(new Callback<GameList>() {
                 @Override
-                public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
+                public void onResponse(Call<GameList> call, Response<GameList> response) {
                     if (response.isSuccessful()) {
-                        List<Game> games = response.body();
+                        GameList games = response.body();
                         view.showGameList(games);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<Game>> call, Throwable t) {
+                public void onFailure(Call<GameList> call, Throwable t) {
                     Log.e(LOG_TAG, t.getMessage());
                     view.showErrorGameList();
                 }
@@ -51,7 +50,7 @@ public class GameListPresenter {
 
     public interface GameListView {
         void showLoading();
-        void showGameList(@NonNull List<Game> games);
+        void showGameList(@NonNull GameList games);
         void showErrorGameList();
     }
 }
