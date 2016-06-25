@@ -8,11 +8,11 @@ import retrofit2.Callback;
 
 public class AppRepository {
 
-    private ServiceGenerator.GetGameListServiceApi mService;
+    private ServiceGenerator.WeeklyDealsServiceApi mService;
     private Call<GameList> mCallGetGames;
 
     public AppRepository() {
-        mService = ServiceGenerator.createService(ServiceGenerator.GetGameListServiceApi.class);
+        mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
     }
 
     public void getGames(Callback<GameList> callback) {

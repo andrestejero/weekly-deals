@@ -11,7 +11,7 @@ import retrofit2.http.Path;
 
 public class ServiceGenerator {
 
-    public interface GetGameListServiceApi {
+    public interface WeeklyDealsServiceApi {
         @GET("/games/{id}")
         Call<GameList> getGames(@Path("id") String gameId);
     }

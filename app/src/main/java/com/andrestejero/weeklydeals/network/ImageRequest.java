@@ -123,8 +123,9 @@ public class ImageRequest {
 
     private void executeRequest(@NonNull String path, @Nullable final ImageRequestCallback listener) {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //Picasso.with(context).setLoggingEnabled(BuildTypeUtils.isDebug());
-        //Picasso.with(context).setIndicatorsEnabled(AppPreferences.isImageIndicatorsEnabled(context));
+        // TODO: Picasso DEBUG
+        Picasso.with(context).setLoggingEnabled(false);
+        Picasso.with(context).setIndicatorsEnabled(false);
         RequestCreator request = Picasso.with(context)
                 .load(path);
         if (shouldShowPlaceHolder) {
