@@ -23,6 +23,11 @@
             android:configChanges="orientation"
             android:label="@string/title_activity_game_list"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.GameDetailActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_game_list"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

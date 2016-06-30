@@ -29,6 +29,9 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     private Context mContext;
 
+    @Nullable
+    private OnItemClickListener mItemClickListener;
+
     @NonNull
     private List<Game> mGames;
 
@@ -71,6 +74,14 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return CollectionUtils.safeSize(mGames);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(@Nullable OnItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView gameTitle;
         private ImageView gameImage;
@@ -89,7 +100,9 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         @Override
         public void onClick(View v) {
-            Log.d(LOG_TAG, "OnItemClick");
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(getLayoutPosition());
+            }
         }
     }
 

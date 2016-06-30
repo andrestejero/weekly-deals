@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +11,16 @@ import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
-import com.andrestejero.weeklydeals.models.GameList;
+import com.andrestejero.weeklydeals.models.Game;
+import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.views.adapters.GameListAdapter;
 import com.andrestejero.weeklydeals.views.presenters.GameListPresenter;
 
-public class GameListActivity extends AppBaseActivity implements GameListPresenter.GameListView {
+import java.util.List;
+
+public class GameListActivity extends AppBaseActivity implements
+        GameListPresenter.GameListView,
+        GameListAdapter.OnItemClickListener {
 
     private static final String LOG_TAG = GameListActivity.class.getSimpleName();
 
@@ -23,6 +29,9 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
 
     @Nullable
     private GameListPresenter mPresenter;
+
+    @Nullable
+    private List<Game> mGames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +60,18 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
     }
 
     @Override
-    public void showGameList(@NonNull GameList games) {
+    public void showGameList(@NonNull List<Game> games) {
+        mGames = games;
         updateLoadingView(View.GONE);
         if (mViewHolder != null) {
-            mViewHolder.gameListAdapter.updateGames(games.getGames());
+            mViewHolder.gameListAdapter.updateGames(games);
         }
+    }
+
+    @Override
+    public void showEmptyList() {
+        updateLoadingView(View.GONE);
+        Log.d(LOG_TAG, "El listado esta vacio");
     }
 
     @Override
@@ -67,6 +83,16 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
     private void updateLoadingView(int loadingVisibility) {
         if (mViewHolder != null) {
             mViewHolder.loadingView.setVisibility(loadingVisibility);
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        if (CollectionUtils.isNotEmpty(mGames)) {
+            Game game = mGames.get(position);
+            Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
+            intent.putExtra("GAME_ID", game.getDescription());
+            startActivity(intent);
         }
     }
 
@@ -83,6 +109,7 @@ public class GameListActivity extends AppBaseActivity implements GameListPresent
             gameListView.setAdapter(gameListAdapter);
             mLayoutManager = new LinearLayoutManager(GameListActivity.this);
             gameListView.setLayoutManager(mLayoutManager);
+            gameListAdapter.setOnItemClickListener(GameListActivity.this);
         }
     }
 }
