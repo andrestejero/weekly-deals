@@ -20,6 +20,8 @@ import com.andrestejero.weeklydeals.utils.StringUtils;
 import java.util.Collections;
 import java.util.List;
 
+
+// TODO Este Adapter se borra
 public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String LOG_TAG = GameListAdapter.class.getSimpleName();

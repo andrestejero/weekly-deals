@@ -1,6 +1,5 @@
 package com.andrestejero.weeklydeals.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,47 +10,36 @@ import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
-import com.andrestejero.weeklydeals.models.Product;
-import com.andrestejero.weeklydeals.utils.CollectionUtils;
-import com.andrestejero.weeklydeals.views.adapters.GameListAdapter;
-import com.andrestejero.weeklydeals.views.presenters.GameListPresenter;
+import com.andrestejero.weeklydeals.models.PsnContainer;
+import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
+import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
-import java.util.List;
+public class PsnListActivity extends AppBaseActivity implements
+        PsnPresenter.PsnListView,
+        PsnListAdapter.OnItemClickListener {
 
-public class GameListActivity extends AppBaseActivity implements
-        GameListPresenter.GameListView,
-        GameListAdapter.OnItemClickListener {
-
-    private static final String LOG_TAG = GameListActivity.class.getSimpleName();
+    private static final String LOG_TAG = PsnListActivity.class.getSimpleName();
 
     @Nullable
     private ViewHolder mViewHolder;
 
     @Nullable
-    private GameListPresenter mPresenter;
-
-    @Nullable
-    private List<Product> mProducts;
+    private PsnPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.game_list);
-        mViewHolder = new ViewHolder();
-        mPresenter = new GameListPresenter(this, getAppRepository());
-        loadGameList();
-    }
+        setContentView(R.layout.psn_list);
 
-    private void loadGameList() {
-        if (mPresenter != null) {
-            mPresenter.getGameList();
-        }
+        mViewHolder = new ViewHolder();
+        mPresenter = new PsnPresenter(this, getAppRepository());
+        mPresenter.getPsnContainer();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getAppRepository().stopGetGames();
+        getAppRepository().stopGetPsnContainer();
     }
 
     @Override
@@ -60,12 +48,9 @@ public class GameListActivity extends AppBaseActivity implements
     }
 
     @Override
-    public void showGameList(@NonNull List<Product> products) {
-        mProducts = products;
+    public void showPsnContainer(@NonNull PsnContainer psnContainer) {
         updateLoadingView(View.GONE);
-        if (mViewHolder != null) {
-            mViewHolder.gameListAdapter.updateGames(products);
-        }
+        Log.d(LOG_TAG, psnContainer.getId());
     }
 
     @Override
@@ -88,28 +73,31 @@ public class GameListActivity extends AppBaseActivity implements
 
     @Override
     public void onItemClick(int position) {
+        /*
         if (CollectionUtils.isNotEmpty(mProducts)) {
             Product product = mProducts.get(position);
             Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
             intent.putExtra("GAME_ID", product.getId());
             startActivity(intent);
         }
+         */
     }
 
     private class ViewHolder {
         private View loadingView;
-        private RecyclerView gameListView;
-        private final GameListAdapter gameListAdapter;
+        private RecyclerView psnListView;
+        private final PsnListAdapter psnListAdapter;
         private final RecyclerView.LayoutManager mLayoutManager;
 
         private ViewHolder() {
             loadingView = findViewById(R.id.loadingView);
-            gameListView = (RecyclerView) findViewById(R.id.rvGameList);
-            gameListAdapter = new GameListAdapter(GameListActivity.this);
-            gameListView.setAdapter(gameListAdapter);
-            mLayoutManager = new LinearLayoutManager(GameListActivity.this);
-            gameListView.setLayoutManager(mLayoutManager);
-            gameListAdapter.setOnItemClickListener(GameListActivity.this);
+            psnListView = (RecyclerView) findViewById(R.id.rvPsnList);
+            psnListAdapter = new PsnListAdapter(PsnListActivity.this);
+            psnListView.setAdapter(psnListAdapter);
+            mLayoutManager = new LinearLayoutManager(PsnListActivity.this);
+            psnListView.setLayoutManager(mLayoutManager);
+            psnListAdapter.setOnItemClickListener(PsnListActivity.this);
         }
     }
+
 }

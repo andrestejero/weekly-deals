@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.GameListActivity"
+            android:name=".views.PsnListActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_game_list"
             android:screenOrientation="portrait" />

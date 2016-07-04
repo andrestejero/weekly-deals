@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ProductList {
+public class PsnContainer {
 
     @Nullable
     private String id;

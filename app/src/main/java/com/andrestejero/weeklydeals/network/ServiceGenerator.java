@@ -1,6 +1,6 @@
 package com.andrestejero.weeklydeals.network;
 
-import com.andrestejero.weeklydeals.models.ProductList;
+import com.andrestejero.weeklydeals.models.PsnContainer;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -13,7 +13,7 @@ public class ServiceGenerator {
 
     public interface WeeklyDealsServiceApi {
         @GET("/lists/{id}")
-        Call<ProductList> getGames(@Path("id") String gameId);
+        Call<PsnContainer> getPsnContainer(@Path("id") String psnId);
     }
 
     public static final String API_BASE_URL = "http://ps-mapi.herokuapp.com";
