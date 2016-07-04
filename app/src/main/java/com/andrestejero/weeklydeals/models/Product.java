@@ -3,9 +3,7 @@ package com.andrestejero.weeklydeals.models;
 import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
-import com.google.gson.annotations.SerializedName;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class Product {

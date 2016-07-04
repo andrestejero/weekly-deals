@@ -3,9 +3,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.R;
-import com.andrestejero.weeklydeals.models.Game;
+import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.network.ImageRequest;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
@@ -35,15 +33,15 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private OnItemClickListener mItemClickListener;
 
     @NonNull
-    private List<Game> mGames;
+    private List<Product> mProducts;
 
     public GameListAdapter(@NonNull Context context) {
         this.mContext = context;
-        mGames = Collections.emptyList();
+        mProducts = Collections.emptyList();
     }
 
-    public void updateGames(@Nullable List<Game> games) {
-        this.mGames = CollectionUtils.safeList(games);
+    public void updateGames(@Nullable List<Product> products) {
+        this.mProducts = CollectionUtils.safeList(products);
         notifyDataSetChanged();
     }
 
@@ -56,10 +54,10 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        final Game game = mGames.get(position);
-        viewHolder.gameTitle.setText(game.getName());
-        if (game.getPrice() != null) {
-            Price price = game.getPrice();
+        final Product product = mProducts.get(position);
+        viewHolder.gameTitle.setText(product.getName());
+        if (product.getPrice() != null) {
+            Price price = product.getPrice();
             if (price.getNormal() != null) {
                 viewHolder.normalPrice.setText(StringUtils.gamePrice(price.getNormal()));
             }
@@ -83,12 +81,12 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
 
-        showGameImage(mContext, game, viewHolder.gameImage, PRODUCT_IMAGE_WIDTH);
+        showGameImage(mContext, product, viewHolder.gameImage, PRODUCT_IMAGE_WIDTH);
     }
 
-    private static void showGameImage(@NonNull Context context, @NonNull Game game, @NonNull ImageView imageView, @Nullable Integer imageWidth) {
-        if (StringUtils.isNotEmpty(game.getImage()) && imageWidth != null) {
-            new ImageRequest(context, game.getImage(), imageView).widthInPixels(imageWidth, 1000).execute();
+    private static void showGameImage(@NonNull Context context, @NonNull Product product, @NonNull ImageView imageView, @Nullable Integer imageWidth) {
+        if (StringUtils.isNotEmpty(product.getImage()) && imageWidth != null) {
+            new ImageRequest(context, product.getImage(), imageView).widthInPixels(imageWidth, 1000).execute();
         } else {
             imageView.setImageResource(R.drawable.bg_image_placeholder_100dp);
         }
@@ -96,7 +94,7 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return CollectionUtils.safeSize(mGames);
+        return CollectionUtils.safeSize(mProducts);
     }
 
     public interface OnItemClickListener {

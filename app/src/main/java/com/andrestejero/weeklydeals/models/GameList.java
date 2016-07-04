@@ -17,7 +17,7 @@ public class GameList {
 
     @Nullable
     @SerializedName("products")
-    private List<Game> games;
+    private List<Product> products;
 
     @Nullable
     @SerializedName("lists")
@@ -34,8 +34,8 @@ public class GameList {
     }
 
     @Nullable
-    public List<Game> getGames() {
-        return CollectionUtils.safeList(games);
+    public List<Product> getProducts() {
+        return CollectionUtils.safeList(products);
     }
 
     @Nullable

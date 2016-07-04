@@ -3,7 +3,7 @@ package com.andrestejero.weeklydeals.views.presenters;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.andrestejero.weeklydeals.models.Game;
+import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.GameList;
 import com.andrestejero.weeklydeals.repositories.AppRepository;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
@@ -38,8 +38,8 @@ public class GameListPresenter {
                 public void onResponse(Call<GameList> call, Response<GameList> response) {
                     if (response.isSuccessful()) {
                         GameList games = response.body();
-                        if (CollectionUtils.isNotEmpty(games.getGames())) {
-                            view.showGameList(games.getGames());
+                        if (CollectionUtils.isNotEmpty(games.getProducts())) {
+                            view.showGameList(games.getProducts());
                         } else {
                             view.showEmptyList();
                         }
@@ -57,7 +57,7 @@ public class GameListPresenter {
 
     public interface GameListView {
         void showLoading();
-        void showGameList(@NonNull List<Game> games);
+        void showGameList(@NonNull List<Product> products);
         void showEmptyList();
         void showErrorGameList();
     }

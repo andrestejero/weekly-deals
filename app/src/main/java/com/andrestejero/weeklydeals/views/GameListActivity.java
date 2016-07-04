@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
-import com.andrestejero.weeklydeals.models.Game;
+import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.views.adapters.GameListAdapter;
 import com.andrestejero.weeklydeals.views.presenters.GameListPresenter;
@@ -31,7 +31,7 @@ public class GameListActivity extends AppBaseActivity implements
     private GameListPresenter mPresenter;
 
     @Nullable
-    private List<Game> mGames;
+    private List<Product> mProducts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +60,11 @@ public class GameListActivity extends AppBaseActivity implements
     }
 
     @Override
-    public void showGameList(@NonNull List<Game> games) {
-        mGames = games;
+    public void showGameList(@NonNull List<Product> products) {
+        mProducts = products;
         updateLoadingView(View.GONE);
         if (mViewHolder != null) {
-            mViewHolder.gameListAdapter.updateGames(games);
+            mViewHolder.gameListAdapter.updateGames(products);
         }
     }
 
@@ -88,10 +88,10 @@ public class GameListActivity extends AppBaseActivity implements
 
     @Override
     public void onItemClick(int position) {
-        if (CollectionUtils.isNotEmpty(mGames)) {
-            Game game = mGames.get(position);
+        if (CollectionUtils.isNotEmpty(mProducts)) {
+            Product product = mProducts.get(position);
             Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
-            intent.putExtra("GAME_ID", game.getId());
+            intent.putExtra("GAME_ID", product.getId());
             startActivity(intent);
         }
     }
