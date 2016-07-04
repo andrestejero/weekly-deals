@@ -50,36 +50,36 @@
             android:layout_marginTop="8dp">
 
             <TextView
-                android:id="@+id/tvListPrice"
+                android:id="@+id/tvNormalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:textColor="@color/grey80"
                 android:textSize="13sp"
-                tools:text="$2,000" />
+                tools:text="U$S 59.99" />
 
             <RelativeLayout
                 android:id="@+id/rlSavingContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvListPrice">
+                android:layout_below="@+id/tvNormalPrice">
 
                 <!--style="@style/TextStyleRobotoLight"-->
                 <TextView
-                    android:id="@+id/tvPrice"
+                    android:id="@+id/tvDiscountPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:lines="1"
                     android:textColor="@color/blue00"
                     android:textSize="22sp"
-                    tools:text="$1,500" />
+                    tools:text="U$S 49.99" />
 
                 <LinearLayout
                     android:id="@+id/llSavingContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tvPrice"
+                    android:layout_alignBottom="@+id/tvDiscountPrice"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -92,8 +92,9 @@
                     android:paddingRight="4dp"
                     android:paddingTop="2dp">
 
+                    <!-- TODO volar bold -->
                     <TextView
-                        android:id="@+id/tvGameSaving"
+                        android:id="@+id/tvGameDiscount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
@@ -101,23 +102,62 @@
                         android:textSize="11sp"
                         android:textStyle="bold"
                         tools:ignore="SmallSp"
-                        tools:text="$200.00" />
+                        tools:text="SAVE 20%" />
 
                 </LinearLayout>
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvInstallmentsDescription"
+            <!-- PLUS PRICE -->
+            <RelativeLayout
+                android:id="@+id/rlPlusSavingContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlSavingContainer"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/grey120"
-                android:textSize="12sp"
-                tools:text="En 6 cuotas sin interés de $12.000" />
+                android:layout_below="@+id/rlSavingContainer">
+
+                <!--style="@style/TextStyleRobotoLight"-->
+                <TextView
+                    android:id="@+id/tvPlusDiscountPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:lines="1"
+                    android:textColor="@color/yellow80"
+                    android:textSize="22sp"
+                    tools:text="U$S 39.99" />
+
+                <LinearLayout
+                    android:id="@+id/llPlusSavingContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tvPlusDiscountPrice"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/saving_yellow_background"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp">
+
+                    <!-- TODO volar bold -->
+                    <TextView
+                        android:id="@+id/tvPlusGameDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:textColor="@color/white00"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:ignore="SmallSp"
+                        tools:text="SAVE 30%" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

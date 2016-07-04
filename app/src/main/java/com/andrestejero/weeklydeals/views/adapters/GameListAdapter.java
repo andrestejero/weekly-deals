@@ -3,6 +3,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Game;
+import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.network.ImageRequest;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
@@ -55,15 +57,38 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         final Game game = mGames.get(position);
-        viewHolder.gameTitle.setText(game.getDescription());
-        viewHolder.gameSaving.setText("20% OFF");
-        viewHolder.gamePrice.setText("U$S 39.99");
+        viewHolder.gameTitle.setText(game.getName());
+        if (game.getPrice() != null) {
+            Price price = game.getPrice();
+            if (price.getNormal() != null) {
+                viewHolder.normalPrice.setText(StringUtils.gamePrice(price.getNormal()));
+            }
+            if (price.getDiscountPrice() != null) {
+                viewHolder.discountPrice.setText(StringUtils.gamePrice(price.getDiscountPrice()));
+            }
+            if (price.getDiscount() != null) {
+                viewHolder.discount.setText(StringUtils.gamePercent(price.getDiscount()));
+            }
+            if (price.getBonusDiscountPrice() != null) {
+                viewHolder.plusDiscountPrice.setVisibility(View.VISIBLE);
+                viewHolder.plusDiscountPrice.setText(StringUtils.gamePrice(price.getBonusDiscountPrice()));
+            } else {
+                viewHolder.plusDiscountPrice.setVisibility(View.GONE);
+            }
+            if (price.getBonusDiscount() != null) {
+                viewHolder.plusSavingContainer.setVisibility(View.VISIBLE);
+                viewHolder.plusDiscount.setText(StringUtils.gamePercent(price.getBonusDiscount()));
+            } else {
+                viewHolder.plusSavingContainer.setVisibility(View.GONE);
+            }
+        }
+
         showGameImage(mContext, game, viewHolder.gameImage, PRODUCT_IMAGE_WIDTH);
     }
 
     private static void showGameImage(@NonNull Context context, @NonNull Game game, @NonNull ImageView imageView, @Nullable Integer imageWidth) {
-        if (StringUtils.isNotEmpty(game.getUrl()) && imageWidth != null) {
-            new ImageRequest(context, game.getUrl(), imageView).widthInPixels(imageWidth, 1000).execute();
+        if (StringUtils.isNotEmpty(game.getImage()) && imageWidth != null) {
+            new ImageRequest(context, game.getImage(), imageView).widthInPixels(imageWidth, 1000).execute();
         } else {
             imageView.setImageResource(R.drawable.bg_image_placeholder_100dp);
         }
@@ -85,16 +110,24 @@ public class GameListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView gameTitle;
         private ImageView gameImage;
-        private TextView gameSaving;
-        private TextView gamePrice;
+        private TextView normalPrice;
+        private TextView discountPrice;
+        private TextView discount;
+        private View plusSavingContainer;
+        private TextView plusDiscountPrice;
+        private TextView plusDiscount;
 
         public ViewHolder(View itemView) {
             super(itemView);
             View actionableCover = itemView.findViewById(R.id.actionableCover);
             gameTitle = (TextView) itemView.findViewById(R.id.tvGameTitle);
             gameImage = (ImageView) itemView.findViewById(R.id.ivGameImage);
-            gameSaving = (TextView) itemView.findViewById(R.id.tvGameSaving);
-            gamePrice = (TextView) itemView.findViewById(R.id.tvPrice);
+            normalPrice = (TextView) itemView.findViewById(R.id.tvNormalPrice);
+            discountPrice = (TextView) itemView.findViewById(R.id.tvDiscountPrice);
+            discount = (TextView) itemView.findViewById(R.id.tvGameDiscount);
+            plusSavingContainer = itemView.findViewById(R.id.llPlusSavingContainer);
+            plusDiscountPrice = (TextView) itemView.findViewById(R.id.tvPlusDiscountPrice);
+            plusDiscount = (TextView) itemView.findViewById(R.id.tvPlusGameDiscount);
             actionableCover.setOnClickListener(this);
         }
 

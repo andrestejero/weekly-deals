@@ -16,7 +16,7 @@ public class AppRepository {
     }
 
     public void getGames(Callback<GameList> callback) {
-        mCallGetGames = mService.getGames("1");
+        mCallGetGames = mService.getGames("STORE-MSF77008-ALLDEALS");
         mCallGetGames.enqueue(callback);
     }
 

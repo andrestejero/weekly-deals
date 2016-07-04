@@ -12,11 +12,11 @@ import retrofit2.http.Path;
 public class ServiceGenerator {
 
     public interface WeeklyDealsServiceApi {
-        @GET("/games/{id}")
+        @GET("/lists/{id}")
         Call<GameList> getGames(@Path("id") String gameId);
     }
 
-    public static final String API_BASE_URL = "http://quick-entities.herokuapp.com";
+    public static final String API_BASE_URL = "http://ps-mapi.herokuapp.com";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

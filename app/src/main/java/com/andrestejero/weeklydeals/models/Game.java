@@ -2,9 +2,11 @@ package com.andrestejero.weeklydeals.models;
 
 import android.support.annotation.Nullable;
 
+import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Game {
 
@@ -12,21 +14,16 @@ public class Game {
     private String id;
 
     @Nullable
-    private String description;
+    private String name;
 
     @Nullable
-    private String url;
+    private String image;
 
     @Nullable
-    private BigDecimal price;
+    private List<String> platforms;
 
     @Nullable
-    @SerializedName("discount-price")
-    private BigDecimal discountPrice;
-
-    @Nullable
-    @SerializedName("plus-price")
-    private BigDecimal plusPrice;
+    private Price price;
 
     @Nullable
     public String getId() {
@@ -34,27 +31,22 @@ public class Game {
     }
 
     @Nullable
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
     @Nullable
-    public String getUrl() {
-        return url;
+    public String getImage() {
+        return image;
     }
 
     @Nullable
-    public BigDecimal getPrice() {
+    public List<String> getPlatforms() {
+        return CollectionUtils.safeList(platforms);
+    }
+
+    @Nullable
+    public Price getPrice() {
         return price;
-    }
-
-    @Nullable
-    public BigDecimal getDiscountPrice() {
-        return discountPrice;
-    }
-
-    @Nullable
-    public BigDecimal getPlusPrice() {
-        return plusPrice;
     }
 }

@@ -14,10 +14,6 @@ import com.squareup.picasso.RequestCreator;
 
 public class ImageRequest {
 
-    private final static String PROTOCOL = "https:";
-    private final static int MULTIPLE_OF = 50;
-    private static int WIDTH_DIVIDER = 1;
-
     @NonNull
     private final Context context;
     @NonNull
@@ -53,21 +49,6 @@ public class ImageRequest {
         this.shouldFitCenterCrop = false;
     }
 
-    public static void setDeviceIsLowEnd(boolean deviceIsLowEnd) {
-        WIDTH_DIVIDER = deviceIsLowEnd ? 2 : 1;
-    }
-
-    public ImageRequest scaleType(@NonNull ImageView.ScaleType scaleType) {
-        this.scaleType = scaleType;
-        return this;
-    }
-
-    @NonNull
-    public ImageRequest placeHolderResourceId(@DrawableRes int placeholderResourceId) {
-        this.placeholderResourceId = placeholderResourceId;
-        return this;
-    }
-
     @NonNull
     public ImageRequest widthInPixels(@NonNull Integer widthInPixels, @NonNull Integer maxWidthInPixels) {
         this.width = widthInPixels;
@@ -75,46 +56,8 @@ public class ImageRequest {
         return this;
     }
 
-    @NonNull
-    public ImageRequest widthInDps(@NonNull Integer widthInDps, @NonNull Integer maxWidthInPixels) {
-        return widthInPixels(Math.round(context.getResources().getDisplayMetrics().density * widthInDps), maxWidthInPixels);
-    }
-
-    @NonNull
-    public ImageRequest doNotShowBrokenImage() {
-        shouldShowBrokenImageOnError = false;
-        return this;
-    }
-
-    @NonNull
-    public ImageRequest doNotShowPlaceholderWhileRequesting() {
-        shouldShowPlaceHolder = false;
-        return this;
-    }
-
-    @NonNull
-    public ImageRequest showBrokenImageDarkBackgroundOnError() {
-        shouldShowBrokenImageDarkBackgroundOnError = true;
-        return this;
-    }
-
-    @NonNull
-    public ImageRequest fitCenterInside() {
-        shouldFitCenterInside = true;
-        shouldFitCenterCrop = false;
-        return this;
-    }
-
-    @NonNull
-    public ImageRequest fitCenterCrop() {
-        shouldFitCenterCrop = true;
-        shouldFitCenterInside = false;
-        return this;
-    }
-
     public void execute(@Nullable final ImageRequestCallback listener) {
-        String path = getPath();
-        executeRequest(path, listener);
+        executeRequest(url, listener);
     }
 
     public void execute() {
@@ -168,45 +111,9 @@ public class ImageRequest {
         });
     }
 
-    @NonNull
-    private String getPath() {
-        if (url.contains("http")) {
-            return url + getWidthSuffix();
-        }
-        return PROTOCOL + url + getWidthSuffix();
-    }
-
-    @NonNull
-    private String getWidthSuffix() {
-        if (width == null || maxWidth == null) {
-            return "";
-        }
-        return doGetWidthSuffix(width, maxWidth);
-    }
-
-    @NonNull
-    private String doGetWidthSuffix(int width, int maxWidth) {
-        int imageSize = roundUp(Math.round(width) / WIDTH_DIVIDER, MULTIPLE_OF);
-        maxWidth = roundDown(maxWidth / WIDTH_DIVIDER, MULTIPLE_OF);
-        if (imageSize >= maxWidth) {
-            return "_" + maxWidth;
-        } else {
-            return "_" + imageSize;
-        }
-    }
-
-    private int roundUp(float number, int multipleOf) {
-        return ((int) (number / multipleOf) + (number % multipleOf > 0 ? 1 : 0)) * multipleOf;
-    }
-
-    private int roundDown(float number, int multipleOf) {
-        return (int) (number - (number % multipleOf));
-    }
-
     public interface ImageRequestCallback {
         void onError();
 
         void onSuccess();
     }
-
 }

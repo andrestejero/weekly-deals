@@ -91,7 +91,7 @@ public class GameListActivity extends AppBaseActivity implements
         if (CollectionUtils.isNotEmpty(mGames)) {
             Game game = mGames.get(position);
             Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
-            intent.putExtra("GAME_ID", game.getDescription());
+            intent.putExtra("GAME_ID", game.getId());
             startActivity(intent);
         }
     }
