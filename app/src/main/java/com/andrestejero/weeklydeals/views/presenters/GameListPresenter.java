@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.andrestejero.weeklydeals.models.Product;
-import com.andrestejero.weeklydeals.models.GameList;
+import com.andrestejero.weeklydeals.models.ProductList;
 import com.andrestejero.weeklydeals.repositories.AppRepository;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 
@@ -33,11 +33,11 @@ public class GameListPresenter {
         final GameListView view = weakView.get();
         if (view != null) {
             view.showLoading();
-            mAppRepository.getGames(new Callback<GameList>() {
+            mAppRepository.getGames(new Callback<ProductList>() {
                 @Override
-                public void onResponse(Call<GameList> call, Response<GameList> response) {
+                public void onResponse(Call<ProductList> call, Response<ProductList> response) {
                     if (response.isSuccessful()) {
-                        GameList games = response.body();
+                        ProductList games = response.body();
                         if (CollectionUtils.isNotEmpty(games.getProducts())) {
                             view.showGameList(games.getProducts());
                         } else {
@@ -47,7 +47,7 @@ public class GameListPresenter {
                 }
 
                 @Override
-                public void onFailure(Call<GameList> call, Throwable t) {
+                public void onFailure(Call<ProductList> call, Throwable t) {
                     Log.e(LOG_TAG, t.getMessage());
                     view.showErrorGameList();
                 }
