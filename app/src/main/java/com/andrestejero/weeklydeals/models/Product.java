@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class Game {
+public class Product {
 
     @Nullable
     private String id;
