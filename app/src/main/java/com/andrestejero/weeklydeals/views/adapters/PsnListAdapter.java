@@ -69,17 +69,11 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (isPositionCategory(position)) {
             CategoryViewHolder viewHolder = (CategoryViewHolder) holder;
             final Category category = mCategories.get(position);
-            viewHolder.categoryName.setText(category.getName());
-
-            // TODO Refactor con showGameImage
-            if (StringUtils.isNotEmpty(category.getImage())) {
-                new ImageRequest(mContext, category.getImage(), viewHolder.categoryImage).widthInPixels(50, 1000).execute();
-            } else {
-                viewHolder.categoryImage.setImageResource(R.drawable.bg_image_placeholder_100dp);
-            }
-
+            PsnListAdapterHelper.showCategoryName(category, viewHolder.categoryName);
+            PsnListAdapterHelper.showCategoryImage(mContext, category, viewHolder.categoryImage);
         } else {
             ProductViewHolder viewHolder = (ProductViewHolder) holder;
+            position -= CollectionUtils.safeSize(mCategories);
             final Product product = mProducts.get(position);
             viewHolder.gameTitle.setText(product.getName());
             if (product.getPrice() != null) {
@@ -120,7 +114,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (CollectionUtils.isNotEmpty(mCategories)) {
+        if (CollectionUtils.safeSize(mCategories) > position) {
             return PsnViewType.CATEGORY.ordinal();
         }
         return PsnViewType.PRODUCT.ordinal();
