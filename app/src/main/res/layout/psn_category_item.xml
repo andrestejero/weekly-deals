@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rlContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white00">
+
+        <ImageView
+            android:id="@+id/ivCategoryImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/white"
+            android:contentDescription="@string/iv_description"
+            android:scaleType="centerCrop"
+            tools:background="@color/blue00" />
+
+        <TextView
+            android:id="@+id/tvCategoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/ivCategoryImage"
+            android:layout_toRightOf="@+id/ivCategoryImage"
+            android:lines="2"
+            android:textColor="@color/grey120"
+            android:textSize="16sp"
+            tools:text="COMBO TABLET GONNA SPRINGBOKS 7' 8GB NEGRO" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue20" />
+
+    <RelativeLayout
+        android:id="@+id/actionableCover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/rlContent"
+        android:layout_alignEnd="@+id/rlContent"
+        android:layout_alignLeft="@+id/rlContent"
+        android:layout_alignRight="@+id/rlContent"
+        android:layout_alignStart="@+id/rlContent"
+        android:layout_alignTop="@+id/rlContent"
+        android:background="@drawable/bg_transparent_actionable" />
+
+</RelativeLayout>

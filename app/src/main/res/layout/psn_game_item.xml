@@ -16,7 +16,6 @@
             android:layout_height="@dimen/list_image_size"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -26,7 +25,7 @@
             tools:background="@color/blue00" />
 
         <TextView
-            android:id="@+id/tvGameTitle"
+            android:id="@+id/tvCategoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/ivGameImage"
@@ -44,9 +43,9 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvGameTitle"
-            android:layout_alignStart="@+id/tvGameTitle"
-            android:layout_below="@+id/tvGameTitle"
+            android:layout_alignLeft="@+id/tvCategoryName"
+            android:layout_alignStart="@+id/tvCategoryName"
+            android:layout_below="@+id/tvCategoryName"
             android:layout_marginTop="8dp">
 
             <TextView
@@ -113,7 +112,8 @@
                 android:id="@+id/rlPlusSavingContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlSavingContainer">
+                android:layout_below="@+id/rlSavingContainer"
+                android:layout_marginBottom="12dp">
 
                 <!--style="@style/TextStyleRobotoLight"-->
                 <TextView

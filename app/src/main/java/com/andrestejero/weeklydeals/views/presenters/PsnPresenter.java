@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class PsnPresenter {
 
-    private static final String LOG_TAG = GameListPresenter.class.getSimpleName();
+    private static final String LOG_TAG = PsnPresenter.class.getSimpleName();
 
     @NonNull
     private final WeakReference<PsnListView> weakView;
@@ -26,11 +26,11 @@ public class PsnPresenter {
         this.mAppRepository = appRepository;
     }
 
-    public void getPsnContainer() {
+    public void getPsnContainer(@NonNull String id) {
         final PsnListView view = weakView.get();
         if (view != null) {
             view.showLoading();
-            mAppRepository.getPsnContainer(new Callback<PsnContainer>() {
+            mAppRepository.getPsnContainer(id, new Callback<PsnContainer>() {
                 @Override
                 public void onResponse(Call<PsnContainer> call, Response<PsnContainer> response) {
                     if (response.isSuccessful()) {

@@ -10,7 +10,9 @@ import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
+import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.models.PsnContainer;
+import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
@@ -26,6 +28,9 @@ public class PsnListActivity extends AppBaseActivity implements
     @Nullable
     private PsnPresenter mPresenter;
 
+    @Nullable
+    private PsnContainer mPsnContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +38,7 @@ public class PsnListActivity extends AppBaseActivity implements
 
         mViewHolder = new ViewHolder();
         mPresenter = new PsnPresenter(this, getAppRepository());
-        mPresenter.getPsnContainer();
+        mPresenter.getPsnContainer("STORE-MSF77008-SAVE");
     }
 
     @Override
@@ -49,8 +54,11 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void showPsnContainer(@NonNull PsnContainer psnContainer) {
+        mPsnContainer = psnContainer;
         updateLoadingView(View.GONE);
-        Log.d(LOG_TAG, psnContainer.getId());
+        if (mViewHolder != null) {
+            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer);
+        }
     }
 
     @Override
@@ -68,6 +76,20 @@ public class PsnListActivity extends AppBaseActivity implements
     private void updateLoadingView(int loadingVisibility) {
         if (mViewHolder != null) {
             mViewHolder.loadingView.setVisibility(loadingVisibility);
+        }
+    }
+
+    @Override
+    public void onCategoryClick(int position) {
+        if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getCategories())) {
+            Category category = mPsnContainer.getCategories().get(position);
+            updateList(category.getId());
+        }
+    }
+
+    private void updateList(String id) {
+        if (mPresenter != null) {
+            mPresenter.getPsnContainer(id);
         }
     }
 

@@ -1,5 +1,8 @@
 package com.andrestejero.weeklydeals.repositories;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.network.ServiceGenerator;
 
@@ -15,8 +18,8 @@ public class AppRepository {
         mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
     }
 
-    public void getPsnContainer(Callback<PsnContainer> callback) {
-        mCallGetPsnContainer = mService.getPsnContainer("STORE-MSF77008-SAVE");
+    public void getPsnContainer(@NonNull String id, @NonNull Callback<PsnContainer> callback) {
+        mCallGetPsnContainer = mService.getPsnContainer(id);
         mCallGetPsnContainer.enqueue(callback);
     }
 

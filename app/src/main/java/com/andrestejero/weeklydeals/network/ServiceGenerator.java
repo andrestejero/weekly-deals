@@ -13,7 +13,7 @@ public class ServiceGenerator {
 
     public interface WeeklyDealsServiceApi {
         @GET("/lists/{id}")
-        Call<PsnContainer> getPsnContainer(@Path("id") String psnId);
+        Call<PsnContainer> getPsnContainer(@Path("id") String id);
     }
 
     public static final String API_BASE_URL = "http://ps-mapi.herokuapp.com";
