@@ -11,7 +11,7 @@
         android:background="@color/white00">
 
         <ImageView
-            android:id="@+id/ivGameImage"
+            android:id="@+id/ivProductImage"
             android:layout_width="@dimen/list_image_size"
             android:layout_height="@dimen/list_image_size"
             android:layout_alignParentLeft="true"
@@ -25,16 +25,16 @@
             tools:background="@color/blue00" />
 
         <TextView
-            android:id="@+id/tvCategoryName"
+            android:id="@+id/tvProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/ivGameImage"
+            android:layout_alignTop="@id/ivProductImage"
             android:layout_marginEnd="16dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="16dp"
             android:layout_marginStart="12dp"
-            android:layout_toEndOf="@+id/ivGameImage"
-            android:layout_toRightOf="@+id/ivGameImage"
+            android:layout_toEndOf="@+id/ivProductImage"
+            android:layout_toRightOf="@+id/ivProductImage"
             android:lines="2"
             android:textColor="@color/grey120"
             android:textSize="16sp"
@@ -43,9 +43,9 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvCategoryName"
-            android:layout_alignStart="@+id/tvCategoryName"
-            android:layout_below="@+id/tvCategoryName"
+            android:layout_alignLeft="@+id/tvProductName"
+            android:layout_alignStart="@+id/tvProductName"
+            android:layout_below="@+id/tvProductName"
             android:layout_marginTop="8dp">
 
             <TextView
@@ -93,7 +93,7 @@
 
                     <!-- TODO volar bold -->
                     <TextView
-                        android:id="@+id/tvGameDiscount"
+                        android:id="@+id/tvDiscount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"

@@ -16,7 +16,6 @@ import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.models.PsnViewType;
-import com.andrestejero.weeklydeals.network.ImageRequest;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 
@@ -26,8 +25,6 @@ import java.util.List;
 public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String LOG_TAG = PsnListAdapter.class.getSimpleName();
-
-    private final static int PRODUCT_IMAGE_WIDTH = 100;
 
     @NonNull
     private Context mContext;
@@ -75,7 +72,9 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ProductViewHolder viewHolder = (ProductViewHolder) holder;
             position -= CollectionUtils.safeSize(mCategories);
             final Product product = mProducts.get(position);
-            viewHolder.gameTitle.setText(product.getName());
+            PsnListAdapterHelper.showProductName(product, viewHolder.productName);
+            PsnListAdapterHelper.showProductImage(mContext, product, viewHolder.productImage);
+
             if (product.getPrice() != null) {
                 Price price = product.getPrice();
                 if (price.getNormal() != null) {
@@ -100,15 +99,6 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     viewHolder.plusSavingContainer.setVisibility(View.GONE);
                 }
             }
-            showGameImage(mContext, product, viewHolder.gameImage, PRODUCT_IMAGE_WIDTH);
-        }
-    }
-
-    private static void showGameImage(@NonNull Context context, @NonNull Product product, @NonNull ImageView imageView, @Nullable Integer imageWidth) {
-        if (StringUtils.isNotEmpty(product.getImage()) && imageWidth != null) {
-            new ImageRequest(context, product.getImage(), imageView).widthInPixels(imageWidth, 1000).execute();
-        } else {
-            imageView.setImageResource(R.drawable.bg_image_placeholder_100dp);
         }
     }
 
@@ -159,8 +149,8 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView gameTitle;
-        private ImageView gameImage;
+        private TextView productName;
+        private ImageView productImage;
         private TextView normalPrice;
         private TextView discountPrice;
         private TextView discount;
@@ -171,11 +161,11 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ProductViewHolder(View itemView) {
             super(itemView);
             View actionableCover = itemView.findViewById(R.id.actionableCover);
-            gameTitle = (TextView) itemView.findViewById(R.id.tvCategoryName);
-            gameImage = (ImageView) itemView.findViewById(R.id.ivGameImage);
+            productName = (TextView) itemView.findViewById(R.id.tvProductName);
+            productImage = (ImageView) itemView.findViewById(R.id.ivProductImage);
             normalPrice = (TextView) itemView.findViewById(R.id.tvNormalPrice);
             discountPrice = (TextView) itemView.findViewById(R.id.tvDiscountPrice);
-            discount = (TextView) itemView.findViewById(R.id.tvGameDiscount);
+            discount = (TextView) itemView.findViewById(R.id.tvDiscount);
             plusSavingContainer = itemView.findViewById(R.id.llPlusSavingContainer);
             plusDiscountPrice = (TextView) itemView.findViewById(R.id.tvPlusDiscountPrice);
             plusDiscount = (TextView) itemView.findViewById(R.id.tvPlusGameDiscount);
