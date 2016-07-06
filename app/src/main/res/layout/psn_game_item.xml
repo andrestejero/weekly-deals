@@ -38,17 +38,47 @@
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/ivProductImage"
             android:layout_toRightOf="@+id/ivProductImage"
-            android:lines="2"
             android:textColor="@color/grey120"
             android:textSize="16sp"
             tools:text="Assassin's Creed Chronicles: Russia" />
 
-        <RelativeLayout
+        <!-- PLATFORM CONTAINER -->
+        <LinearLayout
+            android:id="@+id/llPlatformContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tvProductName"
             android:layout_alignStart="@+id/tvProductName"
-            android:layout_below="@+id/tvProductName">
+            android:layout_below="@+id/tvProductName"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPlatform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey120"
+                android:textSize="12sp"
+                tools:text="PS4" />
+
+            <TextView
+                android:id="@+id/tvGameType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/grey120"
+                android:textSize="12sp"
+                tools:text="Full Game" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/llPlatformContainer"
+            android:layout_alignStart="@+id/llPlatformContainer"
+            android:layout_below="@+id/llPlatformContainer"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/tvNormalPrice"
@@ -153,35 +183,6 @@
 
             </RelativeLayout>
 
-            <!-- PLATFORM CONTAINER -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rlPriceContainer"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvPlatform"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/grey120"
-                    android:textSize="12sp"
-                    tools:text="PS4" />
-
-                <TextView
-                    android:id="@+id/tvGameType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:textColor="@color/grey120"
-                    android:textSize="12sp"
-                    tools:text="Full Game" />
-
-            </LinearLayout>
-
         </RelativeLayout>
 
         <ImageView
@@ -191,6 +192,7 @@
             android:layout_alignParentTop="true"
             android:contentDescription="@string/iv_description"
             tools:background="@color/blue00" />
+
 
     </RelativeLayout>
 

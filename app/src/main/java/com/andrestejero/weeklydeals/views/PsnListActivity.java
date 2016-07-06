@@ -52,35 +52,34 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void showLoading() {
-        updateLoadingView(View.VISIBLE);
+        if (mViewHolder != null) {
+            updateLoadingView(mViewHolder.loadingView, View.VISIBLE);
+        }
     }
 
     @Override
     public void showPsnContainer(@NonNull PsnContainer psnContainer) {
         mPsnContainer = psnContainer;
-        updateLoadingView(View.GONE);
         if (mViewHolder != null) {
+            updateLoadingView(mViewHolder.loadingView, View.GONE);
             mViewHolder.psnListAdapter.updatePsnList(mPsnContainer);
         }
     }
 
     @Override
     public void showEmptyList() {
-        updateLoadingView(View.GONE);
+        if (mViewHolder != null) {
+            updateLoadingView(mViewHolder.loadingView, View.GONE);
+        }
         Log.d(LOG_TAG, "El listado esta vacio");
     }
 
     @Override
     public void showErrorGameList() {
-        updateLoadingView(View.GONE);
-        Log.d(LOG_TAG, "showErrorGameList");
-    }
-
-    // TODO Pasar a AppBase
-    private void updateLoadingView(int loadingVisibility) {
         if (mViewHolder != null) {
-            mViewHolder.loadingView.setVisibility(loadingVisibility);
+            updateLoadingView(mViewHolder.loadingView, View.GONE);
         }
+        Log.d(LOG_TAG, "showErrorGameList");
     }
 
     @Override

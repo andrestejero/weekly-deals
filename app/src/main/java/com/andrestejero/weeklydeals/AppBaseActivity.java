@@ -2,6 +2,7 @@ package com.andrestejero.weeklydeals;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.andrestejero.weeklydeals.repositories.AppRepository;
 
@@ -26,5 +27,9 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     public String getAppName() {
         return getString(R.string.app_name);
+    }
+
+    public void updateLoadingView(View loadingView, int loadingVisibility) {
+        loadingView.setVisibility(loadingVisibility);
     }
 }

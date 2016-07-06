@@ -3,7 +3,6 @@ package com.andrestejero.weeklydeals.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,13 +53,15 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
 
     @Override
     public void showLoading() {
-        updateLoadingView(View.VISIBLE);
+        if (mViewHolder != null) {
+            updateLoadingView(mViewHolder.loadingView, View.VISIBLE);
+        }
     }
 
     @Override
     public void showProductDetail(@NonNull ProductDetail productDetail) {
-        updateLoadingView(View.GONE);
         if (mViewHolder != null) {
+            updateLoadingView(mViewHolder.loadingView, View.GONE);
             mViewHolder.title.setText(productDetail.getDescription());
         }
     }
@@ -68,13 +69,6 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     @Override
     public void showErrorProductDetail() {
 
-    }
-
-    // TODO Pasar a AppBase
-    private void updateLoadingView(int loadingVisibility) {
-        if (mViewHolder != null) {
-            mViewHolder.loadingView.setVisibility(loadingVisibility);
-        }
     }
 
     private class ViewHolder {

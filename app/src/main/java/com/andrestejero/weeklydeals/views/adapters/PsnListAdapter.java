@@ -82,6 +82,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 PsnListAdapterHelper.updateDiscountContainer(price, viewHolder.discount, viewHolder.discountContainer);
                 PsnListAdapterHelper.updateDiscountPlusContainer(price, viewHolder.plusDiscount, viewHolder.discountPlusContainer);
             }
+            // TODO FREE GAMES
             viewHolder.platform.setText("PS4");
             viewHolder.gameType.setText("FULL GAME");
         }

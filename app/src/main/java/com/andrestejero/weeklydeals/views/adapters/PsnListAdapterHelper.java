@@ -49,7 +49,10 @@ public class PsnListAdapterHelper {
 
     public static void showPlusBadge(@NonNull Price price, @NonNull ImageView productBadge) {
         if (price.getBonusDiscount() != null) {
+            productBadge.setVisibility(View.VISIBLE);
             productBadge.setImageResource(R.drawable.ic_plus);
+        } else {
+            productBadge.setVisibility(View.GONE);
         }
     }
 
