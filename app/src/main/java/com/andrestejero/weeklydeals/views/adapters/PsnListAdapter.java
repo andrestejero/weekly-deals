@@ -17,7 +17,6 @@ import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.models.PsnViewType;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
-import com.andrestejero.weeklydeals.utils.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -76,10 +75,12 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             PsnListAdapterHelper.showProductImage(mContext, product, viewHolder.productImage);
             Price price = product.getPrice();
             if (price != null) {
-                PsnListAdapterHelper.showNormalPrice(price, viewHolder.normalPrice);
-                PsnListAdapterHelper.showDiscountPrice(price, viewHolder.discountPrice, viewHolder.discount);
-                PsnListAdapterHelper.showPlusPrice(price, viewHolder.plusPrice, viewHolder.plusDiscount);
+                PsnListAdapterHelper.showNormalPrice(price, viewHolder.normalPrice, viewHolder.discountPrice);
+                PsnListAdapterHelper.showDiscountPrice(price, viewHolder.discountPrice);
+                PsnListAdapterHelper.showPlusPrice(price, viewHolder.plusPrice);
                 PsnListAdapterHelper.showPlusBadge(price, viewHolder.productBadge);
+                PsnListAdapterHelper.updateDiscountContainer(price, viewHolder.discount, viewHolder.discountContainer);
+                PsnListAdapterHelper.updateDiscountPlusContainer(price, viewHolder.plusDiscount, viewHolder.discountPlusContainer);
             }
             viewHolder.platform.setText("PS4");
             viewHolder.gameType.setText("FULL GAME");
@@ -137,9 +138,10 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private ImageView productImage;
         private TextView normalPrice;
         private TextView discountPrice;
+        private View discountContainer;
         private TextView discount;
-        private View plusContainer;
         private TextView plusPrice;
+        private View discountPlusContainer;
         private TextView plusDiscount;
         private ImageView productBadge;
         private TextView platform;
@@ -151,9 +153,10 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             productName = (TextView) itemView.findViewById(R.id.tvProductName);
             normalPrice = (TextView) itemView.findViewById(R.id.tvNormalPrice);
             discountPrice = (TextView) itemView.findViewById(R.id.tvDiscountPrice);
+            discountContainer = itemView.findViewById(R.id.llDiscountContainer);
             discount = (TextView) itemView.findViewById(R.id.tvDiscount);
-            plusContainer = itemView.findViewById(R.id.rlPlusContainer);
             plusPrice = (TextView) itemView.findViewById(R.id.tvPlusPrice);
+            discountPlusContainer = itemView.findViewById(R.id.llPlusDiscountContainer);
             plusDiscount = (TextView) itemView.findViewById(R.id.tvPlusDiscount);
             productBadge = (ImageView) itemView.findViewById(R.id.ivBadge);
             platform = (TextView) itemView.findViewById(R.id.tvPlatform);
