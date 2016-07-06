@@ -27,22 +27,28 @@ public class PsnPresenter {
     }
 
     public void getPsnContainer(@NonNull String id) {
-        final PsnListView view = weakView.get();
+        PsnListView view = weakView.get();
         if (view != null) {
             view.showLoading();
             mAppRepository.getPsnContainer(id, new Callback<PsnContainer>() {
                 @Override
                 public void onResponse(Call<PsnContainer> call, Response<PsnContainer> response) {
                     if (response.isSuccessful()) {
-                        PsnContainer psnContainer = response.body();
-                        view.showPsnContainer(psnContainer);
+                        PsnListView view = weakView.get();
+                        if (view != null) {
+                            PsnContainer psnContainer = response.body();
+                            view.showPsnContainer(psnContainer);
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PsnContainer> call, Throwable t) {
-                    Log.e(LOG_TAG, t.getMessage());
-                    view.showErrorGameList();
+                    PsnListView view = weakView.get();
+                    if (view != null) {
+                        Log.e(LOG_TAG, t.getMessage());
+                        view.showErrorGameList();
+                    }
                 }
             });
         }

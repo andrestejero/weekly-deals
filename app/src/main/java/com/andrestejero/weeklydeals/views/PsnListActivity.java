@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.View;
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
+import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
@@ -74,6 +76,7 @@ public class PsnListActivity extends AppBaseActivity implements
         Log.d(LOG_TAG, "showErrorGameList");
     }
 
+    // TODO Pasar a AppBase
     private void updateLoadingView(int loadingVisibility) {
         if (mViewHolder != null) {
             mViewHolder.loadingView.setVisibility(loadingVisibility);
@@ -98,14 +101,12 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void onItemClick(int position) {
-        /*
-        if (CollectionUtils.isNotEmpty(mProducts)) {
-            Product product = mProducts.get(position);
-            Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
-            intent.putExtra("GAME_ID", product.getId());
+        if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts())) {
+            Product product = mPsnContainer.getProducts().get(position);
+            Intent intent = new Intent(PsnListActivity.this, ProductDetailActivity.class);
+            intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_ID, product.getId());
             startActivity(intent);
         }
-         */
     }
 
     private class ViewHolder {

@@ -76,4 +76,6 @@ public class PsnListAdapterHelper {
             productBadge.setImageResource(R.drawable.ic_plus);
         }
     }
+
+    // TODO hacer VISIBLE / INVISIBLE
 }

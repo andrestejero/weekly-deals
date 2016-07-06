@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.network;
 
+import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 
 import okhttp3.OkHttpClient;
@@ -15,6 +16,9 @@ public class ServiceGenerator {
     public interface WeeklyDealsServiceApi {
         @GET("/lists/{id}")
         Call<PsnContainer> getPsnContainer(@Path("id") String id);
+
+        @GET("/products/{id}")
+        Call<ProductDetail> getProductDetail(@Path("id") String id);
     }
 
     public static final String API_BASE_URL = "http://ps-mapi.herokuapp.com";

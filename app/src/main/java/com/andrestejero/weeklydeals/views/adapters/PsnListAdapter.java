@@ -81,8 +81,8 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 PsnListAdapterHelper.showPlusPrice(price, viewHolder.plusPrice, viewHolder.plusDiscount);
                 PsnListAdapterHelper.showPlusBadge(price, viewHolder.productBadge);
             }
-
-
+            viewHolder.platform.setText("PS4");
+            viewHolder.gameType.setText("FULL GAME");
         }
     }
 

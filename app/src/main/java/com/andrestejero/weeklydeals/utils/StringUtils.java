@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class StringUtils {
 
@@ -22,7 +24,10 @@ public class StringUtils {
 
     @NonNull
     public static String gamePrice(@NonNull BigDecimal price) {
-        return new DecimalFormat("'U$S' #0.00").format(price);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("en", "US"));
+        symbols.setDecimalSeparator(',');
+        symbols.setGroupingSeparator('.');
+        return new DecimalFormat("'$'#,###.##", symbols).format(price);
     }
 
     @NonNull

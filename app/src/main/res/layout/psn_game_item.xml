@@ -8,7 +8,8 @@
         android:id="@+id/rlContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white00">
+        android:background="@color/white00"
+        android:paddingTop="8dp">
 
         <ImageView
             android:id="@+id/ivProductImage"
@@ -47,8 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tvProductName"
             android:layout_alignStart="@+id/tvProductName"
-            android:layout_below="@+id/tvProductName"
-            android:layout_marginTop="8dp">
+            android:layout_below="@+id/tvProductName">
 
             <TextView
                 android:id="@+id/tvNormalPrice"
@@ -188,13 +188,17 @@
             android:id="@+id/ivBadge"
             android:layout_width="@dimen/product_list_item_badge_size"
             android:layout_height="@dimen/product_list_item_badge_size"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:contentDescription="@string/iv_description"
             tools:background="@color/blue00" />
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue20" />
 
     <RelativeLayout
         android:id="@+id/actionableCover"
