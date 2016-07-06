@@ -2,6 +2,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,35 +48,46 @@ public class PsnListAdapterHelper {
         }
     }
 
-    public static void showNormalPrice(@NonNull Price price, @NonNull TextView normalPrice) {
-        if (price.getNormal() != null) {
-            normalPrice.setText(StringUtils.gamePrice(price.getNormal()));
-        }
-    }
-
-    public static void showDiscountPrice(@NonNull Price price, @NonNull TextView discountPrice, @NonNull TextView discount) {
-        if (price.getDiscountPrice() != null) {
-            discountPrice.setText(StringUtils.gamePrice(price.getDiscountPrice()));
-        }
-        if (price.getDiscount() != null) {
-            discount.setText(StringUtils.gamePercent(price.getDiscount()));
-        }
-    }
-
-    public static void showPlusPrice(@NonNull Price price, @NonNull TextView plusPrice, @NonNull TextView plusDiscount) {
-        if (price.getBonusDiscountPrice() != null) {
-            plusPrice.setText(StringUtils.gamePrice(price.getBonusDiscountPrice()));
-        }
-        if (price.getBonusDiscount() != null) {
-            plusDiscount.setText(StringUtils.gamePercent(price.getBonusDiscount()));
-        }
-    }
-
     public static void showPlusBadge(@NonNull Price price, @NonNull ImageView productBadge) {
         if (price.getBonusDiscount() != null) {
             productBadge.setImageResource(R.drawable.ic_plus);
         }
     }
 
-    // TODO hacer VISIBLE / INVISIBLE
+    public static void showNormalPrice(@NonNull Price price, @NonNull TextView normalPrice) {
+        if (price.getNormal() != null) {
+            normalPrice.setText(StringUtils.gamePrice(price.getNormal()));
+        }
+    }
+
+    // TODO Refactor
+    public static void showDiscountPrice(@NonNull Price price, @NonNull TextView discountPrice, @NonNull TextView discount) {
+        if (price.getDiscountPrice() != null) {
+            discountPrice.setVisibility(View.VISIBLE);
+            discountPrice.setText(StringUtils.gamePrice(price.getDiscountPrice()));
+        } else {
+            discountPrice.setVisibility(View.INVISIBLE);
+        }
+        if (price.getDiscount() != null) {
+            discount.setVisibility(View.VISIBLE);
+            discount.setText(StringUtils.gamePercent(price.getDiscount()));
+        } else {
+            discount.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public static void showPlusPrice(@NonNull Price price, @NonNull TextView plusPrice, @NonNull TextView plusDiscount) {
+        if (price.getBonusDiscountPrice() != null) {
+            plusPrice.setVisibility(View.VISIBLE);
+            plusPrice.setText(StringUtils.gamePrice(price.getBonusDiscountPrice()));
+        } else {
+            plusPrice.setVisibility(View.INVISIBLE);
+        }
+        if (price.getBonusDiscount() != null) {
+            plusDiscount.setVisibility(View.VISIBLE);
+            plusDiscount.setText(StringUtils.gamePercent(price.getBonusDiscount()));
+        } else {
+            plusDiscount.setVisibility(View.INVISIBLE);
+        }
+    }
 }
