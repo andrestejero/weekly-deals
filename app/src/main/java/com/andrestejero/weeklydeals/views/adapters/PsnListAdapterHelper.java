@@ -7,9 +7,12 @@ import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
+import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.network.ImageRequest;
 import com.andrestejero.weeklydeals.utils.StringUtils;
+
+import java.math.BigDecimal;
 
 public class PsnListAdapterHelper {
 
@@ -44,4 +47,33 @@ public class PsnListAdapterHelper {
         }
     }
 
+    public static void showNormalPrice(@NonNull Price price, @NonNull TextView normalPrice) {
+        if (price.getNormal() != null) {
+            normalPrice.setText(StringUtils.gamePrice(price.getNormal()));
+        }
+    }
+
+    public static void showDiscountPrice(@NonNull Price price, @NonNull TextView discountPrice, @NonNull TextView discount) {
+        if (price.getDiscountPrice() != null) {
+            discountPrice.setText(StringUtils.gamePrice(price.getDiscountPrice()));
+        }
+        if (price.getDiscount() != null) {
+            discount.setText(StringUtils.gamePercent(price.getDiscount()));
+        }
+    }
+
+    public static void showPlusPrice(@NonNull Price price, @NonNull TextView plusPrice, @NonNull TextView plusDiscount) {
+        if (price.getBonusDiscountPrice() != null) {
+            plusPrice.setText(StringUtils.gamePrice(price.getBonusDiscountPrice()));
+        }
+        if (price.getBonusDiscount() != null) {
+            plusDiscount.setText(StringUtils.gamePercent(price.getBonusDiscount()));
+        }
+    }
+
+    public static void showPlusBadge(@NonNull Price price, @NonNull ImageView productBadge) {
+        if (price.getBonusDiscount() != null) {
+            productBadge.setImageResource(R.drawable.ic_plus);
+        }
+    }
 }

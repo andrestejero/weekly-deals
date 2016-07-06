@@ -41,7 +41,6 @@ public class PsnPresenter {
 
                 @Override
                 public void onFailure(Call<PsnContainer> call, Throwable t) {
-                    // TODO borrar log
                     Log.e(LOG_TAG, t.getMessage());
                     view.showErrorGameList();
                 }

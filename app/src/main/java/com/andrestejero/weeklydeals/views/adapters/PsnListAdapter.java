@@ -74,31 +74,15 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             final Product product = mProducts.get(position);
             PsnListAdapterHelper.showProductName(product, viewHolder.productName);
             PsnListAdapterHelper.showProductImage(mContext, product, viewHolder.productImage);
-
-            if (product.getPrice() != null) {
-                Price price = product.getPrice();
-                if (price.getNormal() != null) {
-                    viewHolder.normalPrice.setText(StringUtils.gamePrice(price.getNormal()));
-                }
-                if (price.getDiscountPrice() != null) {
-                    viewHolder.discountPrice.setText(StringUtils.gamePrice(price.getDiscountPrice()));
-                }
-                if (price.getDiscount() != null) {
-                    viewHolder.discount.setText(StringUtils.gamePercent(price.getDiscount()));
-                }
-                if (price.getBonusDiscountPrice() != null) {
-                    viewHolder.plusDiscountPrice.setVisibility(View.VISIBLE);
-                    viewHolder.plusDiscountPrice.setText(StringUtils.gamePrice(price.getBonusDiscountPrice()));
-                } else {
-                    viewHolder.plusDiscountPrice.setVisibility(View.GONE);
-                }
-                if (price.getBonusDiscount() != null) {
-                    viewHolder.plusSavingContainer.setVisibility(View.VISIBLE);
-                    viewHolder.plusDiscount.setText(StringUtils.gamePercent(price.getBonusDiscount()));
-                } else {
-                    viewHolder.plusSavingContainer.setVisibility(View.GONE);
-                }
+            Price price = product.getPrice();
+            if (price != null) {
+                PsnListAdapterHelper.showNormalPrice(price, viewHolder.normalPrice);
+                PsnListAdapterHelper.showDiscountPrice(price, viewHolder.discountPrice, viewHolder.discount);
+                PsnListAdapterHelper.showPlusPrice(price, viewHolder.plusPrice, viewHolder.plusDiscount);
+                PsnListAdapterHelper.showPlusBadge(price, viewHolder.productBadge);
             }
+
+
         }
     }
 
@@ -154,21 +138,27 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView normalPrice;
         private TextView discountPrice;
         private TextView discount;
-        private View plusSavingContainer;
-        private TextView plusDiscountPrice;
+        private View plusContainer;
+        private TextView plusPrice;
         private TextView plusDiscount;
+        private ImageView productBadge;
+        private TextView platform;
+        private TextView gameType;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-            View actionableCover = itemView.findViewById(R.id.actionableCover);
-            productName = (TextView) itemView.findViewById(R.id.tvProductName);
             productImage = (ImageView) itemView.findViewById(R.id.ivProductImage);
+            productName = (TextView) itemView.findViewById(R.id.tvProductName);
             normalPrice = (TextView) itemView.findViewById(R.id.tvNormalPrice);
             discountPrice = (TextView) itemView.findViewById(R.id.tvDiscountPrice);
             discount = (TextView) itemView.findViewById(R.id.tvDiscount);
-            plusSavingContainer = itemView.findViewById(R.id.llPlusSavingContainer);
-            plusDiscountPrice = (TextView) itemView.findViewById(R.id.tvPlusDiscountPrice);
-            plusDiscount = (TextView) itemView.findViewById(R.id.tvPlusGameDiscount);
+            plusContainer = itemView.findViewById(R.id.rlPlusContainer);
+            plusPrice = (TextView) itemView.findViewById(R.id.tvPlusPrice);
+            plusDiscount = (TextView) itemView.findViewById(R.id.tvPlusDiscount);
+            productBadge = (ImageView) itemView.findViewById(R.id.ivBadge);
+            platform = (TextView) itemView.findViewById(R.id.tvPlatform);
+            gameType = (TextView) itemView.findViewById(R.id.tvGameType);
+            View actionableCover = itemView.findViewById(R.id.actionableCover);
             actionableCover.setOnClickListener(this);
         }
 

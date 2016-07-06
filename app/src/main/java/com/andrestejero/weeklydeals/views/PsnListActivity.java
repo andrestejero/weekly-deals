@@ -13,6 +13,7 @@ import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
+import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
@@ -38,7 +39,7 @@ public class PsnListActivity extends AppBaseActivity implements
 
         mViewHolder = new ViewHolder();
         mPresenter = new PsnPresenter(this, getAppRepository());
-        mPresenter.getPsnContainer("STORE-MSF77008-SAVE");
+        loadPsnList("STORE-MSF77008-SAVE");
     }
 
     @Override
@@ -83,11 +84,13 @@ public class PsnListActivity extends AppBaseActivity implements
     public void onCategoryClick(int position) {
         if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getCategories())) {
             Category category = mPsnContainer.getCategories().get(position);
-            updateList(category.getId());
+            if (StringUtils.isNotEmpty(category.getId())) {
+                loadPsnList(category.getId());
+            }
         }
     }
 
-    private void updateList(String id) {
+    private void loadPsnList(@NonNull String id) {
         if (mPresenter != null) {
             mPresenter.getPsnContainer(id);
         }
