@@ -46,7 +46,6 @@ public class ProductDetailPresenter {
                 public void onFailure(Call<ProductDetail> call, Throwable t) {
                     DetailView view = weakView.get();
                     if (view != null) {
-                        Log.e(LOG_TAG, t.getMessage());
                         view.showErrorProductDetail();
                     }
                 }

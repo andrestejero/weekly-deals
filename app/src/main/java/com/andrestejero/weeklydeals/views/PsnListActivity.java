@@ -25,6 +25,8 @@ public class PsnListActivity extends AppBaseActivity implements
 
     private static final String LOG_TAG = PsnListActivity.class.getSimpleName();
 
+    public static final String EXTRA_PSN_LIST_ID = "EXTRA_PSN_LIST_ID";
+
     @Nullable
     private ViewHolder mViewHolder;
 
@@ -39,9 +41,21 @@ public class PsnListActivity extends AppBaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.psn_list);
 
+        Bundle extras = getIntent().getExtras();
+        String id = extras.getString(EXTRA_PSN_LIST_ID);
+
         mViewHolder = new ViewHolder();
         mPresenter = new PsnPresenter(this, getAppRepository());
-        loadPsnList("STORE-MSF77008-SAVE");
+
+        if (StringUtils.isNotEmpty(id)) {
+            loadPsnList(id);
+        }
+    }
+
+    private void loadPsnList(@NonNull String id) {
+        if (mPresenter != null) {
+            mPresenter.getPsnContainer(id);
+        }
     }
 
     @Override
@@ -87,14 +101,10 @@ public class PsnListActivity extends AppBaseActivity implements
         if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getCategories())) {
             Category category = mPsnContainer.getCategories().get(position);
             if (StringUtils.isNotEmpty(category.getId())) {
-                loadPsnList(category.getId());
+                Intent intent = new Intent(PsnListActivity.this, PsnListActivity.class);
+                intent.putExtra(EXTRA_PSN_LIST_ID, category.getId());
+                startActivity(intent);
             }
-        }
-    }
-
-    private void loadPsnList(@NonNull String id) {
-        if (mPresenter != null) {
-            mPresenter.getPsnContainer(id);
         }
     }
 
@@ -102,9 +112,11 @@ public class PsnListActivity extends AppBaseActivity implements
     public void onItemClick(int position) {
         if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts())) {
             Product product = mPsnContainer.getProducts().get(position);
-            Intent intent = new Intent(PsnListActivity.this, ProductDetailActivity.class);
-            intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_ID, product.getId());
-            startActivity(intent);
+            if (StringUtils.isNotEmpty(product.getId())) {
+                Intent intent = new Intent(PsnListActivity.this, ProductDetailActivity.class);
+                intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_ID, product.getId());
+                startActivity(intent);
+            }
         }
     }
 

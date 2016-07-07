@@ -28,6 +28,7 @@ public class MainActivity extends AppBaseActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, PsnListActivity.class);
+                    intent.putExtra(PsnListActivity.EXTRA_PSN_LIST_ID, "STORE-MSF77008-SAVE");
                     startActivity(intent);
                 }
             });
