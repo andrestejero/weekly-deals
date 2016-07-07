@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Weekly Deals</string>
+    <string name="home_subtitle">Playstation Network</string>
     <string name="title_activity_game_list">Listado de Juegos</string>
     <string name="iv_description">Content Description</string>
+    <string name="title_activity_game_detail">Detalle de producto</string>
 </resources>

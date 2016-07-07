@@ -26,7 +26,7 @@
         <activity
             android:name=".views.ProductDetailActivity"
             android:configChanges="orientation"
-            android:label="@string/title_activity_game_list"
+            android:label="@string/title_activity_game_detail"
             android:screenOrientation="portrait" />
     </application>
 
