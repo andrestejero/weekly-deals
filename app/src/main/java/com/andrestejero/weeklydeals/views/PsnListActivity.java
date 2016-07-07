@@ -66,34 +66,35 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void showLoading() {
-        if (mViewHolder != null) {
-            updateLoadingView(mViewHolder.loadingView, View.VISIBLE);
-        }
+        updateVisibilities(View.VISIBLE, View.GONE, View.GONE);
     }
 
     @Override
     public void showPsnContainer(@NonNull PsnContainer psnContainer) {
+        updateVisibilities(View.GONE, View.GONE, View.VISIBLE);
         mPsnContainer = psnContainer;
         if (mViewHolder != null) {
-            updateLoadingView(mViewHolder.loadingView, View.GONE);
             mViewHolder.psnListAdapter.updatePsnList(mPsnContainer);
         }
     }
 
     @Override
     public void showEmptyList() {
-        if (mViewHolder != null) {
-            updateLoadingView(mViewHolder.loadingView, View.GONE);
-        }
         Log.d(LOG_TAG, "El listado esta vacio");
     }
 
     @Override
     public void showErrorGameList() {
-        if (mViewHolder != null) {
-            updateLoadingView(mViewHolder.loadingView, View.GONE);
-        }
+        updateVisibilities(View.GONE, View.VISIBLE, View.GONE);
         Log.d(LOG_TAG, "showErrorGameList");
+    }
+
+    private void updateVisibilities(int loadingVisibility, int errorVisibility, int contentVisibility) {
+        if (mViewHolder != null) {
+            mViewHolder.loadingView.setVisibility(loadingVisibility);
+            mViewHolder.errorView.setVisibility(errorVisibility);
+            mViewHolder.psnListView.setVisibility(contentVisibility);
+        }
     }
 
     @Override
@@ -122,12 +123,14 @@ public class PsnListActivity extends AppBaseActivity implements
 
     private class ViewHolder {
         private View loadingView;
+        private View errorView;
         private RecyclerView psnListView;
         private final PsnListAdapter psnListAdapter;
         private final RecyclerView.LayoutManager mLayoutManager;
 
         private ViewHolder() {
             loadingView = findViewById(R.id.loadingView);
+            errorView = findViewById(R.id.errorView);
             psnListView = (RecyclerView) findViewById(R.id.rvPsnList);
             psnListAdapter = new PsnListAdapter(PsnListActivity.this);
             psnListView.setAdapter(psnListAdapter);

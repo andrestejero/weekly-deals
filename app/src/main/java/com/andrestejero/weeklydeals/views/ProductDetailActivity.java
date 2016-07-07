@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,15 +59,14 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
 
     @Override
     public void showLoading() {
-        if (mViewHolder != null) {
-            updateLoadingView(mViewHolder.loadingView, View.VISIBLE);
-        }
+        updateVisibilities(View.VISIBLE, View.GONE, View.GONE);
     }
 
     @Override
     public void showProductDetail(@NonNull ProductDetail productDetail) {
+        updateVisibilities(View.GONE, View.GONE, View.VISIBLE);
+        // TODO Refactor
         if (mViewHolder != null) {
-            updateLoadingView(mViewHolder.loadingView, View.GONE);
             if (StringUtils.isNotEmpty(productDetail.getImage())) {
                 new ImageRequest(this, productDetail.getImage(), mViewHolder.productImage).widthInPixels(200, 1000).execute();
             } else {
@@ -94,11 +94,22 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
 
     @Override
     public void showErrorProductDetail() {
+        updateVisibilities(View.GONE, View.VISIBLE, View.GONE);
+        Log.d(LOG_TAG, "showErrorGameList");
+    }
 
+    private void updateVisibilities(int loadingVisibility, int errorVisibility, int contentVisibility) {
+        if (mViewHolder != null) {
+            mViewHolder.loadingView.setVisibility(loadingVisibility);
+            mViewHolder.errorView.setVisibility(errorVisibility);
+            mViewHolder.contentView.setVisibility(contentVisibility);
+        }
     }
 
     private class ViewHolder {
         private View loadingView;
+        private View errorView;
+        private View contentView;
         private ImageView productImage;
         private TextView productName;
         private TextView provider;
@@ -118,6 +129,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
 
         private ViewHolder() {
             loadingView = findViewById(R.id.loadingView);
+            errorView = findViewById(R.id.errorView);
+            contentView = findViewById(R.id.contentView);
             productImage = (ImageView) findViewById(R.id.ivProductImage);
             productName = (TextView) findViewById(R.id.tvProductName);
             provider = (TextView) findViewById(R.id.tvProvider);
