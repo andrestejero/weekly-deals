@@ -37,7 +37,7 @@
             android:layout_toEndOf="@+id/ivCategoryImage"
             android:layout_toRightOf="@+id/ivCategoryImage"
             android:lines="2"
-            android:textColor="@color/grey120"
+            android:textColor="@color/gray120"
             android:textSize="16sp"
             tools:text="COMBO TABLET GONNA SPRINGBOKS 7' 8GB NEGRO" />
 

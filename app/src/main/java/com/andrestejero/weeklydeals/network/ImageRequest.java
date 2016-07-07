@@ -102,7 +102,7 @@ public class ImageRequest {
                     imageView.setScaleType(ImageView.ScaleType.CENTER);
                 }
                 if (shouldShowBrokenImageDarkBackgroundOnError) {
-                    imageView.setBackgroundColor(ContextCompat.getColor(context, R.color.grey20));
+                    imageView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray20));
                 }
                 if (listener != null) {
                     listener.onError();

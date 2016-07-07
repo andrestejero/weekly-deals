@@ -46,15 +46,15 @@
     <color name="black00">#333333</color>
     <color name="black00alpha30">#1e000000</color>
 
-    <color name="grey120">#444444</color>
-    <color name="grey120alpha40">#28444444</color>
-    <color name="grey100">#777777</color>
-    <color name="grey80">#999999</color>
-    <color name="grey60">#aaaaaa</color>
-    <color name="grey40">#cccccc</color>
-    <color name="grey20">#dfdfdf</color>
-    <color name="grey15">#ececec</color>
-    <color name="grey10">#f5f5f5</color>
+    <color name="gray120">#444444</color>
+    <color name="gray120alpha40">#28444444</color>
+    <color name="gray100">#777777</color>
+    <color name="gray80">#999999</color>
+    <color name="gray60">#aaaaaa</color>
+    <color name="gray40">#cccccc</color>
+    <color name="gray20">#dfdfdf</color>
+    <color name="gray15">#ececec</color>
+    <color name="gray10">#f5f5f5</color>
 
     <color name="white00">#ffffff</color>
     <color name="white00alpha40">#28ffffff</color>

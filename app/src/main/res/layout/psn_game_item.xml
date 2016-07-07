@@ -38,7 +38,7 @@
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/ivProductImage"
             android:layout_toRightOf="@+id/ivProductImage"
-            android:textColor="@color/grey120"
+            android:textColor="@color/gray120"
             android:textSize="16sp"
             tools:text="Assassin's Creed Chronicles: Russia" />
 
@@ -56,7 +56,7 @@
                 android:id="@+id/tvPlatform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey120"
+                android:textColor="@color/gray120"
                 android:textSize="12sp"
                 tools:text="PS4" />
 
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/grey120"
+                android:textColor="@color/gray120"
                 android:textSize="12sp"
                 tools:text="Full Game" />
 
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:textColor="@color/grey80"
+                android:textColor="@color/gray80"
                 android:textSize="14sp"
                 tools:text="$59.99" />
 

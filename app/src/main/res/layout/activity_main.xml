@@ -11,7 +11,9 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white" />
+        android:theme="@style/ToolbarTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     <Button
         android:id="@+id/btGameList"
