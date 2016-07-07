@@ -65,11 +65,11 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
         if (mViewHolder != null) {
             updateLoadingView(mViewHolder.loadingView, View.GONE);
             if (StringUtils.isNotEmpty(productDetail.getImage())) {
-                new ImageRequest(this, productDetail.getImage(), mViewHolder.defaultImage).widthInPixels(200, 1000).execute();
+                new ImageRequest(this, productDetail.getImage(), mViewHolder.productImage).widthInPixels(200, 1000).execute();
             } else {
-                mViewHolder.defaultImage.setImageResource(R.drawable.bg_image_placeholder_200dp);
+                mViewHolder.productImage.setImageResource(R.drawable.bg_image_placeholder_200dp);
             }
-            mViewHolder.name.setText(productDetail.getName());
+            mViewHolder.productName.setText(productDetail.getName());
             mViewHolder.provider.setText(productDetail.getProvider());
         }
     }
@@ -81,15 +81,39 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
 
     private class ViewHolder {
         private View loadingView;
-        private final ImageView defaultImage;
-        private final TextView name;
-        private final TextView provider;
+        private ImageView productImage;
+        private TextView productName;
+        private TextView provider;
+        private TextView normalPrice;
+        private TextView discountPrice;
+        private View discountContainer;
+        private TextView discount;
+        private TextView plusPrice;
+        private View discountPlusContainer;
+        private TextView plusDiscount;
+        private ImageView productBadge;
+        private TextView platform;
+        private TextView gameType;
+        private TextView releaseDate;
+        private TextView rating;
 
         private ViewHolder() {
             loadingView = findViewById(R.id.loadingView);
-            defaultImage = (ImageView) findViewById(R.id.ivDetailImage);
-            name = (TextView) findViewById(R.id.tvDetailName);
-            provider = (TextView) findViewById(R.id.tvDetailProvider);
+            productImage = (ImageView) findViewById(R.id.ivProductImage);
+            productName = (TextView) findViewById(R.id.tvProductName);
+            provider = (TextView) findViewById(R.id.tvProvider);
+            normalPrice = (TextView) findViewById(R.id.tvNormalPrice);
+            discountPrice = (TextView) findViewById(R.id.tvDiscountPrice);
+            discountContainer = findViewById(R.id.llDiscountContainer);
+            discount = (TextView) findViewById(R.id.tvDiscount);
+            plusPrice = (TextView) findViewById(R.id.tvPlusPrice);
+            discountPlusContainer = findViewById(R.id.llPlusDiscountContainer);
+            plusDiscount = (TextView) findViewById(R.id.tvPlusDiscount);
+            productBadge = (ImageView) findViewById(R.id.ivBadge);
+            platform = (TextView) findViewById(R.id.tvPlatform);
+            gameType = (TextView) findViewById(R.id.tvGameType);
+            releaseDate = (TextView) findViewById(R.id.tvReleaseDate);
+            rating = (TextView) findViewById(R.id.tvRating);
         }
     }
 }

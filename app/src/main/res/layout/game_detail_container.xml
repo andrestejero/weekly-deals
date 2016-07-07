@@ -5,46 +5,189 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/ivDetailImage"
+        android:id="@+id/ivBadge"
+        android:layout_width="@dimen/product_list_item_badge_size"
+        android:layout_height="@dimen/product_list_item_badge_size"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/iv_description"
+        tools:background="@color/blue80" />
+
+    <ImageView
+        android:id="@+id/ivProductImage"
         android:layout_width="@dimen/detail_image_size"
         android:layout_height="@dimen/detail_image_size"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/white"
         android:contentDescription="@string/iv_description"
         android:scaleType="centerCrop"
-        tools:background="#F00" />
+        tools:background="@color/yellow80" />
 
     <LinearLayout
+        android:id="@+id/llDetailContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailImage"
+        android:layout_below="@+id/ivProductImage"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvDetailName"
+            android:id="@+id/tvProductName"
             style="@style/TextStyleRobotoBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
             android:textSize="24sp"
             tools:text="Titulo del juego" />
 
         <TextView
-            android:id="@+id/tvDetailProvider"
+            android:id="@+id/tvProvider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="16sp"
             tools:text="Provider" />
 
+        <TextView
+            android:id="@+id/tvPlatform"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="PS4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvGameType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Full Game" />
+
+            <TextView
+                android:id="@+id/tvReleaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Released Nov 18, 2014" />
+
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="111071 Ratings" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvNormalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text="$59.99" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDiscountPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue00"
+                    android:textSize="24sp"
+                    tools:text="$49.99" />
+
+                <LinearLayout
+                    android:id="@+id/llDiscountContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/saving_blue_background"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp">
+
+                    <TextView
+                        android:id="@+id/tvDiscount"
+                        style="@style/TextStyleRobotoBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:textColor="@color/white00"
+                        android:textSize="11sp"
+                        tools:ignore="SmallSp"
+                        tools:text="SAVE 40%" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPlusPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/yellow80"
+                    android:textSize="24sp"
+                    tools:text="$49.99" />
+
+                <LinearLayout
+                    android:id="@+id/llPlusDiscountContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/saving_yellow_background"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp">
+
+                    <TextView
+                        android:id="@+id/tvPlusDiscount"
+                        style="@style/TextStyleRobotoBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:textColor="@color/white00"
+                        android:textSize="11sp"
+                        tools:ignore="SmallSp"
+                        tools:text="SAVE 40%" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
+
+    <WebView
+        android:id="@+id/tvDetailWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/llDetailContent"
+        android:layout_margin="16dp" />
 
 </RelativeLayout>

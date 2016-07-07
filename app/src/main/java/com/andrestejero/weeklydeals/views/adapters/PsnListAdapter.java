@@ -135,8 +135,8 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView productName;
         private ImageView productImage;
+        private TextView productName;
         private TextView normalPrice;
         private TextView discountPrice;
         private View discountContainer;
