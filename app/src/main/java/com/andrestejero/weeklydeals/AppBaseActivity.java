@@ -46,7 +46,8 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     private void configureChildActionBar(@NonNull ActionBar actionBar) {
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_broken_image);
+        // TODO Agragar ic_back
+        //actionBar.setHomeAsUpIndicator(R.drawable.ic_broken_image);
         String subtitle = getSubtitle();
         if (StringUtils.isNotEmpty(subtitle)) {
             actionBar.setSubtitle(subtitle);
