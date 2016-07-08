@@ -40,6 +40,8 @@ public class PsnListActivity extends AppBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.psn_list);
+        setTitle(R.string.title_activity_game_list);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);

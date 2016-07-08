@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class ProductDetail {
@@ -37,7 +38,7 @@ public class ProductDetail {
 
     @Nullable
     @SerializedName("release_date")
-    private String releaseDate;
+    private Date releaseDate;
 
     @Nullable
     private String provider;
@@ -86,7 +87,7 @@ public class ProductDetail {
     }
 
     @Nullable
-    public String getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 

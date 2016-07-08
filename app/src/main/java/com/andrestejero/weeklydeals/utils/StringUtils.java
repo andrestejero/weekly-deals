@@ -35,4 +35,14 @@ public class StringUtils {
         return new DecimalFormat("'SAVE' ##'%'").format(percent);
     }
 
+    @NonNull
+    public static String safeString(@Nullable String string) {
+        return string != null ? string : "";
+    }
+
+    @NonNull
+    public static String safeTrim(@Nullable String string) {
+        return safeString(string).trim();
+    }
+
 }

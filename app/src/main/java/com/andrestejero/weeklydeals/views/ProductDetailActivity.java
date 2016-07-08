@@ -8,16 +8,21 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.models.ProductDetail;
+import com.andrestejero.weeklydeals.models.Rating;
 import com.andrestejero.weeklydeals.network.ImageRequest;
+import com.andrestejero.weeklydeals.utils.DateUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapterHelper;
 import com.andrestejero.weeklydeals.views.presenters.ProductDetailPresenter;
+
+import java.util.TimeZone;
 
 public class ProductDetailActivity extends AppBaseActivity implements ProductDetailPresenter.DetailView {
 
@@ -35,6 +40,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_detail);
+        setTitle(R.string.title_activity_game_detail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -80,6 +87,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     @Override
     public void showProductDetail(@NonNull ProductDetail productDetail) {
         updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
+        setTitle(productDetail.getName());
         // TODO Refactor
         if (mViewHolder != null) {
             if (StringUtils.isNotEmpty(productDetail.getImage())) {
@@ -90,9 +98,22 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             mViewHolder.productName.setText(productDetail.getName());
             mViewHolder.provider.setText(productDetail.getProvider());
             mViewHolder.platform.setText("PS4");
-            mViewHolder.gameType.setText("GameType");
-            mViewHolder.releaseDate.setText(productDetail.getReleaseDate());
-            mViewHolder.rating.setText("5.0");
+            mViewHolder.gameType.setText(productDetail.getGameContentType());
+
+            if (productDetail.getReleaseDate() != null) {
+                String relaseDate = DateUtils.dateFormat(productDetail.getReleaseDate(), getString(R.string.date_format), TimeZone.getTimeZone("America/New_York"));
+                mViewHolder.releaseDate.setText(relaseDate);
+            }
+
+            Rating rating = productDetail.getRating();
+            if (rating != null && rating.getAverage() != null) {
+                mViewHolder.ratingBar.setRating(rating.getAverage());
+                if (rating.getTotal() != null) {
+                    String average = Float.toString(rating.getAverage());
+                    String total = Integer.toString(rating.getTotal());
+                    mViewHolder.ratingResult.setText(getString(R.string.rating_result, average, total));
+                }
+            }
             mViewHolder.description.setText(Html.fromHtml(productDetail.getDescription()));
 
             Price price = productDetail.getPrice();
@@ -123,6 +144,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
         private View contentView;
         private ImageView productImage;
         private TextView productName;
+        private RatingBar ratingBar;
+        private TextView ratingResult;
         private TextView provider;
         private TextView normalPrice;
         private TextView discountPrice;
@@ -135,7 +158,6 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
         private TextView platform;
         private TextView gameType;
         private TextView releaseDate;
-        private TextView rating;
         private TextView description;
 
         private ViewHolder() {
@@ -145,6 +167,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             contentView = findViewById(R.id.contentView);
             productImage = (ImageView) findViewById(R.id.ivProductImage);
             productName = (TextView) findViewById(R.id.tvProductName);
+            ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+            ratingResult = (TextView) findViewById(R.id.tvRatingResult);
             provider = (TextView) findViewById(R.id.tvProvider);
             normalPrice = (TextView) findViewById(R.id.tvNormalPrice);
             discountPrice = (TextView) findViewById(R.id.tvDiscountPrice);
@@ -157,7 +181,6 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             platform = (TextView) findViewById(R.id.tvPlatform);
             gameType = (TextView) findViewById(R.id.tvGameType);
             releaseDate = (TextView) findViewById(R.id.tvReleaseDate);
-            rating = (TextView) findViewById(R.id.tvRating);
             description = (TextView) findViewById(R.id.tvDescription);
         }
     }

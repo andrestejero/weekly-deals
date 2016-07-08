@@ -10,4 +10,6 @@
     <string name="error_view_message">Intentá nuevamente.</string>
     <string name="empty_view_title">No se encontraron productos</string>
     <string name="empty_view_mensaje">Navegá las categorías</string>
+    <string name="rating_result">%1$s / %2$s Ratings</string>
+    <string name="date_format">\'Released\' MMMM d, yyyy</string>
 </resources>

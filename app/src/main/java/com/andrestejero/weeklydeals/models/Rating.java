@@ -7,18 +7,18 @@ import java.math.BigDecimal;
 public class Rating {
 
     @Nullable
-    private BigDecimal average;
+    private Float average;
 
     @Nullable
-    private BigDecimal total;
+    private Integer total;
 
     @Nullable
-    public BigDecimal getAverage() {
+    public Float getAverage() {
         return average;
     }
 
     @Nullable
-    public BigDecimal getTotal() {
+    public Integer getTotal() {
         return total;
     }
 }
