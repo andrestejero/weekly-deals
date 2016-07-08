@@ -37,7 +37,11 @@ public class ProductDetailPresenter {
                         DetailView view = weakView.get();
                         if (view != null) {
                             ProductDetail productDetail = response.body();
-                            view.showProductDetail(productDetail);
+                            if (productDetail != null) {
+                                view.showProductDetail(productDetail);
+                            } else {
+                                view.showEmptyProductDetail();
+                            }
                         }
                     }
                 }
@@ -55,7 +59,11 @@ public class ProductDetailPresenter {
 
     public interface DetailView {
         void showLoading();
+
         void showProductDetail(@NonNull ProductDetail productDetail);
+
+        void showEmptyProductDetail();
+
         void showErrorProductDetail();
     }
 

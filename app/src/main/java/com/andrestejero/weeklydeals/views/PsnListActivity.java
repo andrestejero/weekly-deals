@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
@@ -71,33 +70,33 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void showLoading() {
-        updateVisibilities(View.VISIBLE, View.GONE, View.GONE);
+        updateVisibilities(View.VISIBLE, View.GONE, View.GONE, View.GONE);
+    }
+
+    @Override
+    public void showErrorGameList() {
+        updateVisibilities(View.GONE, View.VISIBLE, View.GONE, View.GONE);
+    }
+
+    @Override
+    public void showEmptyList() {
+        updateVisibilities(View.GONE, View.GONE, View.VISIBLE, View.GONE);
     }
 
     @Override
     public void showPsnContainer(@NonNull PsnContainer psnContainer) {
-        updateVisibilities(View.GONE, View.GONE, View.VISIBLE);
+        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         mPsnContainer = psnContainer;
         if (mViewHolder != null) {
             mViewHolder.psnListAdapter.updatePsnList(mPsnContainer);
         }
     }
 
-    @Override
-    public void showEmptyList() {
-        Log.d(LOG_TAG, "El listado esta vacio");
-    }
-
-    @Override
-    public void showErrorGameList() {
-        updateVisibilities(View.GONE, View.VISIBLE, View.GONE);
-        Log.d(LOG_TAG, "showErrorGameList");
-    }
-
-    private void updateVisibilities(int loadingVisibility, int errorVisibility, int contentVisibility) {
+    private void updateVisibilities(int loadingVisibility, int errorVisibility, int emptyVisibility, int contentVisibility) {
         if (mViewHolder != null) {
             mViewHolder.loadingView.setVisibility(loadingVisibility);
             mViewHolder.errorView.setVisibility(errorVisibility);
+            mViewHolder.emptyView.setVisibility(emptyVisibility);
             mViewHolder.psnListView.setVisibility(contentVisibility);
         }
     }
@@ -129,6 +128,7 @@ public class PsnListActivity extends AppBaseActivity implements
     private class ViewHolder {
         private View loadingView;
         private View errorView;
+        private View emptyView;
         private RecyclerView psnListView;
         private final PsnListAdapter psnListAdapter;
         private final RecyclerView.LayoutManager mLayoutManager;
@@ -136,6 +136,7 @@ public class PsnListActivity extends AppBaseActivity implements
         private ViewHolder() {
             loadingView = findViewById(R.id.loadingView);
             errorView = findViewById(R.id.errorView);
+            emptyView = findViewById(R.id.emptyView);
             psnListView = (RecyclerView) findViewById(R.id.rvPsnList);
             psnListAdapter = new PsnListAdapter(PsnListActivity.this);
             psnListView.setAdapter(psnListAdapter);

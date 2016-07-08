@@ -29,7 +29,11 @@ public class ProductDetail {
     private List<MediaResource> mediaResources;
 
     @Nullable
-    private String rating;
+    private Rating rating;
+
+    @Nullable
+    @SerializedName("game_content_type")
+    private String gameContentType;
 
     @Nullable
     @SerializedName("release_date")
@@ -72,8 +76,13 @@ public class ProductDetail {
     }
 
     @Nullable
-    public String getRating() {
+    public Rating getRating() {
         return rating;
+    }
+
+    @Nullable
+    public String getGameContentType() {
+        return gameContentType;
     }
 
     @Nullable

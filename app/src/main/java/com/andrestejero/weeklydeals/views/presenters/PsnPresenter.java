@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.repositories.AppRepository;
+import com.andrestejero.weeklydeals.utils.CollectionUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -33,11 +34,17 @@ public class PsnPresenter {
             mAppRepository.getPsnContainer(id, new Callback<PsnContainer>() {
                 @Override
                 public void onResponse(Call<PsnContainer> call, Response<PsnContainer> response) {
-                    if (response.isSuccessful()) {
-                        PsnListView view = weakView.get();
-                        if (view != null) {
+                    PsnListView view = weakView.get();
+                    if (view != null) {
+                        if (response.isSuccessful()) {
                             PsnContainer psnContainer = response.body();
-                            view.showPsnContainer(psnContainer);
+                            if (CollectionUtils.isNotEmpty(psnContainer.getCategories()) || CollectionUtils.isNotEmpty(psnContainer.getProducts())) {
+                                view.showPsnContainer(psnContainer);
+                            } else {
+                                view.showEmptyList();
+                            }
+                        } else {
+                            view.showErrorGameList();
                         }
                     }
                 }
@@ -46,7 +53,6 @@ public class PsnPresenter {
                 public void onFailure(Call<PsnContainer> call, Throwable t) {
                     PsnListView view = weakView.get();
                     if (view != null) {
-                        Log.e(LOG_TAG, t.getMessage());
                         view.showErrorGameList();
                     }
                 }
@@ -56,8 +62,11 @@ public class PsnPresenter {
 
     public interface PsnListView {
         void showLoading();
+
         void showPsnContainer(@NonNull PsnContainer psnContainer);
+
         void showEmptyList();
+
         void showErrorGameList();
     }
 }

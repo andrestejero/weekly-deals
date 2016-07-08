@@ -4,4 +4,10 @@
     <string name="title_activity_game_list">Listado de Juegos</string>
     <string name="iv_description">Content Description</string>
     <string name="title_activity_game_detail">Detalle de producto</string>
+    <string name="loading">Cargando&#8230;</string>
+
+    <string name="error_view_title">¡Ups! Falló la conexión a nuestros servidores.</string>
+    <string name="error_view_message">Intentá nuevamente.</string>
+    <string name="empty_view_title">No se encontraron productos</string>
+    <string name="empty_view_mensaje">Navegá las categorías</string>
 </resources>

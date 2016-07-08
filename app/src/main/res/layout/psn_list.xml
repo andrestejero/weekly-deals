@@ -16,13 +16,24 @@
         android:id="@+id/rvPsnList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/emptyView"
+        layout="@layout/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/errorView"
         layout="@layout/error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
@@ -31,6 +42,7 @@
         layout="@layout/loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 

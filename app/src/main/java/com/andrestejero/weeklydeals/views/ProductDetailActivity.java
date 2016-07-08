@@ -64,12 +64,22 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
 
     @Override
     public void showLoading() {
-        updateVisibilities(View.VISIBLE, View.GONE, View.GONE);
+        updateVisibilities(View.VISIBLE, View.GONE, View.GONE, View.GONE);
+    }
+
+    @Override
+    public void showErrorProductDetail() {
+        updateVisibilities(View.GONE, View.VISIBLE, View.GONE, View.GONE);
+    }
+
+    @Override
+    public void showEmptyProductDetail() {
+        updateVisibilities(View.GONE, View.GONE, View.VISIBLE, View.GONE);
     }
 
     @Override
     public void showProductDetail(@NonNull ProductDetail productDetail) {
-        updateVisibilities(View.GONE, View.GONE, View.VISIBLE);
+        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         // TODO Refactor
         if (mViewHolder != null) {
             if (StringUtils.isNotEmpty(productDetail.getImage())) {
@@ -82,7 +92,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             mViewHolder.platform.setText("PS4");
             mViewHolder.gameType.setText("GameType");
             mViewHolder.releaseDate.setText(productDetail.getReleaseDate());
-            mViewHolder.rating.setText(productDetail.getRating());
+            mViewHolder.rating.setText("5.0");
             mViewHolder.description.setText(Html.fromHtml(productDetail.getDescription()));
 
             Price price = productDetail.getPrice();
@@ -97,16 +107,11 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
         }
     }
 
-    @Override
-    public void showErrorProductDetail() {
-        updateVisibilities(View.GONE, View.VISIBLE, View.GONE);
-        Log.d(LOG_TAG, "showErrorGameList");
-    }
-
-    private void updateVisibilities(int loadingVisibility, int errorVisibility, int contentVisibility) {
+    private void updateVisibilities(int loadingVisibility, int errorVisibility, int emptyVisibility, int contentVisibility) {
         if (mViewHolder != null) {
             mViewHolder.loadingView.setVisibility(loadingVisibility);
             mViewHolder.errorView.setVisibility(errorVisibility);
+            mViewHolder.emptyView.setVisibility(emptyVisibility);
             mViewHolder.contentView.setVisibility(contentVisibility);
         }
     }
@@ -114,6 +119,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     private class ViewHolder {
         private View loadingView;
         private View errorView;
+        private View emptyView;
         private View contentView;
         private ImageView productImage;
         private TextView productName;
@@ -135,6 +141,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
         private ViewHolder() {
             loadingView = findViewById(R.id.loadingView);
             errorView = findViewById(R.id.errorView);
+            emptyView = findViewById(R.id.emptyView);
             contentView = findViewById(R.id.contentView);
             productImage = (ImageView) findViewById(R.id.ivProductImage);
             productName = (TextView) findViewById(R.id.tvProductName);
