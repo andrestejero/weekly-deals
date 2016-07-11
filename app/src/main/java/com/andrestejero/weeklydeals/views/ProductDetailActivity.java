@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -101,8 +100,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             mViewHolder.gameType.setText(productDetail.getGameContentType());
 
             if (productDetail.getReleaseDate() != null) {
-                String relaseDate = DateUtils.dateFormat(productDetail.getReleaseDate(), getString(R.string.date_format), TimeZone.getTimeZone("America/New_York"));
-                mViewHolder.releaseDate.setText(relaseDate);
+                String relaseDate = DateUtils.dateFormat(productDetail.getReleaseDate(), getString(R.string.format_date), TimeZone.getTimeZone("America/New_York"));
+                mViewHolder.releaseDate.setText(getString(R.string.release_date, relaseDate));
             }
 
             Rating rating = productDetail.getRating();
@@ -124,6 +123,12 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
                 PsnListAdapterHelper.showPlusBadge(price, mViewHolder.productBadge);
                 PsnListAdapterHelper.updateDiscountContainer(price, mViewHolder.discount, mViewHolder.discountContainer);
                 PsnListAdapterHelper.updateDiscountPlusContainer(price, mViewHolder.plusDiscount, mViewHolder.discountPlusContainer);
+
+                if (price.getStartDate() != null && price.getEndDate() != null) {
+                    String startDate = DateUtils.dateFormat(price.getStartDate(), getString(R.string.format_date), TimeZone.getTimeZone("America/New_York"));
+                    String endDate = DateUtils.dateFormat(price.getEndDate(), getString(R.string.format_date), TimeZone.getTimeZone("America/New_York"));
+                    mViewHolder.priceAvailableDate.setText(getString(R.string.price_available_date, startDate, endDate));
+                }
             }
         }
     }
@@ -158,6 +163,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
         private TextView platform;
         private TextView gameType;
         private TextView releaseDate;
+        private TextView priceAvailableDate;
         private TextView description;
 
         private ViewHolder() {
@@ -181,6 +187,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             platform = (TextView) findViewById(R.id.tvPlatform);
             gameType = (TextView) findViewById(R.id.tvGameType);
             releaseDate = (TextView) findViewById(R.id.tvReleaseDate);
+            priceAvailableDate = (TextView) findViewById(R.id.tvPriceAvailable);
             description = (TextView) findViewById(R.id.tvDescription);
         }
     }

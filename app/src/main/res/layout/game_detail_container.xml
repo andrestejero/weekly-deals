@@ -211,6 +211,14 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvPriceAvailable"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue00"
+                tools:text="This price is only available from 7/5/2016 12:00 pm to 7/12/2016 12:00 pm"/>
+
+            <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

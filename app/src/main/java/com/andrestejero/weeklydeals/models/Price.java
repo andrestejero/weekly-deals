@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Price {
 
@@ -25,6 +26,14 @@ public class Price {
     @Nullable
     @SerializedName("bonus_discount_price")
     private BigDecimal bonusDiscountPrice;
+
+    @Nullable
+    @SerializedName("start_date")
+    private Date startDate;
+
+    @Nullable
+    @SerializedName("end_date")
+    private Date endDate;
 
     @Nullable
     public BigDecimal getNormal() {
@@ -49,5 +58,15 @@ public class Price {
     @Nullable
     public BigDecimal getBonusDiscountPrice() {
         return bonusDiscountPrice;
+    }
+
+    @Nullable
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    @Nullable
+    public Date getEndDate() {
+        return endDate;
     }
 }
