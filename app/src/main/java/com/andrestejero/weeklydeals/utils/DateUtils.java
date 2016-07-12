@@ -18,7 +18,6 @@ public class DateUtils {
     private static final String LOG_TAG = DateUtils.class.toString();
     private static final Locale LOCALE_AR = new Locale("es", "AR");
     private static final Locale LOCALE_US = new Locale("en", "US");
-    private static final String CHECKOUT_FORMAT = "dd/MM/yyyy";
     public static final String TIMEZONE_AR = "America/Argentina/Buenos_Aires";
     private static final TimeZone SERVER_TIME_ZONE = TimeZone.getTimeZone("GMT");
 
@@ -54,14 +53,13 @@ public class DateUtils {
         return stringFormat(date, format, null);
     }
 
-
     @Nullable
     public static Date stringFormat(@Nullable String date, @NonNull String format, @Nullable TimeZone timeZone) {
         if (StringUtils.isEmpty(date)) {
             return null;
         }
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, LOCALE_AR);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, LOCALE_US);
             if (timeZone != null) {
                 simpleDateFormat.setTimeZone(timeZone);
             }
@@ -70,20 +68,6 @@ public class DateUtils {
             Log.e(LOG_TAG, "Date (" + StringUtils.safeString(date) + ") could not be parsed with format: " + format);
         }
         return null;
-    }
-
-    @Nullable
-    public static Date checkoutStringFormat(@Nullable String date) {
-        return DateUtils.stringFormat(date, CHECKOUT_FORMAT);
-    }
-
-    public static boolean areComponentsEquals(@NonNull Date a, @NonNull Date b, int field) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(a);
-        int aComponent = calendar.get(field);
-        calendar.setTime(b);
-        int bComponent = calendar.get(field);
-        return aComponent == bComponent;
     }
 
     @NonNull

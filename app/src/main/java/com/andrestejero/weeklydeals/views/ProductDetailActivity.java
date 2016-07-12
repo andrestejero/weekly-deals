@@ -16,11 +16,13 @@ import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.Rating;
 import com.andrestejero.weeklydeals.network.ImageRequest;
+import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.DateUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapterHelper;
 import com.andrestejero.weeklydeals.views.presenters.ProductDetailPresenter;
 
+import java.util.List;
 import java.util.TimeZone;
 
 public class ProductDetailActivity extends AppBaseActivity implements ProductDetailPresenter.DetailView {
@@ -28,6 +30,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
 
     public static final String EXTRA_PRODUCT_ID = "EXTRA_PRODUCT_ID";
+    private static final String SEPARATOR = ",";
 
     @Nullable
     private ViewHolder mViewHolder;
@@ -96,12 +99,16 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             }
             mViewHolder.productName.setText(productDetail.getName());
             mViewHolder.provider.setText(productDetail.getProvider());
-            mViewHolder.platform.setText("PS4");
+
+            if (CollectionUtils.isNotEmpty(productDetail.getPlatforms())) {
+                mViewHolder.platform.setText(StringUtils.join(productDetail.getPlatforms(), SEPARATOR));
+            }
+
             mViewHolder.gameType.setText(productDetail.getGameContentType());
 
             if (productDetail.getReleaseDate() != null) {
-                String relaseDate = DateUtils.dateFormat(productDetail.getReleaseDate(), getString(R.string.format_date), TimeZone.getTimeZone("America/New_York"));
-                mViewHolder.releaseDate.setText(getString(R.string.release_date, relaseDate));
+                String releaseDate = DateUtils.serverDateFormat(productDetail.getReleaseDate(), getString(R.string.release_date_format));
+                mViewHolder.releaseDate.setText(releaseDate);
             }
 
             Rating rating = productDetail.getRating();
@@ -125,8 +132,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
                 PsnListAdapterHelper.updateDiscountPlusContainer(price, mViewHolder.plusDiscount, mViewHolder.discountPlusContainer);
 
                 if (price.getStartDate() != null && price.getEndDate() != null) {
-                    String startDate = DateUtils.dateFormat(price.getStartDate(), getString(R.string.format_date), TimeZone.getTimeZone("America/New_York"));
-                    String endDate = DateUtils.dateFormat(price.getEndDate(), getString(R.string.format_date), TimeZone.getTimeZone("America/New_York"));
+                    String startDate = DateUtils.dateFormat(price.getStartDate(), getString(R.string.format_date));
+                    String endDate = DateUtils.dateFormat(price.getEndDate(), getString(R.string.format_date));
                     mViewHolder.priceAvailableDate.setText(getString(R.string.price_available_date, startDate, endDate));
                 }
             }
