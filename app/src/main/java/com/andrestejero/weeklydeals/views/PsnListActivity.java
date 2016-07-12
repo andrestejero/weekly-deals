@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
@@ -21,7 +22,8 @@ import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
 public class PsnListActivity extends AppBaseActivity implements
         PsnPresenter.PsnListView,
-        PsnListAdapter.OnItemClickListener {
+        PsnListAdapter.OnItemClickListener,
+        PsnListAdapter.OnPageLoadingListener {
 
     private static final String LOG_TAG = PsnListActivity.class.getSimpleName();
 
@@ -90,7 +92,7 @@ public class PsnListActivity extends AppBaseActivity implements
         updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         mPsnContainer = psnContainer;
         if (mViewHolder != null) {
-            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer);
+            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
         }
     }
 
@@ -127,6 +129,11 @@ public class PsnListActivity extends AppBaseActivity implements
         }
     }
 
+    @Override
+    public void onPageLoading() {
+        Log.d(LOG_TAG, "onPageLoading");
+    }
+
     private class ViewHolder {
         private View loadingView;
         private View errorView;
@@ -145,6 +152,7 @@ public class PsnListActivity extends AppBaseActivity implements
             mLayoutManager = new LinearLayoutManager(PsnListActivity.this);
             psnListView.setLayoutManager(mLayoutManager);
             psnListAdapter.setOnItemClickListener(PsnListActivity.this);
+            psnListAdapter.setOnPageLoadingListener(PsnListActivity.this);
         }
     }
 

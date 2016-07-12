@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.R;
@@ -31,11 +32,16 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Nullable
     private OnItemClickListener mItemClickListener;
 
+    @Nullable
+    private OnPageLoadingListener mPageLoadingListener;
+
     @NonNull
     private List<Category> mCategories;
 
     @NonNull
     private List<Product> mProducts;
+
+    private int mPagingTotal;
 
     public PsnListAdapter(@NonNull Context context) {
         this.mContext = context;
@@ -43,9 +49,10 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mProducts = Collections.emptyList();
     }
 
-    public void updatePsnList(@NonNull PsnContainer psnContainer) {
+    public void updatePsnList(@NonNull PsnContainer psnContainer, int pagingTotal) {
         this.mCategories = CollectionUtils.safeList(psnContainer.getCategories());
         this.mProducts = CollectionUtils.safeList(psnContainer.getProducts());
+        this.mPagingTotal = pagingTotal;
         notifyDataSetChanged();
     }
 
@@ -54,6 +61,9 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (viewType == PsnViewType.CATEGORY.ordinal()) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.psn_category_item, parent, false);
             return new CategoryViewHolder(view);
+        } else if (viewType == PsnViewType.LOADING.ordinal()) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.psn_loading_item, parent, false);
+            return new LoadingViewHolder(view);
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.psn_game_item, parent, false);
             return new ProductViewHolder(view);
@@ -62,7 +72,11 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (isPositionCategory(position)) {
+        if (isPositionPageLoading(position)) {
+            if (mPageLoadingListener != null) {
+                mPageLoadingListener.onPageLoading();
+            }
+        } else if (isPositionCategory(position)) {
             CategoryViewHolder viewHolder = (CategoryViewHolder) holder;
             final Category category = mCategories.get(position);
             PsnListAdapterHelper.showCategoryName(category, viewHolder.categoryName);
@@ -75,7 +89,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             PsnListAdapterHelper.showProductImage(mContext, product, viewHolder.productImage);
             PsnListAdapterHelper.showPlatforms(product.getPlatforms(), viewHolder.platform);
 
-            viewHolder.gameType.setText("GameType");
+            viewHolder.gameType.setText("GameType"); // TODO
 
             Price price = product.getPrice();
             if (price != null) {
@@ -91,7 +105,9 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (CollectionUtils.safeSize(mCategories) > position) {
+        if (isPositionPageLoading(position)) {
+            return PsnViewType.LOADING.ordinal();
+        } else if (CollectionUtils.safeSize(mCategories) > position) {
             return PsnViewType.CATEGORY.ordinal();
         }
         return PsnViewType.PRODUCT.ordinal();
@@ -101,9 +117,19 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return getItemViewType(position) == PsnViewType.CATEGORY.ordinal();
     }
 
+    private boolean isPositionPageLoading(int position) {
+        return position == getItemCount() && getItemCount() < mPagingTotal;
+    }
+
     @Override
     public int getItemCount() {
-        return CollectionUtils.safeSize(mCategories) + CollectionUtils.safeSize(mProducts);
+        int count = CollectionUtils.safeSize(mCategories) + CollectionUtils.safeSize(mProducts);
+
+        if (count < mPagingTotal) {
+            count += 1;
+        }
+
+        return count;
     }
 
     public interface OnItemClickListener {
@@ -111,8 +137,16 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         void onItemClick(int position);
     }
 
+    public interface OnPageLoadingListener {
+        void onPageLoading();
+    }
+
     public void setOnItemClickListener(@Nullable OnItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
+    }
+
+    public void setOnPageLoadingListener(@Nullable OnPageLoadingListener listener) {
+        this.mPageLoadingListener = listener;
     }
 
     class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -172,6 +206,16 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(getLayoutPosition());
             }
+        }
+    }
+
+    class LoadingViewHolder extends RecyclerView.ViewHolder {
+
+        private ProgressBar progressBar;
+
+        public LoadingViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.itemProgressBar);
         }
     }
 }

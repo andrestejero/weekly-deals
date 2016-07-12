@@ -24,6 +24,9 @@ public class PsnContainer {
     private List<Category> categories;
 
     @Nullable
+    private Paging paging;
+
+    @Nullable
     public String getId() {
         return id;
     }
@@ -41,5 +44,29 @@ public class PsnContainer {
     @Nullable
     public List<Category> getCategories() {
         return CollectionUtils.safeList(categories);
+    }
+
+    @Nullable
+    public Paging getPaging() {
+        return paging;
+    }
+
+    /**
+     *
+     * @return la cantidad de productos/categorias de la pagina
+     */
+    public int getProductsCount() {
+        return CollectionUtils.safeSize(products) + CollectionUtils.safeSize(categories);
+    }
+
+    /**
+     *
+     * @return la cantidad total de productos/categorias
+     */
+    public int getPagingTotal() {
+        if (paging != null && paging.getTotal() != null) {
+            return paging.getTotal();
+        }
+        return getProductsCount();
     }
 }
