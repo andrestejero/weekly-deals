@@ -30,7 +30,6 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
 
     public static final String EXTRA_PRODUCT_ID = "EXTRA_PRODUCT_ID";
-    private static final String SEPARATOR = ",";
 
     @Nullable
     private ViewHolder mViewHolder;
@@ -100,9 +99,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             mViewHolder.productName.setText(productDetail.getName());
             mViewHolder.provider.setText(productDetail.getProvider());
 
-            if (CollectionUtils.isNotEmpty(productDetail.getPlatforms())) {
-                mViewHolder.platform.setText(StringUtils.join(productDetail.getPlatforms(), SEPARATOR));
-            }
+            PsnListAdapterHelper.showPlatforms(productDetail.getPlatforms(), mViewHolder.platform);
 
             mViewHolder.gameType.setText(productDetail.getGameContentType());
 
@@ -125,8 +122,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
             Price price = productDetail.getPrice();
             if (price != null) {
                 PsnListAdapterHelper.showNormalPrice(price, mViewHolder.normalPrice, mViewHolder.discountPrice);
-                PsnListAdapterHelper.showDiscountPrice(price, mViewHolder.discountPrice);
-                PsnListAdapterHelper.showPlusPrice(price, mViewHolder.plusPrice);
+                PsnListAdapterHelper.showDiscountPrice(this, price, mViewHolder.discountPrice);
+                PsnListAdapterHelper.showPlusPrice(this, price, mViewHolder.plusPrice);
                 PsnListAdapterHelper.showPlusBadge(price, mViewHolder.productBadge);
                 PsnListAdapterHelper.updateDiscountContainer(price, mViewHolder.discount, mViewHolder.discountContainer);
                 PsnListAdapterHelper.updateDiscountPlusContainer(price, mViewHolder.plusDiscount, mViewHolder.discountPlusContainer);

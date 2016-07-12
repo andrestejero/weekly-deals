@@ -73,18 +73,19 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             final Product product = mProducts.get(position);
             PsnListAdapterHelper.showProductName(product, viewHolder.productName);
             PsnListAdapterHelper.showProductImage(mContext, product, viewHolder.productImage);
+            PsnListAdapterHelper.showPlatforms(product.getPlatforms(), viewHolder.platform);
+
+            viewHolder.gameType.setText("GameType");
+
             Price price = product.getPrice();
             if (price != null) {
                 PsnListAdapterHelper.showNormalPrice(price, viewHolder.normalPrice, viewHolder.discountPrice);
-                PsnListAdapterHelper.showDiscountPrice(price, viewHolder.discountPrice);
-                PsnListAdapterHelper.showPlusPrice(price, viewHolder.plusPrice);
+                PsnListAdapterHelper.showDiscountPrice(mContext, price, viewHolder.discountPrice);
+                PsnListAdapterHelper.showPlusPrice(mContext, price, viewHolder.plusPrice);
                 PsnListAdapterHelper.showPlusBadge(price, viewHolder.productBadge);
                 PsnListAdapterHelper.updateDiscountContainer(price, viewHolder.discount, viewHolder.discountContainer);
                 PsnListAdapterHelper.updateDiscountPlusContainer(price, viewHolder.plusDiscount, viewHolder.discountPlusContainer);
             }
-            // TODO FREE GAMES
-            viewHolder.platform.setText("PS4");
-            viewHolder.gameType.setText("FULL GAME");
         }
     }
 

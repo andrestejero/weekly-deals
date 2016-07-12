@@ -5,6 +5,7 @@
     <string name="iv_description">Content Description</string>
     <string name="title_activity_game_detail">Detalle de producto</string>
     <string name="loading">Cargando&#8230;</string>
+    <string name="free">FREE</string>
 
     <string name="error_view_title">¡Ups! Falló la conexión a nuestros servidores.</string>
     <string name="error_view_message">Intentá nuevamente.</string>

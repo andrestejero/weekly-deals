@@ -3,6 +3,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,12 +13,17 @@ import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.network.ImageRequest;
+import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public class PsnListAdapterHelper {
 
     private final static int CATEGORY_IMAGE_WIDTH = 50;
     private final static int PRODUCT_IMAGE_WIDTH = 100;
+    private static final String SEPARATOR = ",";
 
     private PsnListAdapterHelper() {
         throw new AssertionError(getClass().toString() + " cannot be instantiated.");
@@ -67,23 +73,31 @@ public class PsnListAdapterHelper {
         }
     }
 
-    public static void showDiscountPrice(@NonNull Price price, @NonNull TextView discountPrice) {
+    public static void showDiscountPrice(@NonNull Context context, @NonNull Price price, @NonNull TextView discountPrice) {
         if (price.getDiscountPrice() != null) {
-            discountPrice.setText(StringUtils.gamePrice(price.getDiscountPrice()));
+            if (price.getDiscountPrice().equals(BigDecimal.ZERO)) {
+                discountPrice.setText(context.getString(R.string.free));
+            } else {
+                discountPrice.setText(StringUtils.gamePrice(price.getDiscountPrice()));
+            }
         }
     }
 
-    public static void showPlusPrice(@NonNull Price price, @NonNull TextView plusPrice) {
+    public static void showPlusPrice(@NonNull Context context, @NonNull Price price, @NonNull TextView plusPrice) {
         if (price.getBonusDiscountPrice() != null) {
             plusPrice.setVisibility(View.VISIBLE);
-            plusPrice.setText(StringUtils.gamePrice(price.getBonusDiscountPrice()));
+            if (price.getBonusDiscountPrice().equals(BigDecimal.ZERO)) {
+                plusPrice.setText(context.getString(R.string.free));
+            } else {
+                plusPrice.setText(StringUtils.gamePrice(price.getBonusDiscountPrice()));
+            }
         } else {
             plusPrice.setVisibility(View.INVISIBLE);
         }
     }
 
     public static void updateDiscountContainer(@NonNull Price price, @NonNull TextView discount, @NonNull View discountContainer) {
-        if (price.getDiscount() != null) {
+        if (price.getDiscount() != null && !price.getDiscount().equals(new BigDecimal(100))) {
             discountContainer.setVisibility(View.VISIBLE);
             discount.setText(StringUtils.gamePercent(price.getDiscount()));
         } else {
@@ -92,11 +106,17 @@ public class PsnListAdapterHelper {
     }
 
     public static void updateDiscountPlusContainer(@NonNull Price price, @NonNull TextView plusDiscount, @NonNull View discountPlusContainer) {
-        if (price.getBonusDiscount() != null) {
+        if (price.getBonusDiscount() != null && !price.getBonusDiscount().equals(new BigDecimal(100))) {
             discountPlusContainer.setVisibility(View.VISIBLE);
             plusDiscount.setText(StringUtils.gamePercent(price.getBonusDiscount()));
         } else {
             discountPlusContainer.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public static void showPlatforms(@Nullable List<String> platforms, @NonNull TextView platform) {
+        if (CollectionUtils.isNotEmpty(platforms)) {
+            platform.setText(StringUtils.join(platforms, SEPARATOR));
         }
     }
 }
