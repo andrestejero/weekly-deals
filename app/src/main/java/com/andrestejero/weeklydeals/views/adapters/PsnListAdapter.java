@@ -118,12 +118,16 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private boolean isPositionPageLoading(int position) {
-        return position == getItemCount() && getItemCount() < mPagingTotal;
+        return position == getTotalItems() && getTotalItems() < mPagingTotal;
+    }
+
+    private int getTotalItems() {
+        return CollectionUtils.safeSize(mCategories) + CollectionUtils.safeSize(mProducts);
     }
 
     @Override
     public int getItemCount() {
-        int count = CollectionUtils.safeSize(mCategories) + CollectionUtils.safeSize(mProducts);
+        int count = getTotalItems();
 
         if (count < mPagingTotal) {
             count += 1;
