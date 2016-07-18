@@ -47,13 +47,24 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mContext = context;
         mCategories = Collections.emptyList();
         mProducts = Collections.emptyList();
+        setHasStableIds(true);
     }
 
     public void updatePsnList(@NonNull PsnContainer psnContainer, int pagingTotal) {
         this.mCategories = CollectionUtils.safeList(psnContainer.getCategories());
         this.mProducts = CollectionUtils.safeList(psnContainer.getProducts());
         this.mPagingTotal = pagingTotal;
-        notifyDataSetChanged();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if (isPositionCategory(position)) {
+            return mCategories.get(position).hashCode();
+        } else if (isPositionPageLoading(position)) {
+            return "page_loading".hashCode();
+        } else {
+            return mProducts.get(position).hashCode();
+        }
     }
 
     @Override
@@ -219,7 +230,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public LoadingViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.itemProgressBar);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
     }
 }

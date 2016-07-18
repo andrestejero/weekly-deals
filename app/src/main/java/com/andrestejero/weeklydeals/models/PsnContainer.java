@@ -69,4 +69,12 @@ public class PsnContainer {
         }
         return getProductsCount();
     }
+
+    public void setProducts(@Nullable List<Product> products) {
+        this.products = products;
+    }
+
+    public void setCategories(@Nullable List<Category> categories) {
+        this.categories = categories;
+    }
 }

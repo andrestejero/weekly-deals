@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
@@ -49,20 +48,18 @@ public class PsnListActivity extends AppBaseActivity implements
             setSupportActionBar(toolbar);
         }
 
-        Bundle extras = getIntent().getExtras();
-        String id = extras.getString(EXTRA_PSN_LIST_ID);
-
         mViewHolder = new ViewHolder();
         mPresenter = new PsnPresenter(this, getAppRepository());
 
-        if (StringUtils.isNotEmpty(id)) {
-            loadPsnList(id);
-        }
+        loadPsnList(false);
     }
 
-    private void loadPsnList(@NonNull String id) {
-        if (mPresenter != null) {
-            mPresenter.getPsnContainer(id);
+    private void loadPsnList(boolean nextPage) {
+        Bundle extras = getIntent().getExtras();
+        String id = extras.getString(EXTRA_PSN_LIST_ID);
+
+        if (mPresenter != null && StringUtils.isNotEmpty(id)) {
+            mPresenter.getPsnContainer(id, nextPage);
         }
     }
 
@@ -80,6 +77,15 @@ public class PsnListActivity extends AppBaseActivity implements
     @Override
     public void showErrorGameList() {
         updateVisibilities(View.GONE, View.VISIBLE, View.GONE, View.GONE);
+    }
+
+    @Override
+    public void refreshPsnContainer(@NonNull PsnContainer psnContainer, int positionStart, int itemCount) {
+        mPsnContainer = psnContainer;
+        if (mViewHolder != null) {
+            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
+            mViewHolder.psnListAdapter.notifyItemRangeChanged(positionStart, itemCount);
+        }
     }
 
     @Override
@@ -131,7 +137,7 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void onPageLoading() {
-        Log.d(LOG_TAG, "onPageLoading");
+        loadPsnList(true);
     }
 
     private class ViewHolder {
