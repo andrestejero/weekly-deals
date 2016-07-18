@@ -42,22 +42,18 @@ public class PsnListActivity extends AppBaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.psn_list);
         setTitle(R.string.title_activity_game_list);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-
         mViewHolder = new ViewHolder();
         mPresenter = new PsnPresenter(this, getAppRepository());
-
         loadPsnList(false);
     }
 
     private void loadPsnList(boolean nextPage) {
         Bundle extras = getIntent().getExtras();
         String id = extras.getString(EXTRA_PSN_LIST_ID);
-
         if (mPresenter != null && StringUtils.isNotEmpty(id)) {
             mPresenter.getPsnContainer(id, nextPage);
         }

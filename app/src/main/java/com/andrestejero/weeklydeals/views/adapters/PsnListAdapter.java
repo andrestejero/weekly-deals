@@ -18,6 +18,7 @@ import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.models.PsnViewType;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
+import com.andrestejero.weeklydeals.utils.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,8 +91,13 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else if (isPositionCategory(position)) {
             CategoryViewHolder viewHolder = (CategoryViewHolder) holder;
             final Category category = mCategories.get(position);
-            PsnListAdapterHelper.showCategoryName(category, viewHolder.categoryName);
-            PsnListAdapterHelper.showCategoryImage(mContext, category, viewHolder.categoryImage);
+            if (StringUtils.isNotEmpty(category.getName()) && category.getName().contains("----")) {
+                viewHolder.categoryContent.setVisibility(View.GONE);
+            } else {
+                viewHolder.categoryContent.setVisibility(View.VISIBLE);
+                PsnListAdapterHelper.showCategoryName(category, viewHolder.categoryName);
+                PsnListAdapterHelper.showCategoryImage(mContext, category, viewHolder.categoryImage);
+            }
         } else {
             ProductViewHolder viewHolder = (ProductViewHolder) holder;
             position -= CollectionUtils.safeSize(mCategories);
@@ -99,9 +105,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             PsnListAdapterHelper.showProductName(product, viewHolder.productName);
             PsnListAdapterHelper.showProductImage(mContext, product, viewHolder.productImage);
             PsnListAdapterHelper.showPlatforms(product.getPlatforms(), viewHolder.platform);
-
-            viewHolder.gameType.setText("GameType"); // TODO
-
+            viewHolder.gameType.setText(product.getGameContentType());
             Price price = product.getPrice();
             if (price != null) {
                 PsnListAdapterHelper.showNormalPrice(price, viewHolder.normalPrice, viewHolder.discountPrice);
@@ -165,14 +169,16 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private View categoryContent;
         private ImageView categoryImage;
         private TextView categoryName;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
-            View actionableCover = itemView.findViewById(R.id.actionableCover);
+            categoryContent = itemView.findViewById(R.id.rlContent);
             categoryImage = (ImageView) itemView.findViewById(R.id.ivCategoryImage);
             categoryName = (TextView) itemView.findViewById(R.id.tvCategoryName);
+            View actionableCover = itemView.findViewById(R.id.actionableCover);
             actionableCover.setOnClickListener(this);
         }
 

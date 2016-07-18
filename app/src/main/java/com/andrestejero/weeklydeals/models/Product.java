@@ -3,6 +3,7 @@ package com.andrestejero.weeklydeals.models;
 import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class Product {
 
     @Nullable
     private String image;
+
+    @Nullable
+    @SerializedName("game_content_type")
+    private String gameContentType;
 
     @Nullable
     private List<String> platforms;
@@ -36,6 +41,11 @@ public class Product {
     @Nullable
     public String getImage() {
         return image;
+    }
+
+    @Nullable
+    public String getGameContentType() {
+        return gameContentType;
     }
 
     @Nullable
