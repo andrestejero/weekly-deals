@@ -28,6 +28,9 @@
             android:configChanges="orientation"
             android:label="@string/title_activity_game_detail"
             android:screenOrientation="portrait" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="8d7caf4bac646d51953615edc86dbdf59627fc65" />
     </application>
 
 </manifest>
