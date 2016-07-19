@@ -16,14 +16,10 @@ import com.andrestejero.weeklydeals.models.Price;
 import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.Rating;
 import com.andrestejero.weeklydeals.network.ImageRequest;
-import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.DateUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapterHelper;
 import com.andrestejero.weeklydeals.views.presenters.ProductDetailPresenter;
-
-import java.util.List;
-import java.util.TimeZone;
 
 public class ProductDetailActivity extends AppBaseActivity implements ProductDetailPresenter.DetailView {
 
@@ -90,7 +86,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     public void showProductDetail(@NonNull ProductDetail productDetail) {
         updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         setTitle(productDetail.getName());
-        // TODO Refactor
+        // FIXME Refactor
         if (mViewHolder != null) {
             if (StringUtils.isNotEmpty(productDetail.getImage())) {
                 String url = productDetail.getImageFromWidth(PRODUCT_DETAIL_IMAGE_WIDTH);
