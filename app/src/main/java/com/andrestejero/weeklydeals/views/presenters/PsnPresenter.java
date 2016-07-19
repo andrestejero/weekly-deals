@@ -57,32 +57,8 @@ public class PsnPresenter {
                             if (!nextPage) {
                                 offset = 0;
                             }
-                            offset += psnContainer.getProductsCount();
-
-                            // FIXME ver de refactorizar esto
-                            if (CollectionUtils.isNotEmpty(psnContainer.getProducts()) && CollectionUtils.isNotEmpty(products) && nextPage) {
-                                int positionStart = products.size();
-                                int itemCount = psnContainer.getProductsCount();
-                                products.addAll(psnContainer.getProducts());
-                                psnContainer.setProducts(products);
-                                view.refreshPsnContainer(psnContainer, positionStart, itemCount);
-                            } else if (CollectionUtils.isNotEmpty(psnContainer.getCategories()) && CollectionUtils.isNotEmpty(categories) && nextPage) {
-                                int positionStart = categories.size();
-                                int itemCount = psnContainer.getProductsCount();
-                                categories.addAll(psnContainer.getCategories());
-                                psnContainer.setCategories(categories);
-                                view.refreshPsnContainer(psnContainer, positionStart, itemCount);
-                            } else if (CollectionUtils.isNotEmpty(psnContainer.getProducts())) {
-                                products = psnContainer.getProducts();
-                                psnContainer.setProducts(products);
-                                view.showPsnContainer(psnContainer);
-                            } else if (CollectionUtils.isNotEmpty(psnContainer.getCategories())) {
-                                categories = psnContainer.getCategories();
-                                psnContainer.setCategories(categories);
-                                view.showPsnContainer(psnContainer);
-                            } else {
-                                view.showEmptyList();
-                            }
+                            offset += psnContainer.getItemsCount();
+                            showPsnList(psnContainer, view, nextPage);
                         } else {
                             view.showErrorGameList();
                         }
@@ -97,6 +73,32 @@ public class PsnPresenter {
                     }
                 }
             });
+        }
+    }
+
+    private void showPsnList(@NonNull PsnContainer psnContainer, @NonNull PsnListView view, boolean nextPage) {
+        if (CollectionUtils.isNotEmpty(psnContainer.getProducts()) && CollectionUtils.isNotEmpty(products) && nextPage) {
+            int positionStart = products.size();
+            int itemCount = psnContainer.getItemsCount();
+            products.addAll(psnContainer.getProducts());
+            psnContainer.setProducts(products);
+            view.refreshPsnContainer(psnContainer, positionStart, itemCount);
+        } else if (CollectionUtils.isNotEmpty(psnContainer.getCategories()) && CollectionUtils.isNotEmpty(categories) && nextPage) {
+            int positionStart = categories.size();
+            int itemCount = psnContainer.getItemsCount();
+            categories.addAll(psnContainer.getCategories());
+            psnContainer.setCategories(categories);
+            view.refreshPsnContainer(psnContainer, positionStart, itemCount);
+        } else if (CollectionUtils.isNotEmpty(psnContainer.getProducts())) {
+            products = psnContainer.getProducts();
+            psnContainer.setProducts(products);
+            view.showPsnContainer(psnContainer);
+        } else if (CollectionUtils.isNotEmpty(psnContainer.getCategories())) {
+            categories = psnContainer.getCategories();
+            psnContainer.setCategories(categories);
+            view.showPsnContainer(psnContainer);
+        } else {
+            view.showEmptyList();
         }
     }
 

@@ -55,7 +55,7 @@ public class PsnContainer {
      *
      * @return la cantidad de productos/categorias de la pagina
      */
-    public int getProductsCount() {
+    public int getItemsCount() {
         return CollectionUtils.safeSize(products) + CollectionUtils.safeSize(categories);
     }
 
@@ -67,7 +67,7 @@ public class PsnContainer {
         if (paging != null && paging.getTotal() != null) {
             return paging.getTotal();
         }
-        return getProductsCount();
+        return getItemsCount();
     }
 
     public void setProducts(@Nullable List<Product> products) {
