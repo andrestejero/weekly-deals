@@ -21,7 +21,8 @@ import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
 public class PsnListActivity extends AppBaseActivity implements
         PsnPresenter.PsnListView,
-        PsnListAdapter.OnItemClickListener {
+        PsnListAdapter.OnItemClickListener,
+        PsnListAdapter.OnPageLoadingListener {
 
     private static final String LOG_TAG = PsnListActivity.class.getSimpleName();
 
@@ -41,26 +42,20 @@ public class PsnListActivity extends AppBaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.psn_list);
         setTitle(R.string.title_activity_game_list);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-
-        Bundle extras = getIntent().getExtras();
-        String id = extras.getString(EXTRA_PSN_LIST_ID);
-
         mViewHolder = new ViewHolder();
         mPresenter = new PsnPresenter(this, getAppRepository());
-
-        if (StringUtils.isNotEmpty(id)) {
-            loadPsnList(id);
-        }
+        loadPsnList(false);
     }
 
-    private void loadPsnList(@NonNull String id) {
-        if (mPresenter != null) {
-            mPresenter.getPsnContainer(id);
+    private void loadPsnList(boolean nextPage) {
+        Bundle extras = getIntent().getExtras();
+        String id = extras.getString(EXTRA_PSN_LIST_ID);
+        if (mPresenter != null && StringUtils.isNotEmpty(id)) {
+            mPresenter.getPsnContainer(id, nextPage);
         }
     }
 
@@ -81,6 +76,15 @@ public class PsnListActivity extends AppBaseActivity implements
     }
 
     @Override
+    public void refreshPsnContainer(@NonNull PsnContainer psnContainer, int positionStart, int itemCount) {
+        mPsnContainer = psnContainer;
+        if (mViewHolder != null) {
+            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
+            mViewHolder.psnListAdapter.notifyItemRangeChanged(positionStart, itemCount);
+        }
+    }
+
+    @Override
     public void showEmptyList() {
         updateVisibilities(View.GONE, View.GONE, View.VISIBLE, View.GONE);
     }
@@ -90,7 +94,7 @@ public class PsnListActivity extends AppBaseActivity implements
         updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         mPsnContainer = psnContainer;
         if (mViewHolder != null) {
-            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer);
+            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
         }
     }
 
@@ -127,6 +131,11 @@ public class PsnListActivity extends AppBaseActivity implements
         }
     }
 
+    @Override
+    public void onPageLoading() {
+        loadPsnList(true);
+    }
+
     private class ViewHolder {
         private View loadingView;
         private View errorView;
@@ -145,6 +154,7 @@ public class PsnListActivity extends AppBaseActivity implements
             mLayoutManager = new LinearLayoutManager(PsnListActivity.this);
             psnListView.setLayoutManager(mLayoutManager);
             psnListAdapter.setOnItemClickListener(PsnListActivity.this);
+            psnListAdapter.setOnPageLoadingListener(PsnListActivity.this);
         }
     }
 

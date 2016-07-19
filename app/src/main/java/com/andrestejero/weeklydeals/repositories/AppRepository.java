@@ -20,8 +20,8 @@ public class AppRepository {
         mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
     }
 
-    public void getPsnContainer(@NonNull String id, @NonNull Callback<PsnContainer> callback) {
-        mCallGetPsnContainer = mService.getPsnContainer(id);
+    public void getPsnContainer(@NonNull String id, @Nullable Integer offset, @NonNull Callback<PsnContainer> callback) {
+        mCallGetPsnContainer = mService.getPsnContainer(id, offset);
         mCallGetPsnContainer.enqueue(callback);
     }
 

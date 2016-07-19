@@ -47,7 +47,8 @@ public class PsnListAdapterHelper {
 
     public static void showProductImage(@NonNull Context context, @NonNull Product product, @NonNull ImageView productImage) {
         if (StringUtils.isNotEmpty(product.getImage())) {
-            new ImageRequest(context, product.getImage(), productImage).widthInPixels(PRODUCT_IMAGE_WIDTH, 1000).execute();
+            String url = product.getImageFromWidth(PRODUCT_IMAGE_WIDTH);
+            new ImageRequest(context, url, productImage).widthInPixels(PRODUCT_IMAGE_WIDTH, 1000).execute();
         } else {
             productImage.setImageResource(R.drawable.bg_image_placeholder_100dp);
         }
