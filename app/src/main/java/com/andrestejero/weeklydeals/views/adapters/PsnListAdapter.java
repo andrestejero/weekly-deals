@@ -108,7 +108,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewHolder.gameType.setText(product.getGameContentType());
             Price price = product.getPrice();
             if (price != null) {
-                PsnListAdapterHelper.showNormalPrice(price, viewHolder.normalPrice, viewHolder.discountPrice);
+                PsnListAdapterHelper.showNormalPrice(mContext, price, viewHolder.normalPrice, viewHolder.discountPrice);
                 PsnListAdapterHelper.showDiscountPrice(mContext, price, viewHolder.discountPrice);
                 PsnListAdapterHelper.showPlusPrice(mContext, price, viewHolder.plusPrice);
                 PsnListAdapterHelper.showPlusBadge(price, viewHolder.productBadge);

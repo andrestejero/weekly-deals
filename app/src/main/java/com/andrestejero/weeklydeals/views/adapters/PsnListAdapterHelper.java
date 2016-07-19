@@ -63,14 +63,18 @@ public class PsnListAdapterHelper {
         }
     }
 
-    public static void showNormalPrice(@NonNull Price price, @NonNull TextView normalPrice, @NonNull TextView discountPrice) {
+    public static void showNormalPrice(@NonNull Context context, @NonNull Price price, @NonNull TextView normalPrice, @NonNull TextView discountPrice) {
         if (price.getNormal() != null && price.getDiscountPrice() != null) {
             normalPrice.setVisibility(View.VISIBLE);
             normalPrice.setText(StringUtils.gamePrice(price.getNormal()));
             normalPrice.setPaintFlags(normalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else if (price.getNormal() != null) {
             normalPrice.setVisibility(View.INVISIBLE);
-            discountPrice.setText(StringUtils.gamePrice(price.getNormal()));
+            if (price.getNormal().equals(BigDecimal.ZERO)) {
+                discountPrice.setText(context.getString(R.string.free));
+            } else {
+                discountPrice.setText(StringUtils.gamePrice(price.getNormal()));
+            }
         }
     }
 

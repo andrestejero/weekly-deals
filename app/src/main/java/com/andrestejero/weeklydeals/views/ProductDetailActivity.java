@@ -119,7 +119,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
 
             Price price = productDetail.getPrice();
             if (price != null) {
-                PsnListAdapterHelper.showNormalPrice(price, mViewHolder.normalPrice, mViewHolder.discountPrice);
+                PsnListAdapterHelper.showNormalPrice(this, price, mViewHolder.normalPrice, mViewHolder.discountPrice);
                 PsnListAdapterHelper.showDiscountPrice(this, price, mViewHolder.discountPrice);
                 PsnListAdapterHelper.showPlusPrice(this, price, mViewHolder.plusPrice);
                 PsnListAdapterHelper.showPlusBadge(price, mViewHolder.productBadge);
