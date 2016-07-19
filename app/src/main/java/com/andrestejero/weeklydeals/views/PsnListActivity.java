@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +49,7 @@ public class PsnListActivity extends AppBaseActivity implements
         }
         mViewHolder = new ViewHolder();
         mPresenter = new PsnPresenter(this, getAppRepository());
+        setupRefreshHandler(mViewHolder);
         loadPsnList(false);
     }
 
@@ -56,6 +58,21 @@ public class PsnListActivity extends AppBaseActivity implements
         String id = extras.getString(EXTRA_PSN_LIST_ID);
         if (mPresenter != null && StringUtils.isNotEmpty(id)) {
             mPresenter.getPsnContainer(id, nextPage);
+        }
+    }
+
+    private void setupRefreshHandler(@NonNull ViewHolder holder) {
+        holder.refreshControl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadPsnList(false);
+            }
+        });
+    }
+
+    private void stopRefreshIndicator() {
+        if (mViewHolder != null) {
+            mViewHolder.refreshControl.setRefreshing(false);
         }
     }
 
@@ -72,7 +89,25 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void showErrorGameList() {
+        stopRefreshIndicator();
         updateVisibilities(View.GONE, View.VISIBLE, View.GONE, View.GONE);
+    }
+
+    @Override
+    public void showEmptyList() {
+        stopRefreshIndicator();
+        updateVisibilities(View.GONE, View.GONE, View.VISIBLE, View.GONE);
+    }
+
+    @Override
+    public void showPsnContainer(@NonNull PsnContainer psnContainer) {
+        stopRefreshIndicator();
+        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
+        mPsnContainer = psnContainer;
+        if (mViewHolder != null) {
+            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
+            mViewHolder.psnListAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -81,20 +116,6 @@ public class PsnListActivity extends AppBaseActivity implements
         if (mViewHolder != null) {
             mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
             mViewHolder.psnListAdapter.notifyItemRangeChanged(positionStart, itemCount);
-        }
-    }
-
-    @Override
-    public void showEmptyList() {
-        updateVisibilities(View.GONE, View.GONE, View.VISIBLE, View.GONE);
-    }
-
-    @Override
-    public void showPsnContainer(@NonNull PsnContainer psnContainer) {
-        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
-        mPsnContainer = psnContainer;
-        if (mViewHolder != null) {
-            mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
         }
     }
 
@@ -137,6 +158,7 @@ public class PsnListActivity extends AppBaseActivity implements
     }
 
     private class ViewHolder {
+        private SwipeRefreshLayout refreshControl;
         private View loadingView;
         private View errorView;
         private View emptyView;
@@ -145,6 +167,7 @@ public class PsnListActivity extends AppBaseActivity implements
         private final RecyclerView.LayoutManager mLayoutManager;
 
         private ViewHolder() {
+            refreshControl = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
             loadingView = findViewById(R.id.loadingView);
             errorView = findViewById(R.id.errorView);
             emptyView = findViewById(R.id.emptyView);
