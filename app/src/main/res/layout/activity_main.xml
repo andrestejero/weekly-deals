@@ -10,12 +10,29 @@
         android:layout_height="wrap_content"
         android:theme="@style/ToolbarPsnTheme" />
 
-    <Button
-        android:id="@+id/btGameList"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ver Ofertas" />
+        android:orientation="vertical">
 
-    <!-- Layout for content is here. This can be a RelativeLayout  -->
+        <ImageView
+            android:id="@+id/ivUpdateMessageImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/iv_description"
+            android:src="@drawable/dload" />
+
+        <Button
+            android:id="@+id/btGameList"
+            style="@style/HomeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/home_button"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
 
 </LinearLayout>
