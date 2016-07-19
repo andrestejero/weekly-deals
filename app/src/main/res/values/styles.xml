@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/gray120</item>
     </style>
 
+    <!-- FIXME borrar esta toolbar de ejemplo -->
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
         <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
@@ -27,6 +28,12 @@
         <item name="selectableItemBackground">?android:selectableItemBackground</item>
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
         -->
+    </style>
+
+    <!-- FIXME Agregar mas estilos a la toolbar -->
+    <style name="ToolbarPsnTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/blue80</item>
+        <item name="colorControlNormal">@color/white00</item>
     </style>
 
     <!-- This configures the styles for the title within the Toolbar  -->

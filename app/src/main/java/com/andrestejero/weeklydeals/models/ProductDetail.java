@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.models;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
@@ -99,5 +100,12 @@ public class ProductDetail {
     @Nullable
     public String getDescription() {
         return description;
+    }
+
+    @NonNull
+    public String getImageFromWidth(int width) {
+        // FIXME multiplicar por densidad
+        int size = width * 2;
+        return image + "?w=" + size + "&h=" + size;
     }
 }

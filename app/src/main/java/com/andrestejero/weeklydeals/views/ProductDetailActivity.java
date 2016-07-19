@@ -30,6 +30,7 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
     private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
 
     public static final String EXTRA_PRODUCT_ID = "EXTRA_PRODUCT_ID";
+    private final static int PRODUCT_DETAIL_IMAGE_WIDTH = 200;
 
     @Nullable
     private ViewHolder mViewHolder;
@@ -92,7 +93,8 @@ public class ProductDetailActivity extends AppBaseActivity implements ProductDet
         // TODO Refactor
         if (mViewHolder != null) {
             if (StringUtils.isNotEmpty(productDetail.getImage())) {
-                new ImageRequest(this, productDetail.getImage(), mViewHolder.productImage).widthInPixels(200, 1000).execute();
+                String url = productDetail.getImageFromWidth(PRODUCT_DETAIL_IMAGE_WIDTH);
+                new ImageRequest(this, url, mViewHolder.productImage).widthInPixels(PRODUCT_DETAIL_IMAGE_WIDTH, 1000).execute();
             } else {
                 mViewHolder.productImage.setImageResource(R.drawable.bg_image_placeholder_200dp);
             }
