@@ -10,9 +10,6 @@ import android.view.MenuItem;
 
 import com.andrestejero.weeklydeals.repositories.AppRepository;
 import com.andrestejero.weeklydeals.utils.StringUtils;
-import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
 
 public abstract class AppBaseActivity extends AppCompatActivity {
 
@@ -21,7 +18,6 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
 
         //Picasso.with(this).setIndicatorsEnabled(BuildConfig.DEBUG);
         //Picasso.with(this).setLoggingEnabled(BuildConfig.DEBUG);
