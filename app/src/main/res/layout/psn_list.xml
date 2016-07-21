@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -14,12 +15,34 @@
             android:layout_height="wrap_content"
             android:theme="@style/ToolbarPsnTheme" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvPsnList"
+        <LinearLayout
+            android:id="@+id/llPsnListContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:visibility="gone" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tvPsnListCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray120"
+                android:paddingBottom="4dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/white00"
+                android:textSize="12sp"
+                tools:text="Listado de juegos: 70" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvPsnList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
         <include
             android:id="@+id/emptyView"

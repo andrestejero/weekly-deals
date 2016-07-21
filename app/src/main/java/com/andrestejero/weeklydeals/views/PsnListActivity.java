@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
@@ -105,8 +106,29 @@ public class PsnListActivity extends AppBaseActivity implements
         updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         mPsnContainer = psnContainer;
         if (mViewHolder != null) {
+            updateHeaderTitleView(mViewHolder, mPsnContainer.getName(), mPsnContainer.getPagingTotal());
             mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
             mViewHolder.psnListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void updateHeaderTitleView(@NonNull ViewHolder viewHolder, @Nullable String title, int total) {
+        if (StringUtils.isNotEmpty(title)) {
+            setTitle(title);
+            if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts())) {
+                String text = getString(R.string.results_separator, title, total);
+                if (total == 1) {
+                    text += getString(R.string.result);
+                } else {
+                    text += getString(R.string.results);
+                }
+                viewHolder.psnListCount.setVisibility(View.VISIBLE);
+                viewHolder.psnListCount.setText(text);
+            } else {
+                viewHolder.psnListCount.setVisibility(View.GONE);
+            }
+        } else {
+            viewHolder.psnListCount.setVisibility(View.GONE);
         }
     }
 
@@ -124,7 +146,7 @@ public class PsnListActivity extends AppBaseActivity implements
             mViewHolder.loadingView.setVisibility(loadingVisibility);
             mViewHolder.errorView.setVisibility(errorVisibility);
             mViewHolder.emptyView.setVisibility(emptyVisibility);
-            mViewHolder.psnListView.setVisibility(contentVisibility);
+            mViewHolder.psnListContent.setVisibility(contentVisibility);
         }
     }
 
@@ -162,6 +184,8 @@ public class PsnListActivity extends AppBaseActivity implements
         private View loadingView;
         private View errorView;
         private View emptyView;
+        private View psnListContent;
+        private TextView psnListCount;
         private RecyclerView psnListView;
         private final PsnListAdapter psnListAdapter;
         private final RecyclerView.LayoutManager mLayoutManager;
@@ -171,6 +195,8 @@ public class PsnListActivity extends AppBaseActivity implements
             loadingView = findViewById(R.id.loadingView);
             errorView = findViewById(R.id.errorView);
             emptyView = findViewById(R.id.emptyView);
+            psnListContent = findViewById(R.id.llPsnListContent);
+            psnListCount = (TextView) findViewById(R.id.tvPsnListCount);
             psnListView = (RecyclerView) findViewById(R.id.rvPsnList);
             psnListAdapter = new PsnListAdapter(PsnListActivity.this);
             psnListView.setAdapter(psnListAdapter);
