@@ -19,15 +19,14 @@ import android.widget.TextView;
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
+import com.andrestejero.weeklydeals.models.Filter;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
+import com.andrestejero.weeklydeals.models.Value;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PsnListActivity extends AppBaseActivity implements
         PsnPresenter.PsnListView,
@@ -212,20 +211,37 @@ public class PsnListActivity extends AppBaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    // FIXME test filtros
+    // FIXME Marcar el seleccionado
     private void showFiltersByAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
-        builder.setTitle("title");
+        if (mPsnContainer != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
+            builder.setTitle("Filters");
+            builder.setItems(mPsnContainer.getFilterNamesAsArray(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    Filter filter = mPsnContainer.getFilters().get(item);
+                    showFiltersItemByAlertDialog(filter);
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
 
-        List<CharSequence> optionsNames = new ArrayList<>();
-        optionsNames.add("test1");
-        optionsNames.add("test2");
-        optionsNames.add("test3");
-        CharSequence[] array = new CharSequence[optionsNames.size()];
-        
-        builder.setSingleChoiceItems(optionsNames.toArray(array), 2, null);
-        AlertDialog alert = builder.create();
-        alert.show();
+    private void showFiltersItemByAlertDialog(@NonNull final Filter filter) {
+        if (mPsnContainer != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
+            builder.setTitle(filter.getName());
+            builder.setItems(filter.getValueNamesAsArray(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    Value value = filter.getValues().get(item);
+                    Log.d(LOG_TAG, "Filter: " + filter.getId() + " Value: " + value.getId());
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     private class ViewHolder {
