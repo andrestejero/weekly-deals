@@ -1,13 +1,16 @@
 package com.andrestejero.weeklydeals.views;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,9 @@ import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PsnListActivity extends AppBaseActivity implements
         PsnPresenter.PsnListView,
@@ -192,6 +198,34 @@ public class PsnListActivity extends AppBaseActivity implements
 
     private boolean shouldShowFilterMenuItem() {
         return mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_filter) {
+            showFiltersByAlertDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // FIXME test filtros
+    private void showFiltersByAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
+        builder.setTitle("title");
+
+        List<CharSequence> optionsNames = new ArrayList<>();
+        optionsNames.add("test1");
+        optionsNames.add("test2");
+        optionsNames.add("test3");
+        CharSequence[] array = new CharSequence[optionsNames.size()];
+        
+        builder.setSingleChoiceItems(optionsNames.toArray(array), 2, null);
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private class ViewHolder {
