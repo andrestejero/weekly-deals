@@ -9,6 +9,7 @@
     <string name="home_button">Ver Ofertas</string>
     <string name="result">&#160;game</string>
     <string name="results">&#160;games</string>
+    <string name="action_filter">Filtrar</string>
     <string name="results_separator">%1$s&#160;-&#160;%2$s</string>
     <string name="error_view_title">¡Ups! Falló la conexión a nuestros servidores.</string>
     <string name="error_view_message">Intentá nuevamente.</string>

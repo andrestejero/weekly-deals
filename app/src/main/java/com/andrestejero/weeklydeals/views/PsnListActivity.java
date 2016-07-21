@@ -8,6 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -102,9 +104,10 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void showPsnContainer(@NonNull PsnContainer psnContainer) {
-        stopRefreshIndicator();
-        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         mPsnContainer = psnContainer;
+        stopRefreshIndicator();
+        invalidateOptionsMenu();
+        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         if (mViewHolder != null) {
             updateHeaderTitleView(mViewHolder, mPsnContainer.getName(), mPsnContainer.getPagingTotal());
             mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
@@ -177,6 +180,18 @@ public class PsnListActivity extends AppBaseActivity implements
     @Override
     public void onPageLoading() {
         loadPsnList(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_psn_list, menu);
+        MenuItem filterItem = menu.findItem(R.id.action_filter);
+        filterItem.setVisible(shouldShowFilterMenuItem());
+        return true;
+    }
+
+    private boolean shouldShowFilterMenuItem() {
+        return mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts());
     }
 
     private class ViewHolder {
