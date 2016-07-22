@@ -113,17 +113,19 @@ public class PsnPresenter {
     public void updateFiltersApplied(@Nullable String filterId, @Nullable String valueId) {
         if (filtersApplied != null) {
             if (StringUtils.isNotEmpty(filterId) && StringUtils.isNotEmpty(valueId)) {
-                boolean addFilter = true;
-                for (Iterator<FilterApplied> iterator = filtersApplied.iterator(); iterator.hasNext();) {
-                    FilterApplied filter = iterator.next();
+                boolean removeFilter = false;
+                FilterApplied filterToRemove = new FilterApplied();
+                for (FilterApplied filter : CollectionUtils.safeIterable(filtersApplied)) {
                     if (StringUtils.isNotEmpty(filter.getId()) && StringUtils.isNotEmpty(filter.getValue())) {
                         if (filter.getId().equalsIgnoreCase(filterId) && filter.getValue().equalsIgnoreCase(valueId)) {
-                            addFilter = false;
-                            iterator.remove();
+                            removeFilter = true;
+                            filterToRemove = filter;
                         }
                     }
                 }
-                if (addFilter) {
+                if (removeFilter) {
+                    filtersApplied.remove(filterToRemove);
+                } else {
                     filtersApplied.add(new FilterApplied(filterId, valueId));
                 }
             }

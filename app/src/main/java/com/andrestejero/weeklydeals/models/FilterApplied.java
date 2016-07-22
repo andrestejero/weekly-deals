@@ -10,6 +10,9 @@ public class FilterApplied {
     @Nullable
     private String value;
 
+    public FilterApplied() {
+    }
+
     public FilterApplied(@Nullable String id, @Nullable String value) {
         this.id = id;
         this.value = value;
