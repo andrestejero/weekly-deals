@@ -9,9 +9,11 @@ import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.repositories.AppRepository;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
+import com.andrestejero.weeklydeals.utils.StringUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -108,9 +110,23 @@ public class PsnPresenter {
         }
     }
 
-    public void updateFiltersApplied(@Nullable String filter, @Nullable String value) {
+    public void updateFiltersApplied(@Nullable String filterId, @Nullable String valueId) {
         if (filtersApplied != null) {
-            filtersApplied.add(new FilterApplied(filter, value));
+            if (StringUtils.isNotEmpty(filterId) && StringUtils.isNotEmpty(valueId)) {
+                boolean addFilter = true;
+                for (Iterator<FilterApplied> iterator = filtersApplied.iterator(); iterator.hasNext();) {
+                    FilterApplied filter = iterator.next();
+                    if (StringUtils.isNotEmpty(filter.getId()) && StringUtils.isNotEmpty(filter.getValue())) {
+                        if (filter.getId().equalsIgnoreCase(filterId) && filter.getValue().equalsIgnoreCase(valueId)) {
+                            addFilter = false;
+                            iterator.remove();
+                        }
+                    }
+                }
+                if (addFilter) {
+                    filtersApplied.add(new FilterApplied(filterId, valueId));
+                }
+            }
             PsnListView view = weakView.get();
             if (view != null) {
                 view.updateFiltersApplied(filtersApplied);
