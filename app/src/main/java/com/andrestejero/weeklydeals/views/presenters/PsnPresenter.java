@@ -52,7 +52,7 @@ public class PsnPresenter {
         }
         PsnListView view = weakView.get();
         if (view != null) {
-            if (CollectionUtils.isNullOrEmpty(products) && CollectionUtils.isNullOrEmpty(categories)) {
+            if (CollectionUtils.isNullOrEmpty(products) && CollectionUtils.isNullOrEmpty(categories) || !nextPage) {
                 view.showLoading();
             }
             mAppRepository.getPsnContainer(id, offset, filters, new Callback<PsnContainer>() {
