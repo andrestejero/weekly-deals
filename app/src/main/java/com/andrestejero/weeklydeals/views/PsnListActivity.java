@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +19,7 @@ import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.models.Filter;
+import com.andrestejero.weeklydeals.models.FilterApplied;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.models.Value;
@@ -27,6 +27,8 @@ import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
+
+import java.util.List;
 
 public class PsnListActivity extends AppBaseActivity implements
         PsnPresenter.PsnListView,
@@ -45,6 +47,9 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Nullable
     private PsnContainer mPsnContainer;
+
+    @Nullable
+    private List<FilterApplied> mFiltersApplied;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class PsnListActivity extends AppBaseActivity implements
         Bundle extras = getIntent().getExtras();
         String id = extras.getString(EXTRA_PSN_LIST_ID);
         if (mPresenter != null && StringUtils.isNotEmpty(id)) {
-            mPresenter.getPsnContainer(id, nextPage);
+            mPresenter.getPsnContainer(id, nextPage, mFiltersApplied);
         }
     }
 
@@ -235,13 +240,21 @@ public class PsnListActivity extends AppBaseActivity implements
             builder.setItems(filter.getValueNamesAsArray(), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int item) {
-                    Value value = filter.getValues().get(item);
-                    Log.d(LOG_TAG, "Filter: " + filter.getId() + " Value: " + value.getId());
+                    if (mPresenter != null) {
+                        Value value = filter.getValues().get(item);
+                        mPresenter.updateFiltersApplied(filter.getId(), value.getId());
+                    }
                 }
             });
             AlertDialog alert = builder.create();
             alert.show();
         }
+    }
+
+    @Override
+    public void updateFiltersApplied(@NonNull List<FilterApplied> filtersApplied) {
+        mFiltersApplied = filtersApplied;
+        loadPsnList(false);
     }
 
     private class ViewHolder {

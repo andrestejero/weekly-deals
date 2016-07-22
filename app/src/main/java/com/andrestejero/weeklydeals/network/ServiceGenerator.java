@@ -3,6 +3,8 @@ package com.andrestejero.weeklydeals.network;
 import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 
+import java.util.Map;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -11,12 +13,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public class ServiceGenerator {
 
     public interface WeeklyDealsServiceApi {
         @GET("/lists/{id}")
-        Call<PsnContainer> getPsnContainer(@Path("id") String id, @Query("offset") Integer offset);
+        Call<PsnContainer> getPsnContainer(@Path("id") String id, @Query("offset") Integer offset, @QueryMap(encoded = false) Map<String, String> filters);
 
         @GET("/products/{id}")
         Call<ProductDetail> getProductDetail(@Path("id") String id);
