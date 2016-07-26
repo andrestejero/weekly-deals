@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Filter {
@@ -32,15 +31,5 @@ public class Filter {
     @NonNull
     public List<Value> getValues() {
         return CollectionUtils.safeList(values);
-    }
-
-    @NonNull
-    public CharSequence[] getValueNamesAsArray() {
-        List<CharSequence> valueNames = new ArrayList<>();
-        for (Value value : getValues()) {
-            valueNames.add(value.getName());
-        }
-        CharSequence[] array = new CharSequence[valueNames.size()];
-        return valueNames.toArray(array);
     }
 }

@@ -26,6 +26,7 @@ import com.andrestejero.weeklydeals.models.Value;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
+import com.andrestejero.weeklydeals.views.adapters.PsnListFilterAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
 import java.util.List;
@@ -235,9 +236,10 @@ public class PsnListActivity extends AppBaseActivity implements
 
     private void showFiltersItemByAlertDialog(@NonNull final Filter filter) {
         if (mPsnContainer != null) {
+            PsnListFilterAdapter adapter = new PsnListFilterAdapter(this, filter.getValues());
             AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
             builder.setTitle(filter.getName());
-            builder.setItems(filter.getValueNamesAsArray(), new DialogInterface.OnClickListener() {
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int item) {
                     if (mPresenter != null) {
