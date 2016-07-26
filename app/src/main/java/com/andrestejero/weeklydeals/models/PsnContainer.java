@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PsnContainer {
@@ -78,16 +77,6 @@ public class PsnContainer {
             return paging.getTotal();
         }
         return getItemsCount();
-    }
-
-    @NonNull
-    public CharSequence[] getFilterNamesAsArray() {
-        List<CharSequence> filterNames = new ArrayList<>();
-        for (Filter filter : getFilters()) {
-            filterNames.add(filter.getName());
-        }
-        CharSequence[] array = new CharSequence[filterNames.size()];
-        return filterNames.toArray(array);
     }
 
     public void setProducts(@Nullable List<Product> products) {

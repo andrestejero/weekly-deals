@@ -26,6 +26,7 @@ import com.andrestejero.weeklydeals.models.Value;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
+import com.andrestejero.weeklydeals.views.adapters.PsnListFilterAdapter;
 import com.andrestejero.weeklydeals.views.adapters.PsnListFilterItemAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
@@ -217,12 +218,13 @@ public class PsnListActivity extends AppBaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    // FIXME Agregar adapter - Marcar el seleccionado
+    // FIXME Marcar el seleccionado
     private void showFiltersByAlertDialog() {
         if (mPsnContainer != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
             builder.setTitle("Filters");
-            builder.setItems(mPsnContainer.getFilterNamesAsArray(), new DialogInterface.OnClickListener() {
+            PsnListFilterAdapter adapter = new PsnListFilterAdapter(this, mPsnContainer.getFilters());
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int item) {
                     Filter filter = mPsnContainer.getFilters().get(item);
