@@ -15,7 +15,7 @@ import com.andrestejero.weeklydeals.utils.StringUtils;
 
 import java.util.List;
 
-public class PsnListFilterAdapter extends BaseAdapter {
+public class PsnListFilterItemAdapter extends BaseAdapter {
 
     @NonNull
     private final Context mContext;
@@ -23,7 +23,7 @@ public class PsnListFilterAdapter extends BaseAdapter {
     @NonNull
     private List<Value> mValues;
 
-    public PsnListFilterAdapter(@NonNull Context context, @NonNull List<Value> values) {
+    public PsnListFilterItemAdapter(@NonNull Context context, @NonNull List<Value> values) {
         this.mContext = context;
         this.mValues = values;
     }

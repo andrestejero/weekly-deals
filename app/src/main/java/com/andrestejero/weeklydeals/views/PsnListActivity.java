@@ -26,7 +26,7 @@ import com.andrestejero.weeklydeals.models.Value;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
-import com.andrestejero.weeklydeals.views.adapters.PsnListFilterAdapter;
+import com.andrestejero.weeklydeals.views.adapters.PsnListFilterItemAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
 import java.util.List;
@@ -217,7 +217,7 @@ public class PsnListActivity extends AppBaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    // FIXME Marcar el seleccionado
+    // FIXME Agregar adapter - Marcar el seleccionado
     private void showFiltersByAlertDialog() {
         if (mPsnContainer != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
@@ -234,9 +234,10 @@ public class PsnListActivity extends AppBaseActivity implements
         }
     }
 
+    // FIXME concatenar seleccion multiple de item
     private void showFiltersItemByAlertDialog(@NonNull final Filter filter) {
         if (mPsnContainer != null) {
-            PsnListFilterAdapter adapter = new PsnListFilterAdapter(this, filter.getValues());
+            PsnListFilterItemAdapter adapter = new PsnListFilterItemAdapter(this, filter.getValues());
             AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
             builder.setTitle(filter.getName());
             builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
