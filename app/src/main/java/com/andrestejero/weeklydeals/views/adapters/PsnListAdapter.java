@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.R;
@@ -81,7 +80,9 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             final Category category = mCategories.get(position);
             if (StringUtils.isNotEmpty(category.getName()) && category.getName().contains("----")) {
                 viewHolder.categoryContent.setVisibility(View.GONE);
+                viewHolder.separator.setVisibility(View.GONE);
             } else {
+                viewHolder.separator.setVisibility(View.VISIBLE);
                 viewHolder.categoryContent.setVisibility(View.VISIBLE);
                 PsnListAdapterHelper.showCategoryName(category, viewHolder.categoryName);
                 PsnListAdapterHelper.showCategoryImage(mContext, category, viewHolder.categoryImage);
@@ -158,12 +159,14 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private View categoryContent;
+        private View separator;
         private ImageView categoryImage;
         private TextView categoryName;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
             categoryContent = itemView.findViewById(R.id.rlContent);
+            separator = itemView.findViewById(R.id.separator);
             categoryImage = (ImageView) itemView.findViewById(R.id.ivCategoryImage);
             categoryName = (TextView) itemView.findViewById(R.id.tvCategoryName);
             View actionableCover = itemView.findViewById(R.id.actionableCover);
@@ -219,12 +222,8 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     class LoadingViewHolder extends RecyclerView.ViewHolder {
-
-        private ProgressBar progressBar;
-
         public LoadingViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
     }
 }
