@@ -2,6 +2,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,11 @@ public class PsnListSortAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Sort sort = mSorts.get(position);
-
+        if (sort.isSelected()) {
+            viewHolder.sortName.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green20));
+        } else {
+            viewHolder.sortName.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white00));
+        }
         if (StringUtils.isNotEmpty(sort.getName())) {
             viewHolder.sortName.setText(sort.getName());
         }
