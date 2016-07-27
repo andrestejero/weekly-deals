@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.models;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class Value {
@@ -10,6 +11,8 @@ public class Value {
     @Nullable
     private String name;
 
+    private boolean selected;
+
     @Nullable
     public String getId() {
         return id;
@@ -18,5 +21,13 @@ public class Value {
     @Nullable
     public String getName() {
         return name;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

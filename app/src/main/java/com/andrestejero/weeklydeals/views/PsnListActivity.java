@@ -19,7 +19,6 @@ import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.models.Filter;
-import com.andrestejero.weeklydeals.models.FilterApplied;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.models.Value;
@@ -51,7 +50,7 @@ public class PsnListActivity extends AppBaseActivity implements
     private PsnContainer mPsnContainer;
 
     @Nullable
-    private List<FilterApplied> mFiltersApplied;
+    private List<Filter> mFiltersApplied;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +235,6 @@ public class PsnListActivity extends AppBaseActivity implements
         }
     }
 
-    // FIXME concatenar seleccion multiple de item
     private void showFiltersItemByAlertDialog(@NonNull final Filter filter) {
         if (mPsnContainer != null) {
             PsnListFilterItemAdapter adapter = new PsnListFilterItemAdapter(this, filter.getValues());
@@ -247,19 +245,15 @@ public class PsnListActivity extends AppBaseActivity implements
                 public void onClick(DialogInterface dialog, int item) {
                     if (mPresenter != null) {
                         Value value = filter.getValues().get(item);
-                        mPresenter.updateFiltersApplied(filter.getId(), value.getId());
+                        filter.toggleOption(value);
+                        mFiltersApplied = mPsnContainer.getFilters();
+                        loadPsnList(false);
                     }
                 }
             });
             AlertDialog alert = builder.create();
             alert.show();
         }
-    }
-
-    @Override
-    public void updateFiltersApplied(@NonNull List<FilterApplied> filtersApplied) {
-        mFiltersApplied = filtersApplied;
-        loadPsnList(false);
     }
 
     private class ViewHolder {

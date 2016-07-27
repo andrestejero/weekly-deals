@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Filter {
@@ -31,5 +33,25 @@ public class Filter {
     @NonNull
     public List<Value> getValues() {
         return CollectionUtils.safeList(values);
+    }
+
+    @NonNull
+    public List<Value> getSelectedOptions() {
+        List<Value> values = getValues();
+        if (CollectionUtils.isNullOrEmpty(values)) {
+            return Collections.emptyList();
+        }
+
+        List<Value> selectedOptions = new ArrayList<>();
+        for (Value value : values) {
+            if (value.isSelected()) {
+                selectedOptions.add(value);
+            }
+        }
+        return selectedOptions;
+    }
+
+    public void toggleOption(@NonNull Value value) {
+        value.setSelected(!value.isSelected());
     }
 }

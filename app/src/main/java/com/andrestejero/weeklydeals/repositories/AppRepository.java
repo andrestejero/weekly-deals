@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.helpers.FilterHelper;
-import com.andrestejero.weeklydeals.models.FilterApplied;
+import com.andrestejero.weeklydeals.models.Filter;
 import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.network.ServiceGenerator;
@@ -25,7 +25,7 @@ public class AppRepository {
         mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
     }
 
-    public void getPsnContainer(@NonNull String id, @Nullable Integer offset, @Nullable List<FilterApplied> filtersApplied, @NonNull Callback<PsnContainer> callback) {
+    public void getPsnContainer(@NonNull String id, @Nullable Integer offset, @Nullable List<Filter> filtersApplied, @NonNull Callback<PsnContainer> callback) {
         Map<String, String> filters = FilterHelper.getSelectedFilters(filtersApplied);
         mCallGetPsnContainer = mService.getPsnContainer(id, offset, filters);
         mCallGetPsnContainer.enqueue(callback);
@@ -47,5 +47,4 @@ public class AppRepository {
             mCallGetProductDetail.cancel();
         }
     }
-
 }
