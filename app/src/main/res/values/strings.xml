@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">Weekly Deals</string>
     <string name="home_subtitle">Playstation Network</string>
-    <string name="title_activity_game_list">Listado de Juegos</string>
+    <string name="title_activity_game_list">Game List</string>
     <string name="iv_description">Content Description</string>
-    <string name="title_activity_game_detail">Detalle de producto</string>
-    <string name="loading">Cargando&#8230;</string>
+    <string name="title_activity_game_detail">Product Detail</string>
+    <string name="loading">Loading&#8230;</string>
     <string name="free">FREE</string>
-    <string name="home_button">Ver Ofertas</string>
+    <string name="home_button">Deals</string>
     <string name="result">&#160;game</string>
     <string name="results">&#160;games</string>
-    <string name="action_filter">Filtrar</string>
+    <string name="action_sort">Sort</string>
+    <string name="action_filter">Filter</string>
     <string name="results_separator">%1$s&#160;-&#160;%2$s</string>
     <string name="error_view_title">¡Ups! Falló la conexión a nuestros servidores.</string>
     <string name="error_view_message">Intentá nuevamente.</string>

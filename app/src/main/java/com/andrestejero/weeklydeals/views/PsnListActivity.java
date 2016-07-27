@@ -21,12 +21,14 @@ import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.models.Filter;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
+import com.andrestejero.weeklydeals.models.Sort;
 import com.andrestejero.weeklydeals.models.Value;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
 import com.andrestejero.weeklydeals.views.adapters.PsnListFilterAdapter;
 import com.andrestejero.weeklydeals.views.adapters.PsnListFilterItemAdapter;
+import com.andrestejero.weeklydeals.views.adapters.PsnListSortAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
 
 import java.util.List;
@@ -52,6 +54,9 @@ public class PsnListActivity extends AppBaseActivity implements
     @Nullable
     private List<Filter> mFiltersApplied;
 
+    @Nullable
+    private String mSortApplied;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +76,7 @@ public class PsnListActivity extends AppBaseActivity implements
         Bundle extras = getIntent().getExtras();
         String id = extras.getString(EXTRA_PSN_LIST_ID);
         if (mPresenter != null && StringUtils.isNotEmpty(id)) {
-            mPresenter.getPsnContainer(id, nextPage, mFiltersApplied);
+            mPresenter.getPsnContainer(id, nextPage, mSortApplied, mFiltersApplied);
         }
     }
 
@@ -196,28 +201,59 @@ public class PsnListActivity extends AppBaseActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_psn_list, menu);
+
+        MenuItem sortItem = menu.findItem(R.id.action_sort);
         MenuItem filterItem = menu.findItem(R.id.action_filter);
+
+        sortItem.setVisible(shouldShowSortMenuItem());
         filterItem.setVisible(shouldShowFilterMenuItem());
         return true;
     }
 
+    private boolean shouldShowSortMenuItem() {
+        return mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts()) && CollectionUtils.isNotEmpty(mPsnContainer.getSorting());
+    }
+
     private boolean shouldShowFilterMenuItem() {
-        return mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts());
+        return mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts()) && CollectionUtils.isNotEmpty(mPsnContainer.getFilters());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        if (id == R.id.action_sort) {
+            showSortByAlertDialog();
+            return true;
+        }
+
         if (id == R.id.action_filter) {
-            showFiltersByAlertDialog();
+            showFiltersAlertDialog();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showFiltersByAlertDialog() {
+    private void showSortByAlertDialog() {
+        if (mPsnContainer != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
+            builder.setTitle(getString(R.string.action_sort));
+            PsnListSortAdapter adapter = new PsnListSortAdapter(this, mPsnContainer.getSorting());
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    Sort sort = mPsnContainer.getSorting().get(item);
+                    mSortApplied = sort.getId();
+                    loadPsnList(false);
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
+    private void showFiltersAlertDialog() {
         if (mPsnContainer != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
             builder.setTitle(getString(R.string.action_filter));

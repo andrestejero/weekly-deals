@@ -19,7 +19,7 @@ public class ServiceGenerator {
 
     public interface WeeklyDealsServiceApi {
         @GET("/lists/{id}")
-        Call<PsnContainer> getPsnContainer(@Path("id") String id, @Query("offset") Integer offset, @QueryMap(encoded = false) Map<String, String> filters);
+        Call<PsnContainer> getPsnContainer(@Path("id") String id, @Query("offset") Integer offset, @Query("sorting") String sortApplied,@QueryMap(encoded = false) Map<String, String> filters);
 
         @GET("/products/{id}")
         Call<ProductDetail> getProductDetail(@Path("id") String id);

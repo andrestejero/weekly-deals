@@ -39,7 +39,7 @@ public class PsnPresenter {
         this.mAppRepository = appRepository;
     }
 
-    public void getPsnContainer(@NonNull String id, final boolean nextPage, @Nullable List<Filter> filters) {
+    public void getPsnContainer(@NonNull String id, final boolean nextPage, @Nullable String sort, @Nullable List<Filter> filters) {
         if (!nextPage) {
             offset = null;
         }
@@ -48,7 +48,7 @@ public class PsnPresenter {
             if (CollectionUtils.isNullOrEmpty(products) && CollectionUtils.isNullOrEmpty(categories) || !nextPage) {
                 view.showLoading();
             }
-            mAppRepository.getPsnContainer(id, offset, filters, new Callback<PsnContainer>() {
+            mAppRepository.getPsnContainer(id, offset, sort, filters, new Callback<PsnContainer>() {
                 @Override
                 public void onResponse(Call<PsnContainer> call, Response<PsnContainer> response) {
                     PsnListView view = weakView.get();

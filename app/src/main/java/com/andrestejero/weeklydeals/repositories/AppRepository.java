@@ -25,9 +25,9 @@ public class AppRepository {
         mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
     }
 
-    public void getPsnContainer(@NonNull String id, @Nullable Integer offset, @Nullable List<Filter> filtersApplied, @NonNull Callback<PsnContainer> callback) {
+    public void getPsnContainer(@NonNull String id, @Nullable Integer offset, @Nullable String sortApplied, @Nullable List<Filter> filtersApplied, @NonNull Callback<PsnContainer> callback) {
         Map<String, String> filters = FilterHelper.getSelectedFilters(filtersApplied);
-        mCallGetPsnContainer = mService.getPsnContainer(id, offset, filters);
+        mCallGetPsnContainer = mService.getPsnContainer(id, offset, sortApplied, filters);
         mCallGetPsnContainer.enqueue(callback);
     }
 

@@ -31,6 +31,9 @@ public class PsnContainer {
     private List<Filter> filters;
 
     @Nullable
+    private List<Sort> sorting;
+
+    @Nullable
     public String getId() {
         return id;
     }
@@ -58,6 +61,11 @@ public class PsnContainer {
     @NonNull
     public List<Filter> getFilters() {
         return CollectionUtils.safeList(filters);
+    }
+
+    @NonNull
+    public List<Sort> getSorting() {
+        return CollectionUtils.safeList(sorting);
     }
 
     /**
