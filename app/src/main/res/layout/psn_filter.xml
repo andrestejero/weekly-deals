@@ -2,24 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvFilterName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/red00"
-        android:textSize="24sp"
-        tools:text="PS4" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/blue20" />
+
+    <!-- FIXME hacer actionableCover -->
+    <TextView
+        android:id="@+id/tvFilterName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="6dp"
+        android:textColor="@color/gray120"
+        android:textSize="18sp"
+        tools:text="Platforms" />
 
 </LinearLayout>

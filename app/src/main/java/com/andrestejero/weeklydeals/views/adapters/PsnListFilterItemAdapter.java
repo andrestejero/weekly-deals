@@ -2,6 +2,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,11 @@ public class PsnListFilterItemAdapter extends BaseAdapter {
         }
         Value value = mValues.get(position);
         if (StringUtils.isNotEmpty(value.getName())) {
+            if (value.isSelected()) {
+                viewHolder.filterName.setBackgroundColor(ContextCompat.getColor(mContext, R.color.yellow40));
+            } else {
+                viewHolder.filterName.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white00));
+            }
             viewHolder.filterName.setText(value.getName());
         }
         return convertView;

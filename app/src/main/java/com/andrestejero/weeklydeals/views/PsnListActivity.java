@@ -217,11 +217,10 @@ public class PsnListActivity extends AppBaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    // FIXME Marcar el seleccionado
     private void showFiltersByAlertDialog() {
         if (mPsnContainer != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
-            builder.setTitle("Filters");
+            builder.setTitle(getString(R.string.action_filter));
             PsnListFilterAdapter adapter = new PsnListFilterAdapter(this, mPsnContainer.getFilters());
             builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                 @Override
