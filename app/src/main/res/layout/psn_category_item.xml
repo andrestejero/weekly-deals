@@ -39,11 +39,12 @@
             android:lines="2"
             android:textColor="@color/gray120"
             android:textSize="16sp"
-            tools:text="COMBO TABLET GONNA SPRINGBOKS 7' 8GB NEGRO" />
+            tools:text="PlayStation Plus Specials" />
 
     </RelativeLayout>
 
     <View
+        android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"

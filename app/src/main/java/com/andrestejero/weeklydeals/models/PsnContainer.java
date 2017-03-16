@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.models;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
@@ -27,6 +28,12 @@ public class PsnContainer {
     private Paging paging;
 
     @Nullable
+    private List<Filter> filters;
+
+    @Nullable
+    private List<Sort> sorting;
+
+    @Nullable
     public String getId() {
         return id;
     }
@@ -36,12 +43,12 @@ public class PsnContainer {
         return name;
     }
 
-    @Nullable
+    @NonNull
     public List<Product> getProducts() {
         return CollectionUtils.safeList(products);
     }
 
-    @Nullable
+    @NonNull
     public List<Category> getCategories() {
         return CollectionUtils.safeList(categories);
     }
@@ -49,6 +56,16 @@ public class PsnContainer {
     @Nullable
     public Paging getPaging() {
         return paging;
+    }
+
+    @NonNull
+    public List<Filter> getFilters() {
+        return CollectionUtils.safeList(filters);
+    }
+
+    @NonNull
+    public List<Sort> getSorting() {
+        return CollectionUtils.safeList(sorting);
     }
 
     /**

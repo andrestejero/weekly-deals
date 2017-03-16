@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.models.Category;
+import com.andrestejero.weeklydeals.models.Filter;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.repositories.AppRepository;
@@ -38,16 +39,16 @@ public class PsnPresenter {
         this.mAppRepository = appRepository;
     }
 
-    public void getPsnContainer(@NonNull String id, final boolean nextPage) {
+    public void getPsnContainer(@NonNull String id, final boolean nextPage, @Nullable String sort, @Nullable List<Filter> filters) {
         if (!nextPage) {
             offset = null;
         }
         PsnListView view = weakView.get();
         if (view != null) {
-            if (CollectionUtils.isNullOrEmpty(products) && CollectionUtils.isNullOrEmpty(categories)) {
+            if (CollectionUtils.isNullOrEmpty(products) && CollectionUtils.isNullOrEmpty(categories) || !nextPage) {
                 view.showLoading();
             }
-            mAppRepository.getPsnContainer(id, offset, new Callback<PsnContainer>() {
+            mAppRepository.getPsnContainer(id, offset, sort, filters, new Callback<PsnContainer>() {
                 @Override
                 public void onResponse(Call<PsnContainer> call, Response<PsnContainer> response) {
                     PsnListView view = weakView.get();

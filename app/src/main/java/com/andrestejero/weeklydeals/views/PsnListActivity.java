@@ -1,25 +1,37 @@
 package com.andrestejero.weeklydeals.views;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
+import com.andrestejero.weeklydeals.models.Filter;
 import com.andrestejero.weeklydeals.models.Product;
 import com.andrestejero.weeklydeals.models.PsnContainer;
+import com.andrestejero.weeklydeals.models.Sort;
+import com.andrestejero.weeklydeals.models.Value;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.PsnListAdapter;
+import com.andrestejero.weeklydeals.views.adapters.PsnListFilterAdapter;
+import com.andrestejero.weeklydeals.views.adapters.PsnListFilterItemAdapter;
+import com.andrestejero.weeklydeals.views.adapters.PsnListSortAdapter;
 import com.andrestejero.weeklydeals.views.presenters.PsnPresenter;
+
+import java.util.List;
 
 public class PsnListActivity extends AppBaseActivity implements
         PsnPresenter.PsnListView,
@@ -38,6 +50,12 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Nullable
     private PsnContainer mPsnContainer;
+
+    @Nullable
+    private List<Filter> mFiltersApplied;
+
+    @Nullable
+    private String mSortApplied;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +76,7 @@ public class PsnListActivity extends AppBaseActivity implements
         Bundle extras = getIntent().getExtras();
         String id = extras.getString(EXTRA_PSN_LIST_ID);
         if (mPresenter != null && StringUtils.isNotEmpty(id)) {
-            mPresenter.getPsnContainer(id, nextPage);
+            mPresenter.getPsnContainer(id, nextPage, mSortApplied, mFiltersApplied);
         }
     }
 
@@ -102,9 +120,10 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Override
     public void showPsnContainer(@NonNull PsnContainer psnContainer) {
-        stopRefreshIndicator();
-        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         mPsnContainer = psnContainer;
+        stopRefreshIndicator();
+        invalidateOptionsMenu();
+        updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
         if (mViewHolder != null) {
             updateHeaderTitleView(mViewHolder, mPsnContainer.getName(), mPsnContainer.getPagingTotal());
             mViewHolder.psnListAdapter.updatePsnList(mPsnContainer, mPsnContainer.getPagingTotal());
@@ -177,6 +196,99 @@ public class PsnListActivity extends AppBaseActivity implements
     @Override
     public void onPageLoading() {
         loadPsnList(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_psn_list, menu);
+
+        MenuItem sortItem = menu.findItem(R.id.action_sort);
+        MenuItem filterItem = menu.findItem(R.id.action_filter);
+
+        sortItem.setVisible(shouldShowSortMenuItem());
+        filterItem.setVisible(shouldShowFilterMenuItem());
+        return true;
+    }
+
+    private boolean shouldShowSortMenuItem() {
+        return mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts()) && CollectionUtils.isNotEmpty(mPsnContainer.getSorting());
+    }
+
+    private boolean shouldShowFilterMenuItem() {
+        return mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts()) && CollectionUtils.isNotEmpty(mPsnContainer.getFilters());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_sort) {
+            showSortByAlertDialog();
+            return true;
+        }
+
+        if (id == R.id.action_filter) {
+            showFiltersAlertDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showSortByAlertDialog() {
+        if (mPsnContainer != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
+            builder.setTitle(getString(R.string.action_sort));
+            PsnListSortAdapter adapter = new PsnListSortAdapter(this, mPsnContainer.getSorting());
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    Sort sort = mPsnContainer.getSorting().get(item);
+                    mSortApplied = sort.getId();
+                    loadPsnList(false);
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
+    private void showFiltersAlertDialog() {
+        if (mPsnContainer != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
+            builder.setTitle(getString(R.string.action_filter));
+            PsnListFilterAdapter adapter = new PsnListFilterAdapter(this, mPsnContainer.getFilters());
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    Filter filter = mPsnContainer.getFilters().get(item);
+                    showFiltersItemByAlertDialog(filter);
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
+    private void showFiltersItemByAlertDialog(@NonNull final Filter filter) {
+        if (mPsnContainer != null) {
+            PsnListFilterItemAdapter adapter = new PsnListFilterItemAdapter(this, filter.getValues());
+            AlertDialog.Builder builder = new AlertDialog.Builder(PsnListActivity.this);
+            builder.setTitle(filter.getName());
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    if (mPresenter != null) {
+                        Value value = filter.getValues().get(item);
+                        filter.toggleOption(value);
+                        mFiltersApplied = mPsnContainer.getFilters();
+                        loadPsnList(false);
+                    }
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     private class ViewHolder {
