@@ -16,13 +16,13 @@ repositories {
 
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.andrestejero.weeklydeals"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 2
         versionName "1.0.1"
     }
@@ -34,7 +34,7 @@ android {
     }
 }
 
-final SUPPORT_VERSION = '23.4.0'
+final SUPPORT_VERSION = '25.3.0'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -48,7 +48,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
