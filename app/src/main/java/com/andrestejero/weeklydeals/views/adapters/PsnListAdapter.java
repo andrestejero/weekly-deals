@@ -157,13 +157,13 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mPageLoadingListener = listener;
     }
 
-    class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private View categoryContent;
         private View separator;
         private ImageView categoryImage;
         private TextView categoryName;
 
-        public CategoryViewHolder(View itemView) {
+        private CategoryViewHolder(View itemView) {
             super(itemView);
             categoryContent = itemView.findViewById(R.id.rlContent);
             separator = itemView.findViewById(R.id.separator);
@@ -181,7 +181,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView productImage;
         private TextView productName;
         private TextView normalPrice;
@@ -195,7 +195,7 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView platform;
         private TextView gameType;
 
-        public ProductViewHolder(View itemView) {
+        private ProductViewHolder(View itemView) {
             super(itemView);
             productImage = (ImageView) itemView.findViewById(R.id.ivProductImage);
             productName = (TextView) itemView.findViewById(R.id.tvProductName);
@@ -221,8 +221,9 @@ public class PsnListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    class LoadingViewHolder extends RecyclerView.ViewHolder {
-        public LoadingViewHolder(View itemView) {
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+
+        private LoadingViewHolder(View itemView) {
             super(itemView);
         }
     }

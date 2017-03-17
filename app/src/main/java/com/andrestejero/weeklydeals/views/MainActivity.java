@@ -1,22 +1,17 @@
 package com.andrestejero.weeklydeals.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
-import com.andrestejero.weeklydeals.models.Banner;
 import com.andrestejero.weeklydeals.models.HomeContainer;
-import com.andrestejero.weeklydeals.utils.CollectionUtils;
-import com.andrestejero.weeklydeals.utils.Logger;
-import com.andrestejero.weeklydeals.views.adapters.BannersAdapter;
+import com.andrestejero.weeklydeals.views.adapters.HomeAdapter;
 import com.andrestejero.weeklydeals.views.presenters.HomePresenter;
 
 public class MainActivity extends AppBaseActivity implements HomePresenter.HomeView {
@@ -76,8 +71,13 @@ public class MainActivity extends AppBaseActivity implements HomePresenter.HomeV
     @Override
     public void showHome(@NonNull HomeContainer homeContainer) {
         if (mViewHolder != null) {
-            mViewHolder.bannersAdapter = new BannersAdapter(this, homeContainer.getBanners());
-            mViewHolder.bannersPager.setAdapter(mViewHolder.bannersAdapter);
+            // TODO: 17/3/17 (Andres) mover a list
+            //mViewHolder.bannersAdapter = new BannersAdapter(this, homeContainer.getBanners());
+            //mViewHolder.bannersPager.setAdapter(mViewHolder.bannersAdapter);
+
+            mViewHolder.homeAdapter = new HomeAdapter(this, homeContainer.getBanners(), homeContainer.getCategories());
+            mViewHolder.homeList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            mViewHolder.homeList.setAdapter(mViewHolder.homeAdapter);
         }
     }
 
@@ -88,11 +88,14 @@ public class MainActivity extends AppBaseActivity implements HomePresenter.HomeV
     }
 
     private class ViewHolder {
-        private final ViewPager bannersPager;
-        private BannersAdapter bannersAdapter;
+        //private final ViewPager bannersPager;
+        //private BannersAdapter bannersAdapter;
+        private final RecyclerView homeList;
+        private HomeAdapter homeAdapter;
 
         private ViewHolder() {
-            bannersPager = (ViewPager) findViewById(R.id.banners);
+            homeList = (RecyclerView) findViewById(R.id.homeList);
+            //bannersPager = (ViewPager) findViewById(R.id.banners);
         }
     }
 }
