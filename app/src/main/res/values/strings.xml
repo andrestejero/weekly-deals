@@ -11,7 +11,7 @@
     <string name="results">&#160;games</string>
     <string name="action_sort">Sort</string>
     <string name="action_filter">Filter</string>
-    <string name="results_separator">%1$s&#160;-&#160;%2$s</string>
+    <string name="results_separator">%1$s&#160;-&#160;%2$d</string>
     <string name="error_view_title">¡Ups! Falló la conexión a nuestros servidores.</string>
     <string name="error_view_message">Intentá nuevamente.</string>
     <string name="empty_view_title">No se encontraron productos</string>
