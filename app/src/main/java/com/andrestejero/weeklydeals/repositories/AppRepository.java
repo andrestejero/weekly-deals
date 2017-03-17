@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.andrestejero.weeklydeals.helpers.FilterHelper;
 import com.andrestejero.weeklydeals.models.Filter;
+import com.andrestejero.weeklydeals.models.HomeContainer;
 import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 import com.andrestejero.weeklydeals.network.ServiceGenerator;
@@ -20,6 +21,7 @@ public class AppRepository {
     private ServiceGenerator.WeeklyDealsServiceApi mService;
     private Call<PsnContainer> mCallGetPsnContainer;
     private Call<ProductDetail> mCallGetProductDetail;
+    private Call<HomeContainer> mCallGetHomeContainer;
 
     public AppRepository() {
         mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
@@ -45,6 +47,17 @@ public class AppRepository {
     public void stopGetProductDetail() {
         if (mCallGetProductDetail != null) {
             mCallGetProductDetail.cancel();
+        }
+    }
+
+    public void getHomeContainer(@NonNull Callback<HomeContainer> callback) {
+        mCallGetHomeContainer = mService.getHomeContainer();
+        mCallGetHomeContainer.enqueue(callback);
+    }
+
+    public void stopGetHomeContainer() {
+        if (mCallGetHomeContainer != null) {
+            mCallGetHomeContainer.cancel();
         }
     }
 }

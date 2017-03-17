@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.network;
 
+import com.andrestejero.weeklydeals.models.HomeContainer;
 import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.PsnContainer;
 
@@ -23,6 +24,9 @@ public class ServiceGenerator {
 
         @GET("/products/{id}")
         Call<ProductDetail> getProductDetail(@Path("id") String id);
+
+        @GET("/home")
+        Call<HomeContainer> getHomeContainer();
     }
 
     public static final String API_BASE_URL = "http://ps-mapi.herokuapp.com";
