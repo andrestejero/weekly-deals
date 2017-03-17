@@ -71,10 +71,6 @@ public class MainActivity extends AppBaseActivity implements HomePresenter.HomeV
     @Override
     public void showHome(@NonNull HomeContainer homeContainer) {
         if (mViewHolder != null) {
-            // TODO: 17/3/17 (Andres) mover a list
-            //mViewHolder.bannersAdapter = new BannersAdapter(this, homeContainer.getBanners());
-            //mViewHolder.bannersPager.setAdapter(mViewHolder.bannersAdapter);
-
             mViewHolder.homeAdapter = new HomeAdapter(this, homeContainer.getBanners(), homeContainer.getCategories());
             mViewHolder.homeList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             mViewHolder.homeList.setAdapter(mViewHolder.homeAdapter);
@@ -88,14 +84,11 @@ public class MainActivity extends AppBaseActivity implements HomePresenter.HomeV
     }
 
     private class ViewHolder {
-        //private final ViewPager bannersPager;
-        //private BannersAdapter bannersAdapter;
         private final RecyclerView homeList;
         private HomeAdapter homeAdapter;
 
         private ViewHolder() {
             homeList = (RecyclerView) findViewById(R.id.homeList);
-            //bannersPager = (ViewPager) findViewById(R.id.banners);
         }
     }
 }

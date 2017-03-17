@@ -4,6 +4,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
+        if (type == TYPE_BANNER) {
+            if (CollectionUtils.isNotEmpty(mBanners)) {
+                BannerViewHolder viewHolder = (BannerViewHolder) holder;
+                viewHolder.bannersAdapter = new BannersAdapter(mContext, mBanners);
+                viewHolder.bannersPager.setAdapter(viewHolder.bannersAdapter);
+            }
+        }
         if (type == TYPE_ITEM) {
             if (CollectionUtils.isNotEmpty(mCategories)) {
                 CategoryViewHolder viewHolder = (CategoryViewHolder) holder;
@@ -81,10 +89,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private class BannerViewHolder extends RecyclerView.ViewHolder {
+        private final ViewPager bannersPager;
+        private BannersAdapter bannersAdapter;
 
         private BannerViewHolder(View itemView) {
             super(itemView);
-
+            bannersPager = (ViewPager) itemView.findViewById(R.id.banners);
         }
     }
 
