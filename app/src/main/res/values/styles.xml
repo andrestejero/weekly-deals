@@ -44,4 +44,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ActionableForeground">
+        <item name="android:foreground">@drawable/fg_actionable_grey</item>
+        <item name="android:clickable">true</item>
+    </style>
+
 </resources>

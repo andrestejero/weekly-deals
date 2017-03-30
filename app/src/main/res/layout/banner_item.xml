@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actionable"
+    style="@style/ActionableForeground"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/black00"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- FIXME continuar -->
     <ImageView
-        android:id="@+id/ivBanner"
+        android:id="@+id/bannerImage"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="match_parent"
         android:contentDescription="@string/iv_description"
-        android:scaleType="fitCenter" />
+        android:scaleType="centerCrop" />
 
-</LinearLayout>
+</FrameLayout>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Banner;
 import com.andrestejero.weeklydeals.models.Category;
+import com.andrestejero.weeklydeals.models.Target;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
 
 import java.util.List;
@@ -34,6 +35,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Nullable
     private List<Category> mCategories;
+
+    @Nullable
+    private OnItemClickListener mItemClickListener;
 
     public HomeAdapter(@NonNull Context context, @Nullable List<Banner> banners, @Nullable List<Category> categories) {
         this.mContext = context;
@@ -72,13 +76,29 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 BannerViewHolder viewHolder = (BannerViewHolder) holder;
                 viewHolder.bannersAdapter = new BannersAdapter(mContext, mBanners);
                 viewHolder.bannersPager.setAdapter(viewHolder.bannersAdapter);
+                viewHolder.bannersAdapter.setOnBannerClickListener(new BannersAdapter.OnBannerClickListener() {
+                    @Override
+                    public void onBannerClick(@NonNull Target target) {
+                        if (mItemClickListener != null) {
+                            mItemClickListener.onBannerClick(target);
+                        }
+                    }
+                });
             }
         }
         if (type == TYPE_ITEM) {
             if (CollectionUtils.isNotEmpty(mCategories)) {
                 CategoryViewHolder viewHolder = (CategoryViewHolder) holder;
-                Category category = mCategories.get(position - 1);
+                final Category category = mCategories.get(position - 1);
                 viewHolder.categoryName.setText(category.getName());
+                viewHolder.actionableCover.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mItemClickListener != null) {
+                            mItemClickListener.onCategoryClick(category);
+                        }
+                    }
+                });
             }
         }
     }
@@ -86,6 +106,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         return CollectionUtils.safeSize(mCategories) + 1;
+    }
+
+    public interface OnItemClickListener {
+        void onCategoryClick(@NonNull Category category);
+        void onBannerClick(@NonNull Target target);
+    }
+
+    public void setOnItemClickListener(@Nullable OnItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
     }
 
     private class BannerViewHolder extends RecyclerView.ViewHolder {
@@ -103,6 +132,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private View separator;
         private ImageView categoryImage;
         private TextView categoryName;
+        private View actionableCover;
 
         private CategoryViewHolder(View itemView) {
             super(itemView);
@@ -110,6 +140,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             separator = itemView.findViewById(R.id.separator);
             categoryImage = (ImageView) itemView.findViewById(R.id.ivCategoryImage);
             categoryName = (TextView) itemView.findViewById(R.id.tvCategoryName);
+            actionableCover = itemView.findViewById(R.id.actionableCover);
         }
     }
 

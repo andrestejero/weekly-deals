@@ -56,6 +56,18 @@ public class ImageRequest {
         return this;
     }
 
+    @NonNull
+    public ImageRequest placeHolderResourceId(@DrawableRes int placeholderResourceId) {
+        this.placeholderResourceId = placeholderResourceId;
+        return this;
+    }
+
+    @NonNull
+    public ImageRequest showBrokenImageDarkBackgroundOnError() {
+        shouldShowBrokenImageDarkBackgroundOnError = true;
+        return this;
+    }
+
     public void execute(@Nullable final ImageRequestCallback listener) {
         executeRequest(url, listener);
     }
