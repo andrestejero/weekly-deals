@@ -20,8 +20,6 @@ import java.util.List;
 
 public class BannersAdapter extends PagerAdapter {
 
-    private final static int BANNER_IMAGE_WIDTH = 220;
-
     @NonNull
     private final Context context;
 
