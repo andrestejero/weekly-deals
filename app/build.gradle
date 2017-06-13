@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.21.6'
     }
 }
 apply plugin: 'com.android.application'
@@ -17,7 +17,7 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
         applicationId "com.andrestejero.weeklydeals"
@@ -34,7 +34,7 @@ android {
     }
 }
 
-final SUPPORT_VERSION = '25.3.0'
+final SUPPORT_VERSION = '25.3.1'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

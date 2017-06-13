@@ -19,6 +19,9 @@ import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.HomeAdapter;
 import com.andrestejero.weeklydeals.views.presenters.HomePresenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppBaseActivity implements
         HomePresenter.HomeView,
         HomeAdapter.OnItemClickListener {
@@ -90,8 +93,17 @@ public class MainActivity extends AppBaseActivity implements
     public void showHome(@NonNull HomeContainer homeContainer) {
         stopRefreshIndicator();
         updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
+
+        // FIXME: 13/6/17 (Andres) junto las categorias de la home - ver servicio
+        List<Category> categories = new ArrayList<>();
+        for (Category category : homeContainer.getCategories()) {
+            for (Category childCategory : category.getCategories()) {
+                categories.add(childCategory);
+            }
+        }
+
         if (mViewHolder != null) {
-            mViewHolder.homeAdapter = new HomeAdapter(this, homeContainer.getBanners(), homeContainer.getCategories());
+            mViewHolder.homeAdapter = new HomeAdapter(this, homeContainer.getBanners(), categories);
             mViewHolder.homeAdapter.setOnItemClickListener(this);
             mViewHolder.homeList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             mViewHolder.homeList.setAdapter(mViewHolder.homeAdapter);

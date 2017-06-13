@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/banners"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp" />
+    android:layout_height="wrap_content">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/banners"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        tools:background="@color/green00" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        tools:background="@color/red00" />
+
+</FrameLayout>
+

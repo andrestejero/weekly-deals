@@ -4,6 +4,7 @@ package com.andrestejero.weeklydeals.views.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -76,6 +77,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 BannerViewHolder viewHolder = (BannerViewHolder) holder;
                 viewHolder.bannersAdapter = new BannersAdapter(mContext, mBanners);
                 viewHolder.bannersPager.setAdapter(viewHolder.bannersAdapter);
+                viewHolder.tabLayout.setupWithViewPager(viewHolder.bannersPager, true);
                 viewHolder.bannersAdapter.setOnBannerClickListener(new BannersAdapter.OnBannerClickListener() {
                     @Override
                     public void onBannerClick(@NonNull Target target) {
@@ -90,7 +92,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (CollectionUtils.isNotEmpty(mCategories)) {
                 CategoryViewHolder viewHolder = (CategoryViewHolder) holder;
                 final Category category = mCategories.get(position - 1);
-                viewHolder.categoryName.setText(category.getName());
+                PsnListAdapterHelper.showCategoryName(category, viewHolder.categoryName);
+                PsnListAdapterHelper.showCategoryImage(mContext, category, viewHolder.categoryImage);
                 viewHolder.actionableCover.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -120,10 +123,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private class BannerViewHolder extends RecyclerView.ViewHolder {
         private final ViewPager bannersPager;
         private BannersAdapter bannersAdapter;
+        private final TabLayout tabLayout;
 
         private BannerViewHolder(View itemView) {
             super(itemView);
             bannersPager = (ViewPager) itemView.findViewById(R.id.banners);
+            tabLayout = (TabLayout) itemView.findViewById(R.id.tabLayout);
         }
     }
 
