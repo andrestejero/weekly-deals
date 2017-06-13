@@ -38,7 +38,11 @@ public class HomePresenter {
                 public void onResponse(Call<HomeContainer> call, Response<HomeContainer> response) {
                     HomeView view = weakView.get();
                     if (view != null) {
-                        view.showHome(response.body());
+                        if (response.body() != null) {
+                            view.showHome(response.body());
+                        } else {
+                            view.showError();
+                        }
                     }
                 }
 

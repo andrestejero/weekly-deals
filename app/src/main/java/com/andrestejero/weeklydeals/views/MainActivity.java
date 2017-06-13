@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
@@ -38,15 +38,19 @@ public class MainActivity extends AppBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
         mViewHolder = new ViewHolder();
         mPresenter = new HomePresenter(this, getAppRepository());
+        setupSearchView(); // FIXME: 13/6/17 (Andres) continuar
         setupRefreshHandler();
         loadHome();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mViewHolder != null) {
+            mViewHolder.searchView.clearFocus();
+        }
     }
 
     @Override
@@ -93,21 +97,22 @@ public class MainActivity extends AppBaseActivity implements
     public void showHome(@NonNull HomeContainer homeContainer) {
         stopRefreshIndicator();
         updateVisibilities(View.GONE, View.GONE, View.GONE, View.VISIBLE);
+        if (mViewHolder != null) {
+            mViewHolder.homeAdapter = new HomeAdapter(this, homeContainer.getBanners(), getCategoryHome(homeContainer));
+            mViewHolder.homeAdapter.setOnItemClickListener(this);
+            mViewHolder.homeList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            mViewHolder.homeList.setAdapter(mViewHolder.homeAdapter);
+        }
+    }
 
-        // FIXME: 13/6/17 (Andres) junto las categorias de la home - ver servicio
+    private List<Category> getCategoryHome(@NonNull HomeContainer homeContainer) {
         List<Category> categories = new ArrayList<>();
         for (Category category : homeContainer.getCategories()) {
             for (Category childCategory : category.getCategories()) {
                 categories.add(childCategory);
             }
         }
-
-        if (mViewHolder != null) {
-            mViewHolder.homeAdapter = new HomeAdapter(this, homeContainer.getBanners(), categories);
-            mViewHolder.homeAdapter.setOnItemClickListener(this);
-            mViewHolder.homeList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-            mViewHolder.homeList.setAdapter(mViewHolder.homeAdapter);
-        }
+        return categories;
     }
 
     @Override
@@ -156,6 +161,30 @@ public class MainActivity extends AppBaseActivity implements
         }
     }
 
+    private void setupSearchView() {
+        if (mViewHolder != null) {
+            mViewHolder.searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        startSearchActivity();
+                    }
+                }
+            });
+            mViewHolder.searchView.setQueryHint("Buscar productos"); // FIXME: 13/6/17 (Andres) agregar string
+            mViewHolder.searchView.setFocusable(true);
+            mViewHolder.searchView.setIconifiedByDefault(false);
+        }
+    }
+
+    private void startSearchActivity() {
+        if (mViewHolder != null) {
+            mViewHolder.searchView.clearFocus();
+        }
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
     private class ViewHolder {
         private SwipeRefreshLayout refreshControl;
         private final View loadingView;
@@ -163,6 +192,7 @@ public class MainActivity extends AppBaseActivity implements
         private final View emptyView;
         private final RecyclerView homeList;
         private HomeAdapter homeAdapter;
+        private final SearchView searchView;
 
         private ViewHolder() {
             refreshControl = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
@@ -170,6 +200,7 @@ public class MainActivity extends AppBaseActivity implements
             errorView = findViewById(R.id.errorView);
             emptyView = findViewById(R.id.emptyView);
             homeList = (RecyclerView) findViewById(R.id.homeList);
+            searchView = (SearchView) findViewById(R.id.searchView);
         }
     }
 }
