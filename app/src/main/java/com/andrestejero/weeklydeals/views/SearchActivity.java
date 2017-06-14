@@ -60,7 +60,7 @@ public class SearchActivity extends AppBaseActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // FIXME: 14/6/17 stop repo
+        getAppRepository().stopProductSearch();
     }
 
     private void setupSearchView() {
@@ -89,7 +89,7 @@ public class SearchActivity extends AppBaseActivity implements
                 mViewHolder.searchAdapter.emptySearchList();
             }
         } else {
-            scheduleGetAutocompleteItems(searchString);
+            scheduleGetAutocompleteItems(StringUtils.replaceSpaces(searchString));
         }
         return true;
     }
@@ -121,6 +121,7 @@ public class SearchActivity extends AppBaseActivity implements
 
     private void setupViews(int hintContainer, int loading, int emptyAutocomplete, int errorMessage) {
         if (mViewHolder != null) {
+            mViewHolder.hintContainer.setVisibility(hintContainer);
             mViewHolder.searchAutocompleteLoading.setVisibility(loading);
             mViewHolder.emptyAutocomplete.setVisibility(emptyAutocomplete);
             mViewHolder.errorMessage.setVisibility(errorMessage);
@@ -152,6 +153,7 @@ public class SearchActivity extends AppBaseActivity implements
     }
 
     private class ViewHolder {
+        private final View hintContainer;
         private final TextView emptyAutocomplete;
         private final TextView errorMessage;
         private final SearchView searchView;
@@ -160,6 +162,7 @@ public class SearchActivity extends AppBaseActivity implements
         private ProgressBar searchAutocompleteLoading;
 
         private ViewHolder() {
+            hintContainer = findViewById(R.id.hintContainer);
             emptyAutocomplete = (TextView) findViewById(R.id.tvEmptyAutocomplete);
             errorMessage = (TextView) findViewById(R.id.tvErrorMessage);
             searchView = (SearchView) findViewById(R.id.searchView);

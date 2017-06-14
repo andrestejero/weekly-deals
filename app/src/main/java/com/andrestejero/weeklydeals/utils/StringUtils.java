@@ -64,4 +64,8 @@ public class StringUtils {
     public static <E> String join(@NonNull Collection<E> collection, @NonNull String separator) {
         return join(collection.toArray(), separator);
     }
+
+    public static String replaceSpaces(@NonNull String string) {
+        return string.replaceAll(" ", "_").toLowerCase();
+    }
 }
