@@ -8,6 +8,7 @@ import com.andrestejero.weeklydeals.models.Filter;
 import com.andrestejero.weeklydeals.models.HomeContainer;
 import com.andrestejero.weeklydeals.models.ProductDetail;
 import com.andrestejero.weeklydeals.models.PsnContainer;
+import com.andrestejero.weeklydeals.models.SearchContainer;
 import com.andrestejero.weeklydeals.network.ServiceGenerator;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class AppRepository {
     private Call<PsnContainer> mCallGetPsnContainer;
     private Call<ProductDetail> mCallGetProductDetail;
     private Call<HomeContainer> mCallGetHomeContainer;
+    private Call<SearchContainer> mCallSearchContainer;
 
     public AppRepository() {
         mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
@@ -58,6 +60,17 @@ public class AppRepository {
     public void stopGetHomeContainer() {
         if (mCallGetHomeContainer != null) {
             mCallGetHomeContainer.cancel();
+        }
+    }
+
+    public void getProductSearch(@NonNull String searchString, @NonNull Callback<SearchContainer> callback) {
+        mCallSearchContainer = mService.getProductSearch(searchString, true);
+        mCallSearchContainer.enqueue(callback);
+    }
+
+    public void stopProductSearch() {
+        if (mCallSearchContainer != null) {
+            mCallSearchContainer.cancel();
         }
     }
 }

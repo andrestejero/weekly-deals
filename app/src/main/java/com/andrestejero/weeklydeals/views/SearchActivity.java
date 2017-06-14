@@ -2,6 +2,7 @@ package com.andrestejero.weeklydeals.views;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
+import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.utils.StringUtils;
 import com.andrestejero.weeklydeals.views.adapters.SearchAdapter;
 import com.andrestejero.weeklydeals.views.presenters.SearchPresenter;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,6 +46,7 @@ public class SearchActivity extends AppBaseActivity implements
         mViewHolder = new ViewHolder();
         mPresenter = new SearchPresenter(this, getAppRepository());
         setupSearchView();
+        setupViews(View.VISIBLE, View.GONE, View.GONE, View.GONE);
     }
 
     @Override
@@ -120,6 +124,30 @@ public class SearchActivity extends AppBaseActivity implements
             mViewHolder.searchAutocompleteLoading.setVisibility(loading);
             mViewHolder.emptyAutocomplete.setVisibility(emptyAutocomplete);
             mViewHolder.errorMessage.setVisibility(errorMessage);
+        }
+    }
+
+    @Override
+    public void updateList(@NonNull List<Category> products) {
+        setupViews(View.GONE, View.GONE, View.GONE, View.GONE);
+        if (mViewHolder != null) {
+            mViewHolder.searchAdapter.updateSearchList(products);
+        }
+    }
+
+    @Override
+    public void showEmptyList() {
+        setupViews(View.GONE, View.GONE, View.VISIBLE, View.GONE);
+        if (mViewHolder != null) {
+            mViewHolder.searchAdapter.emptySearchList();
+        }
+    }
+
+    @Override
+    public void showError() {
+        setupViews(View.GONE, View.GONE, View.GONE, View.VISIBLE);
+        if (mViewHolder != null) {
+            mViewHolder.searchAdapter.emptySearchList();
         }
     }
 
