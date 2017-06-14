@@ -40,9 +40,9 @@ public class MainActivity extends AppBaseActivity implements
         setContentView(R.layout.activity_main);
         mViewHolder = new ViewHolder();
         mPresenter = new HomePresenter(this, getAppRepository());
-        setupSearchView(); // FIXME: 13/6/17 (Andres) continuar
         setupRefreshHandler();
         loadHome();
+        setupSearchView();
     }
 
     @Override

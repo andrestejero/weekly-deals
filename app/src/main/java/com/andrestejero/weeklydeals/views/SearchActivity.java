@@ -2,17 +2,144 @@ package com.andrestejero.weeklydeals.views;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.andrestejero.weeklydeals.AppBaseActivity;
 import com.andrestejero.weeklydeals.R;
+import com.andrestejero.weeklydeals.utils.StringUtils;
+import com.andrestejero.weeklydeals.views.adapters.SearchAdapter;
+import com.andrestejero.weeklydeals.views.presenters.SearchPresenter;
 
-public class SearchActivity extends AppBaseActivity {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class SearchActivity extends AppBaseActivity implements
+        SearchView.OnQueryTextListener,
+        SearchPresenter.View {
+
+    private static final String LOG_TAG = SearchActivity.class.getSimpleName();
+    private final static long AUTOCOMPLETE_TIMER_DELAY = 1000;
+
+    @Nullable
+    private ViewHolder mViewHolder;
+
+    @Nullable
+    private Timer mAutocompleteTimer;
+
+    @Nullable
+    private SearchPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        mViewHolder = new ViewHolder();
+        mPresenter = new SearchPresenter(this, getAppRepository());
+        setupSearchView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mViewHolder != null) {
+            mViewHolder.searchView.requestFocus();
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // FIXME: 14/6/17 stop repo
+    }
+
+    private void setupSearchView() {
+        if (mViewHolder != null) {
+            mViewHolder.searchView.setOnQueryTextListener(this);
+            mViewHolder.searchView.setQueryHint("Buscar productos"); // FIXME: 13/6/17 (Andres) agregar string
+            mViewHolder.searchView.setFocusable(true);
+            mViewHolder.searchView.setIconifiedByDefault(false);
+            mViewHolder.searchView.requestFocusFromTouch();
+        }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        // FIXME: 14/6/17 continuar
+        Log.d(LOG_TAG, "--> onQueryTextSubmit <--");
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String searchString) {
+        cancelPreviousScheduledGetAutocompleteItems();
+        if (StringUtils.isEmpty(searchString)) {
+            setupViews(View.VISIBLE, View.GONE, View.GONE, View.GONE);
+            if (mViewHolder != null) {
+                mViewHolder.searchAdapter.emptySearchList();
+            }
+        } else {
+            scheduleGetAutocompleteItems(searchString);
+        }
+        return true;
+    }
+
+    private void cancelPreviousScheduledGetAutocompleteItems() {
+        if (mAutocompleteTimer != null) {
+            mAutocompleteTimer.cancel();
+        }
+    }
+
+    private void scheduleGetAutocompleteItems(final String searchString) {
+        if (mViewHolder != null) {
+            setupViews(View.GONE, View.VISIBLE, View.GONE, View.GONE);
+        }
+        mAutocompleteTimer = new Timer();
+        mAutocompleteTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getAutocompleteItems(searchString);
+            }
+        }, AUTOCOMPLETE_TIMER_DELAY);
+    }
+
+    private void getAutocompleteItems(final String searchString) {
+        if (mPresenter != null) {
+            mPresenter.getProductSearch(searchString);
+        }
+    }
+
+    private void setupViews(int hintContainer, int loading, int emptyAutocomplete, int errorMessage) {
+        if (mViewHolder != null) {
+            mViewHolder.searchAutocompleteLoading.setVisibility(loading);
+            mViewHolder.emptyAutocomplete.setVisibility(emptyAutocomplete);
+            mViewHolder.errorMessage.setVisibility(errorMessage);
+        }
+    }
+
+    private class ViewHolder {
+        private final TextView emptyAutocomplete;
+        private final TextView errorMessage;
+        private final SearchView searchView;
+        private final RecyclerView searchResult;
+        private SearchAdapter searchAdapter;
+        private ProgressBar searchAutocompleteLoading;
+
+        private ViewHolder() {
+            emptyAutocomplete = (TextView) findViewById(R.id.tvEmptyAutocomplete);
+            errorMessage = (TextView) findViewById(R.id.tvErrorMessage);
+            searchView = (SearchView) findViewById(R.id.searchView);
+            searchResult = (RecyclerView) findViewById(R.id.searchResult);
+            searchAutocompleteLoading = (ProgressBar) findViewById(R.id.pbLoading);
+            searchAdapter = new SearchAdapter(SearchActivity.this);
+            searchResult.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+            searchResult.setAdapter(searchAdapter);
+        }
+    }
 }
