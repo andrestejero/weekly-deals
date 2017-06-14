@@ -124,8 +124,7 @@ public class MainActivity extends AppBaseActivity implements
     @Override
     public void onCategoryClick(@NonNull Category category) {
         if (StringUtils.isNotEmpty(category.getId())) {
-            Intent intent = new Intent(MainActivity.this, PsnListActivity.class);
-            intent.putExtra(PsnListActivity.EXTRA_PSN_LIST_ID, category.getId());
+            Intent intent = PsnListActivity.newIntent(this, category.getId());
             startActivity(intent);
         }
     }
@@ -139,8 +138,7 @@ public class MainActivity extends AppBaseActivity implements
 
     @Override
     public void openList(@NonNull String listId) {
-        Intent intent = new Intent(MainActivity.this, PsnListActivity.class);
-        intent.putExtra(PsnListActivity.EXTRA_PSN_LIST_ID, listId);
+        Intent intent = PsnListActivity.newIntent(this, listId);
         startActivity(intent);
     }
 

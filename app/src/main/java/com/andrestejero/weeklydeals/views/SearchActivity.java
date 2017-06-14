@@ -62,7 +62,7 @@ public class SearchActivity extends AppBaseActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getAppRepository().stopProductSearch();
+        getAppRepository().stopAutocomplete();
     }
 
     private void setupSearchView() {
@@ -76,9 +76,9 @@ public class SearchActivity extends AppBaseActivity implements
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        // FIXME: 14/6/17 continuar
-        Log.d(LOG_TAG, "--> onQueryTextSubmit <--");
+    public boolean onQueryTextSubmit(String searchString) {
+        // FIXME: 14/6/17 (Andres) continuar
+        Log.d(LOG_TAG, "onQueryTextSubmit: " + StringUtils.replaceSpaces(searchString));
         return false;
     }
 

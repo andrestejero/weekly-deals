@@ -29,7 +29,7 @@ public class SearchPresenter {
     }
 
     public void getProductSearch(@NonNull String searchString) {
-        mAppRepository.getProductSearch(searchString, new Callback<SearchContainer>() {
+        mAppRepository.getAutocomplete(searchString, new Callback<SearchContainer>() {
             @Override
             public void onResponse(Call<SearchContainer> call, Response<SearchContainer> response) {
                 View view = weakView.get();

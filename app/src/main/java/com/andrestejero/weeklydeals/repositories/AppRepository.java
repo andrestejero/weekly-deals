@@ -23,7 +23,7 @@ public class AppRepository {
     private Call<PsnContainer> mCallGetPsnContainer;
     private Call<ProductDetail> mCallGetProductDetail;
     private Call<HomeContainer> mCallGetHomeContainer;
-    private Call<SearchContainer> mCallSearchContainer;
+    private Call<SearchContainer> mCallAutocomplete;
 
     public AppRepository() {
         mService = ServiceGenerator.createService(ServiceGenerator.WeeklyDealsServiceApi.class);
@@ -63,14 +63,14 @@ public class AppRepository {
         }
     }
 
-    public void getProductSearch(@NonNull String searchString, @NonNull Callback<SearchContainer> callback) {
-        mCallSearchContainer = mService.getProductSearch(searchString, true);
-        mCallSearchContainer.enqueue(callback);
+    public void getAutocomplete(@NonNull String searchString, @NonNull Callback<SearchContainer> callback) {
+        mCallAutocomplete = mService.getAutocomplete(searchString, true);
+        mCallAutocomplete.enqueue(callback);
     }
 
-    public void stopProductSearch() {
-        if (mCallSearchContainer != null) {
-            mCallSearchContainer.cancel();
+    public void stopAutocomplete() {
+        if (mCallAutocomplete != null) {
+            mCallAutocomplete.cancel();
         }
     }
 }

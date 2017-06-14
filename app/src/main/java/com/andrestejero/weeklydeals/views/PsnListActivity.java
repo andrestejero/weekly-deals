@@ -1,5 +1,6 @@
 package com.andrestejero.weeklydeals.views;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,6 +57,13 @@ public class PsnListActivity extends AppBaseActivity implements
 
     @Nullable
     private String mSortApplied;
+
+    @NonNull
+    public static Intent newIntent(@NonNull Context context, @NonNull String productId) {
+        Intent intent = new Intent(context, PsnListActivity.class);
+        intent.putExtra(EXTRA_PSN_LIST_ID, productId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +182,7 @@ public class PsnListActivity extends AppBaseActivity implements
         if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getCategories())) {
             Category category = mPsnContainer.getCategories().get(position);
             if (StringUtils.isNotEmpty(category.getId())) {
-                Intent intent = new Intent(PsnListActivity.this, PsnListActivity.class);
-                intent.putExtra(EXTRA_PSN_LIST_ID, category.getId());
+                Intent intent = newIntent(this, category.getId());
                 startActivity(intent);
             }
         }

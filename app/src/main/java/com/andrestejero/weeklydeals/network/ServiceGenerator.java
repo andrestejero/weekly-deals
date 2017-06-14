@@ -30,7 +30,7 @@ public class ServiceGenerator {
         Call<HomeContainer> getHomeContainer();
 
         @GET("/games")
-        Call<SearchContainer> getProductSearch(@Query("name") String searchString, @Query("suggested") boolean suggested);
+        Call<SearchContainer> getAutocomplete(@Query("name") String searchString, @Query("suggested") boolean suggested);
     }
 
     public static final String API_BASE_URL = "http://ps-mapi.herokuapp.com";
