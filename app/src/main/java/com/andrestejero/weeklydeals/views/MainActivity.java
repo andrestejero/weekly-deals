@@ -146,8 +146,7 @@ public class MainActivity extends AppBaseActivity implements
 
     @Override
     public void openProduct(@NonNull String productId) {
-        Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-        intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_ID, productId);
+        Intent intent = ProductDetailActivity.newIntent(this, productId);
         startActivity(intent);
     }
 
@@ -171,7 +170,7 @@ public class MainActivity extends AppBaseActivity implements
                     }
                 }
             });
-            mViewHolder.searchView.setQueryHint("Buscar productos"); // FIXME: 13/6/17 (Andres) agregar string
+            mViewHolder.searchView.setQueryHint(getString(R.string.search));
             mViewHolder.searchView.setFocusable(true);
             mViewHolder.searchView.setIconifiedByDefault(false);
         }

@@ -20,4 +20,6 @@
     <string name="release_date_format">\'Released\' MMMM d, yyyy</string>
     <string name="format_date">dd/MM/yyyy hh:mm a</string>
     <string name="price_available_date">This price is only available from %1$s to %2$s</string>
+    <string name="search">Search&#8230;</string>
+    <string name="search_hint">Buscá por ofertas, juegos o categorias&#8230;</string>
 </resources>

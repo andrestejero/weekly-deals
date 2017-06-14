@@ -1,6 +1,7 @@
 package com.andrestejero.weeklydeals.views;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,7 +26,8 @@ import java.util.TimerTask;
 
 public class SearchActivity extends AppBaseActivity implements
         SearchView.OnQueryTextListener,
-        SearchPresenter.View {
+        SearchPresenter.View,
+        SearchAdapter.OnItemClickListener {
 
     private static final String LOG_TAG = SearchActivity.class.getSimpleName();
     private final static long AUTOCOMPLETE_TIMER_DELAY = 1000;
@@ -66,7 +68,7 @@ public class SearchActivity extends AppBaseActivity implements
     private void setupSearchView() {
         if (mViewHolder != null) {
             mViewHolder.searchView.setOnQueryTextListener(this);
-            mViewHolder.searchView.setQueryHint("Buscar productos"); // FIXME: 13/6/17 (Andres) agregar string
+            mViewHolder.searchView.setQueryHint(getString(R.string.search));
             mViewHolder.searchView.setFocusable(true);
             mViewHolder.searchView.setIconifiedByDefault(false);
             mViewHolder.searchView.requestFocusFromTouch();
@@ -152,6 +154,12 @@ public class SearchActivity extends AppBaseActivity implements
         }
     }
 
+    @Override
+    public void onItemClick(@NonNull String productId) {
+        Intent intent = ProductDetailActivity.newIntent(this, productId);
+        startActivity(intent);
+    }
+
     private class ViewHolder {
         private final View hintContainer;
         private final TextView emptyAutocomplete;
@@ -169,6 +177,7 @@ public class SearchActivity extends AppBaseActivity implements
             searchResult = (RecyclerView) findViewById(R.id.searchResult);
             searchAutocompleteLoading = (ProgressBar) findViewById(R.id.pbLoading);
             searchAdapter = new SearchAdapter(SearchActivity.this);
+            searchAdapter.setOnItemClickListener(SearchActivity.this);
             searchResult.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
             searchResult.setAdapter(searchAdapter);
         }

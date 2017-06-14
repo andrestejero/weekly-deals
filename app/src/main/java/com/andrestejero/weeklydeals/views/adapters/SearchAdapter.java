@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.andrestejero.weeklydeals.R;
 import com.andrestejero.weeklydeals.models.Category;
 import com.andrestejero.weeklydeals.utils.CollectionUtils;
+import com.andrestejero.weeklydeals.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (CollectionUtils.isNotEmpty(mSearchList)) {
             final Category category = mSearchList.get(position);
             viewHolder.productName.setText(category.getName());
+            viewHolder.actionableCover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null && StringUtils.isNotEmpty(category.getId())) {
+                        mListener.onItemClick(category.getId());
+                    }
+                }
+            });
         }
     }
 
@@ -67,15 +76,17 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public interface OnItemClickListener {
-        // FIXME: 14/6/17 void onItemClick(@NonNull SearchItem searchItem);
+        void onItemClick(@NonNull String id);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView productName;
+        private final View actionableCover;
 
         public ViewHolder(View itemView) {
             super(itemView);
             productName = (TextView) itemView.findViewById(R.id.productName);
+            actionableCover = itemView.findViewById(R.id.actionableCover);
         }
     }
 }

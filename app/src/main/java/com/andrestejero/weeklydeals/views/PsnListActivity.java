@@ -186,8 +186,7 @@ public class PsnListActivity extends AppBaseActivity implements
         if (mPsnContainer != null && CollectionUtils.isNotEmpty(mPsnContainer.getProducts())) {
             Product product = mPsnContainer.getProducts().get(position);
             if (StringUtils.isNotEmpty(product.getId())) {
-                Intent intent = new Intent(PsnListActivity.this, ProductDetailActivity.class);
-                intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_ID, product.getId());
+                Intent intent = ProductDetailActivity.newIntent(this, product.getId());
                 startActivity(intent);
             }
         }
