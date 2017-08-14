@@ -73,10 +73,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
         if (type == TYPE_BANNER) {
+            BannerViewHolder viewHolder = (BannerViewHolder) holder;
             if (CollectionUtils.isNotEmpty(mBanners)) {
-                BannerViewHolder viewHolder = (BannerViewHolder) holder;
                 viewHolder.bannersAdapter = new BannersAdapter(mContext, mBanners);
                 viewHolder.bannersPager.setAdapter(viewHolder.bannersAdapter);
+                viewHolder.bannersPager.setVisibility(View.VISIBLE);
+                viewHolder.tabLayout.setVisibility(View.VISIBLE);
                 viewHolder.tabLayout.setupWithViewPager(viewHolder.bannersPager, true);
                 viewHolder.bannersAdapter.setOnBannerClickListener(new BannersAdapter.OnBannerClickListener() {
                     @Override
@@ -86,6 +88,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         }
                     }
                 });
+            } else {
+                viewHolder.bannersPager.setVisibility(View.GONE);
+                viewHolder.tabLayout.setVisibility(View.GONE);
             }
         }
         if (type == TYPE_ITEM) {
